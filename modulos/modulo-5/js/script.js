@@ -1,992 +1,2883 @@
-const progressBar = document.getElementById("progressBar");
-
-
 /* =========================================================
-   BARRA DE PROGRESO
+   EL EMPLEADO AUMENTADO
+   MÓDULO 05 — JAVASCRIPT COMPLETO
+   VALIDACIÓN REAL + FEEDBACK + RETO ALEATORIO
+   CERTIFICACIÓN
 ========================================================= */
 
-function updateProgress() {
+"use strict";
 
-    if (!progressBar) return;
+document.addEventListener("DOMContentLoaded", () => {
 
-    const scrollTop = window.scrollY;
+    /* =====================================================
+       STORAGE
+    ====================================================== */
 
-    const documentHeight =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+    const STORAGE_SOLUTION =
+        "empleadoAumentado_modulo5_solution";
 
-    const progress =
-        documentHeight > 0
-            ? (scrollTop / documentHeight) * 100
-            : 0;
+    const STORAGE_CHALLENGE =
+        "empleadoAumentado_modulo5_reto";
 
-    progressBar.style.width =
-        `${Math.min(progress, 100)}%`;
-}
+    const STORAGE_MODULE =
+        "empleadoAumentado_modulo5_completado";
 
-window.addEventListener("scroll", updateProgress);
-window.addEventListener("resize", updateProgress);
+    const STORAGE_PROGRESS =
+        "empleadoAumentado_progreso";
 
-updateProgress();
-
-
-/* =========================================================
-   MODALES
-========================================================= */
-
-const capabilityCards =
-    document.querySelectorAll(".capability-card");
-
-const modals =
-    document.querySelectorAll(".modal");
+    const STORAGE_CERTIFICATE =
+        "datosCertificado";
 
 
-capabilityCards.forEach((card) => {
+    /* =====================================================
+       ELEMENTOS PRINCIPALES
+    ====================================================== */
 
-    card.addEventListener("click", (event) => {
+    const body =
+        document.body;
 
-        if (
-            event.target.closest(".text-button") ||
-            event.target === card
-        ) {
-
-            const modalName =
-                card.dataset.modal;
-
-            const modal =
-                document.getElementById(
-                    `modal-${modalName}`
-                );
-
-            if (!modal) return;
-
-            modal.classList.add("active");
-
-            modal.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-            document.body.classList.add(
-                "modal-open"
-            );
-        }
-    });
-});
-
-
-modals.forEach((modal) => {
-
-    const closeButton =
-        modal.querySelector(".modal-close");
-
-    const overlay =
-        modal.querySelector(".modal-overlay");
-
-    const closeModal = () => {
-
-        modal.classList.remove("active");
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
+    const progressBar =
+        document.getElementById(
+            "progressBar"
         );
 
-        document.body.classList.remove(
-            "modal-open"
+    const progressPercentage =
+        document.getElementById(
+            "progressPercentage"
         );
+
+    const solutionInput =
+        document.getElementById(
+            "solutionInput"
+        );
+
+    const solutionCounter =
+        document.getElementById(
+            "solutionCounter"
+        );
+
+    const buildSolution =
+        document.getElementById(
+            "buildSolution"
+        );
+
+    const solutionFeedback =
+        document.getElementById(
+            "solutionFeedback"
+        );
+
+    let challengeOptions =
+        document.querySelectorAll(
+            ".challenge-option"
+        );
+
+    const challengeFeedback =
+        document.getElementById(
+            "challengeFeedback"
+        );
+
+    const requirementActivity =
+        document.getElementById(
+            "requirementActivity"
+        );
+
+    const requirementChallenge =
+        document.getElementById(
+            "requirementChallenge"
+        );
+
+    const requirementModule =
+        document.getElementById(
+            "requirementModule"
+        );
+
+    const courseComplete =
+        document.getElementById(
+            "courseComplete"
+        );
+
+    const completionLabel =
+        document.getElementById(
+            "completionLabel"
+        );
+
+    const completionMessage =
+        document.getElementById(
+            "completionMessage"
+        );
+
+    const certificateButton =
+        document.getElementById(
+            "certificateButton"
+        );
+
+    const certificateData =
+        document.getElementById(
+            "certificateData"
+        );
+
+    const generateCertificate =
+        document.getElementById(
+            "generateCertificate"
+        );
+
+    const studentName =
+        document.getElementById(
+            "studentName"
+        );
+
+    const studentEmail =
+        document.getElementById(
+            "studentEmail"
+        );
+
+    const certificateFeedback =
+        document.getElementById(
+            "certificateFeedback"
+        );
+
+
+    /* =====================================================
+       ESTADO DEL MÓDULO
+    ====================================================== */
+
+    const moduleState = {
+
+        activityCompleted:
+            false,
+
+        challengeCompleted:
+            false,
+
+        moduleCompleted:
+            false
+
     };
 
-    closeButton?.addEventListener(
-        "click",
-        closeModal
-    );
 
-    overlay?.addEventListener(
-        "click",
-        closeModal
-    );
-});
+    /* =====================================================
+       STORAGE HELPERS
+    ====================================================== */
+
+    function getStorage(key) {
+
+        try {
+
+            return localStorage.getItem(
+                key
+            );
+
+        } catch (error) {
+
+            console.warn(
+                `No fue posible leer ${key}.`,
+                error
+            );
+
+            return null;
+        }
+    }
 
 
-document.addEventListener("keydown", (event) => {
+    function setStorage(
+        key,
+        value
+    ) {
 
-    if (event.key !== "Escape") return;
+        try {
 
-    const openModal =
-        document.querySelector(
-            ".modal.active"
+            localStorage.setItem(
+                key,
+                value
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.warn(
+                `No fue posible guardar ${key}.`,
+                error
+            );
+
+            return false;
+        }
+    }
+
+
+    function removeStorage(key) {
+
+        try {
+
+            localStorage.removeItem(
+                key
+            );
+
+        } catch (error) {
+
+            console.warn(
+                `No fue posible eliminar ${key}.`,
+                error
+            );
+        }
+    }
+
+
+    /* =====================================================
+       NORMALIZAR TEXTO
+    ====================================================== */
+
+    function normalizeText(text) {
+
+        return String(text || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(
+                /[\u0300-\u036f]/g,
+                ""
+            )
+            .replace(
+                /[^\p{L}\p{N}\s]/gu,
+                " "
+            )
+            .replace(
+                /\s+/g,
+                " "
+            )
+            .trim();
+    }
+
+
+    /* =====================================================
+       DETECTAR TEXTO INVÁLIDO
+    ====================================================== */
+
+    function detectInvalidText(text) {
+
+        const value =
+            normalizeText(text);
+
+        const compact =
+            value.replace(
+                /\s/g,
+                ""
+            );
+
+
+        if (!value) {
+
+            return {
+                invalid: true,
+                message:
+                    "La respuesta está vacía. Describa una solución concreta para un problema o proceso."
+            };
+        }
+
+
+        if (
+            value.length < 50
+        ) {
+
+            return {
+                invalid: true,
+                message:
+                    "La respuesta es demasiado corta. Explique el problema, la solución propuesta y el resultado esperado."
+            };
+        }
+
+
+        const words =
+            value
+                .split(" ")
+                .filter(
+                    word =>
+                        word.length > 1
+                );
+
+
+        if (
+            words.length < 9
+        ) {
+
+            return {
+                invalid: true,
+                message:
+                    "Describa con mayor detalle el problema y cómo integraría la solución."
+            };
+        }
+
+
+        if (
+            /(.)\1{4,}/iu.test(
+                value
+            )
+        ) {
+
+            return {
+                invalid: true,
+                message:
+                    "La respuesta contiene caracteres repetidos y no parece una respuesta válida."
+            };
+        }
+
+
+        const suspiciousPatterns = [
+
+            "asdfgh",
+            "qwerty",
+            "zxcvbn",
+            "poiuy",
+            "lkjhg",
+            "mnbvc"
+
+        ];
+
+
+        if (
+            suspiciousPatterns.some(
+                pattern =>
+                    value.includes(
+                        pattern
+                    )
+            )
+        ) {
+
+            return {
+                invalid: true,
+                message:
+                    "La respuesta no parece contener una descripción real."
+            };
+        }
+
+
+        const wordCount = {};
+
+
+        words.forEach(
+            word => {
+
+                wordCount[word] =
+                    (
+                        wordCount[word] ||
+                        0
+                    ) + 1;
+
+            }
         );
 
-    if (!openModal) return;
 
-    openModal.classList.remove(
-        "active"
-    );
-
-    openModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.classList.remove(
-        "modal-open"
-    );
-});
+        const highestRepetition =
+            Math.max(
+                ...Object.values(
+                    wordCount
+                )
+            );
 
 
-/* =========================================================
-   ACTIVIDAD PRÁCTICA
-========================================================= */
+        if (
+            highestRepetition >= 4 &&
+            highestRepetition >=
+                words.length / 2
+        ) {
 
-const solutionInput =
-    document.getElementById(
-        "solutionInput"
-    );
-
-const solutionCounter =
-    document.getElementById(
-        "solutionCounter"
-    );
-
-const buildSolution =
-    document.getElementById(
-        "buildSolution"
-    );
-
-const solutionFeedback =
-    document.getElementById(
-        "solutionFeedback"
-    );
+            return {
+                invalid: true,
+                message:
+                    "La respuesta repite demasiado las mismas palabras. Escriba una descripción real de la solución."
+            };
+        }
 
 
-function updateSolutionCounter() {
+        const letters =
+            (
+                value.match(
+                    /[a-záéíóúñ]/gi
+                ) || []
+            ).length;
 
-    if (
-        !solutionInput ||
-        !solutionCounter
-    ) {
-        return;
+
+        const numbers =
+            (
+                value.match(
+                    /[0-9]/g
+                ) || []
+            ).length;
+
+
+        if (
+            numbers > letters &&
+            numbers > 5
+        ) {
+
+            return {
+                invalid: true,
+                message:
+                    "La respuesta contiene demasiados números y no parece una descripción válida."
+            };
+        }
+
+
+        const uniqueCharacters =
+            new Set(
+                compact
+            ).size;
+
+
+        if (
+            uniqueCharacters < 8
+        ) {
+
+            return {
+                invalid: true,
+                message:
+                    "La respuesta no contiene suficiente variedad de contenido."
+            };
+        }
+
+
+        return {
+            invalid: false,
+            message: ""
+        };
     }
 
-    solutionCounter.textContent =
-        `${solutionInput.value.length} / 700`;
-}
 
+    /* =====================================================
+       VALIDAR SOLUCIÓN DEL MÓDULO 5
+    ====================================================== */
 
-solutionInput?.addEventListener(
-    "input",
-    updateSolutionCounter
-);
-
-updateSolutionCounter();
-
-
-function analyzeSolution() {
-
-    if (
-        !solutionInput ||
-        !solutionFeedback
+    function validateSolutionContent(
+        text
     ) {
-        return;
+
+        const basicValidation =
+            detectInvalidText(
+                text
+            );
+
+
+        if (
+            basicValidation.invalid
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    basicValidation.message
+            };
+        }
+
+
+        const value =
+            normalizeText(
+                text
+            );
+
+
+        const problemKeywords = [
+
+            "problema",
+            "problemas",
+            "necesidad",
+            "necesita",
+            "dificultad",
+            "error",
+            "errores",
+            "demora",
+            "retraso",
+            "tiempo",
+            "repetitivo",
+            "repetitiva",
+            "ineficiente",
+            "manual",
+            "proceso"
+
+        ];
+
+
+        const dataKeywords = [
+
+            "dato",
+            "datos",
+            "informacion",
+            "excel",
+            "reporte",
+            "registro",
+            "tabla",
+            "indicador",
+            "kpi",
+            "medicion",
+            "medir",
+            "dashboard",
+            "power bi",
+            "base de datos"
+
+        ];
+
+
+        const aiKeywords = [
+
+            "ia",
+            "inteligencia artificial",
+            "chatgpt",
+            "copilot",
+            "gemini",
+            "claude",
+            "modelo",
+            "asistente",
+            "prompt",
+            "prompts"
+
+        ];
+
+
+        const automationKeywords = [
+
+            "automatizar",
+            "automatizacion",
+            "automatico",
+            "flujo",
+            "workflow",
+            "regla",
+            "reglas",
+            "bot",
+            "robot",
+            "integrar",
+            "integracion",
+            "sistema",
+            "proceso"
+
+        ];
+
+
+        const resultKeywords = [
+
+            "resultado",
+            "mejora",
+            "mejorar",
+            "eficiencia",
+            "productividad",
+            "calidad",
+            "tiempo",
+            "reducir",
+            "ahorrar",
+            "control",
+            "seguimiento",
+            "decision",
+            "decidir",
+            "validar",
+            "verificar"
+
+        ];
+
+
+        const detectedProblem =
+            problemKeywords.filter(
+                keyword =>
+                    value.includes(
+                        keyword
+                    )
+            );
+
+
+        const detectedData =
+            dataKeywords.filter(
+                keyword =>
+                    value.includes(
+                        keyword
+                    )
+            );
+
+
+        const detectedAI =
+            aiKeywords.filter(
+                keyword =>
+                    value.includes(
+                        keyword
+                    )
+            );
+
+
+        const detectedAutomation =
+            automationKeywords.filter(
+                keyword =>
+                    value.includes(
+                        keyword
+                    )
+            );
+
+
+        const detectedResult =
+            resultKeywords.filter(
+                keyword =>
+                    value.includes(
+                        keyword
+                    )
+            );
+
+
+        if (
+            detectedProblem.length <
+            1
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "Identifique primero el problema o necesidad que desea solucionar."
+            };
+        }
+
+
+        const technologicalComponents =
+            (
+                detectedData.length > 0
+                    ? 1
+                    : 0
+            ) +
+            (
+                detectedAI.length > 0
+                    ? 1
+                    : 0
+            ) +
+            (
+                detectedAutomation.length > 0
+                    ? 1
+                    : 0
+            );
+
+
+        if (
+            technologicalComponents <
+            1
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "La solución debe indicar cómo utilizaría datos, inteligencia artificial, automatización o alguna combinación de estas capacidades."
+            };
+        }
+
+
+        if (
+            detectedResult.length <
+            1
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "Explique qué resultado, mejora o beneficio espera obtener con la solución."
+            };
+        }
+
+
+        if (
+            technologicalComponents <
+            2
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "La actividad debe integrar al menos dos elementos entre datos, inteligencia artificial y automatización."
+            };
+        }
+
+
+        return {
+            valid: true,
+            message:
+                "La propuesta integra el problema, la tecnología y un resultado esperado."
+        };
     }
 
-    const text =
-        solutionInput.value.trim();
 
-    solutionFeedback.className =
-        "task-feedback";
+    /* =====================================================
+       FEEDBACK
+    ====================================================== */
+
+    function showSolutionFeedback(
+        message,
+        type = "success"
+    ) {
+
+        if (!solutionFeedback) {
+            return;
+        }
 
 
-    if (!text) {
+        solutionFeedback.className =
+            "task-feedback show";
+
+
+        if (
+            type === "error"
+        ) {
+
+            solutionFeedback.classList.add(
+                "error"
+            );
+
+            solutionFeedback.style.color =
+                "#dc2626";
+
+            solutionFeedback.style.backgroundColor =
+                "rgba(220, 38, 38, 0.08)";
+
+            solutionFeedback.style.border =
+                "1px solid rgba(220, 38, 38, 0.25)";
+
+        } else {
+
+            solutionFeedback.classList.add(
+                "success"
+            );
+
+            solutionFeedback.style.color =
+                "#059669";
+
+            solutionFeedback.style.backgroundColor =
+                "rgba(5, 150, 105, 0.08)";
+
+            solutionFeedback.style.border =
+                "1px solid rgba(5, 150, 105, 0.25)";
+        }
+
 
         solutionFeedback.textContent =
-            "Describa primero un problema o una tarea que usted quiera mejorar.";
-
-        solutionFeedback.classList.add(
-            "show",
-            "warning"
-        );
-
-        solutionInput.focus();
-
-        return;
+            message;
     }
 
 
-    const normalized =
-        text.toLowerCase();
+    /* =====================================================
+       VALIDAR ACCESO DESDE MÓDULO 04
+    ====================================================== */
 
-    const components = [];
+    function moduleFourIsCompleted() {
 
-
-    if (
-        normalized.includes("dato") ||
-        normalized.includes("excel") ||
-        normalized.includes("archivo") ||
-        normalized.includes("información") ||
-        normalized.includes("informacion") ||
-        normalized.includes("reporte")
-    ) {
-
-        components.push("datos");
-    }
-
-
-    if (
-        normalized.includes("correo") ||
-        normalized.includes("enviar") ||
-        normalized.includes("copiar") ||
-        normalized.includes("registrar") ||
-        normalized.includes("consolidar")
-    ) {
-
-        components.push("automatización");
-    }
-
-
-    if (
-        normalized.includes("analizar") ||
-        normalized.includes("resumir") ||
-        normalized.includes("clasificar") ||
-        normalized.includes("comparar") ||
-        normalized.includes("ia") ||
-        normalized.includes("inteligencia artificial")
-    ) {
-
-        components.push(
-            "inteligencia artificial"
+        return (
+            getStorage(
+                "empleadoAumentado_modulo4_completado"
+            ) ===
+            "completado"
         );
     }
 
 
-    let recommendation =
-        "<strong>Su problema puede convertirse en una solución integrada.</strong><br><br>";
+    function protectModuleFive() {
 
-    recommendation +=
-        "Empiece identificando el proceso actual, sus entradas, reglas y resultado esperado. ";
+        if (
+            moduleFourIsCompleted()
+        ) {
+
+            return;
+        }
 
 
-    if (components.length > 0) {
+        const warning =
+            document.createElement(
+                "div"
+            );
 
-        recommendation +=
-            `En su descripción aparecen oportunidades relacionadas con: <strong>${components.join(", ")}</strong>. `;
 
-    } else {
+        warning.innerHTML = `
 
-        recommendation +=
-            "Aún no es necesario seleccionar una herramienta específica. Primero estructure el problema. ";
+            <div class="module-access-message">
+
+                <strong>
+                    🔒 Módulo 05 bloqueado
+                </strong>
+
+                <span>
+                    Primero debe completar y aprobar el Módulo 04.
+                </span>
+
+                <a href="../modulo-4/index.html">
+                    Ir al Módulo 04
+                </a>
+
+            </div>
+
+        `;
+
+
+        document.body.prepend(
+            warning
+        );
+
+
+        document.body.classList.add(
+            "module-access-blocked"
+        );
+
+
+        if (solutionInput) {
+
+            solutionInput.disabled =
+                true;
+        }
+
+
+        if (buildSolution) {
+
+            buildSolution.disabled =
+                true;
+        }
+
+
+        challengeOptions.forEach(
+            option => {
+
+                option.disabled =
+                    true;
+
+            }
+        );
+
+
+        if (certificateButton) {
+
+            certificateButton.setAttribute(
+                "aria-disabled",
+                "true"
+            );
+
+
+            certificateButton.disabled =
+                true;
+        }
+
+
+        if (generateCertificate) {
+
+            generateCertificate.disabled =
+                true;
+        }
     }
 
 
-    recommendation +=
-        "Después determine qué parte puede apoyarse con datos, IA o automatización y cómo verificará el resultado.";
+    /* =====================================================
+       MEZCLAR OPCIONES
+       LA CORRECTA PUEDE QUEDAR EN A, B, C O D
+    ====================================================== */
+
+    function shuffleChallengeOptions() {
+
+        const container =
+            document.querySelector(
+                ".challenge-options"
+            );
 
 
-    solutionFeedback.innerHTML =
-        recommendation;
+        if (!container) {
 
-    solutionFeedback.classList.add(
-        "show",
-        "success"
-    );
+            console.warn(
+                "No se encontró .challenge-options"
+            );
 
-
-    localStorage.setItem(
-        "empleadoAumentado_finalSolution",
-        text
-    );
-}
+            return;
+        }
 
 
-buildSolution?.addEventListener(
-    "click",
-    analyzeSolution
-);
+        let options =
+            Array.from(
+                container.querySelectorAll(
+                    ".challenge-option"
+                )
+            );
 
 
-/* =========================================================
-   RECUPERAR EJERCICIO GUARDADO
-========================================================= */
-
-const savedSolution =
-    localStorage.getItem(
-        "empleadoAumentado_finalSolution"
-    );
+        if (options.length <= 1) {
+            return;
+        }
 
 
-if (
-    savedSolution &&
-    solutionInput
-) {
+        /* ---------------------------------------------
+           MEZCLAR FÍSICAMENTE LOS BOTONES
+        --------------------------------------------- */
 
-    solutionInput.value =
-        savedSolution;
+        for (
+            let i =
+                options.length - 1;
+            i > 0;
+            i--
+        ) {
 
-    updateSolutionCounter();
-}
-
-
-/* =========================================================
-   RETO FINAL
-========================================================= */
-
-const challengeOptions =
-    document.querySelectorAll(
-        ".challenge-option"
-    );
-
-const challengeFeedback =
-    document.getElementById(
-        "challengeFeedback"
-    );
+            const j =
+                Math.floor(
+                    Math.random() *
+                    (i + 1)
+                );
 
 
-challengeOptions.forEach((option) => {
+            [
+                options[i],
+                options[j]
+            ] =
+            [
+                options[j],
+                options[i]
+            ];
+        }
 
-    option.addEventListener(
-        "click",
-        () => {
 
-            challengeOptions.forEach(
-                (item) => {
+        /* ---------------------------------------------
+           VOLVER A INSERTAR EN ORDEN ALEATORIO
+        --------------------------------------------- */
 
-                    item.classList.remove(
-                        "correct",
-                        "incorrect"
+        options.forEach(
+            option => {
+
+                container.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+        /* ---------------------------------------------
+           ACTUALIZAR LETRAS VISIBLES
+        --------------------------------------------- */
+
+        const letters = [
+            "A",
+            "B",
+            "C",
+            "D"
+        ];
+
+
+        options.forEach(
+            (
+                option,
+                index
+            ) => {
+
+                const newLetter =
+                    letters[index];
+
+
+                /* -------------------------------------
+                   CASO 1:
+                   elemento con clases de letra
+                ------------------------------------- */
+
+                const letterElement =
+                    option.querySelector(
+                        ".option-letter, " +
+                        ".challenge-letter, " +
+                        ".answer-letter"
                     );
+
+
+                if (letterElement) {
+
+                    letterElement.textContent =
+                        newLetter;
+
+                    letterElement.setAttribute(
+                        "data-letter",
+                        newLetter
+                    );
+
+                    return;
+                }
+
+
+                /* -------------------------------------
+                   CASO 2:
+                   elemento con data-letter
+                ------------------------------------- */
+
+                const dataLetterElement =
+                    option.querySelector(
+                        "[data-letter]"
+                    );
+
+
+                if (dataLetterElement) {
+
+                    dataLetterElement.textContent =
+                        newLetter;
+
+                    dataLetterElement.setAttribute(
+                        "data-letter",
+                        newLetter
+                    );
+
+                    return;
+                }
+
+
+                /* -------------------------------------
+                   CASO 3:
+                   primer elemento contiene A/B/C/D
+                ------------------------------------- */
+
+                const firstChild =
+                    option.firstElementChild;
+
+
+                if (firstChild) {
+
+                    const firstText =
+                        firstChild.textContent
+                            .trim();
+
+
+                    if (
+                        /^[A-D]$/i.test(
+                            firstText
+                        )
+                    ) {
+
+                        firstChild.textContent =
+                            newLetter;
+
+                        return;
+                    }
+
+
+                    if (
+                        /^[A-D][.)\-:]$/i.test(
+                            firstText
+                        )
+                    ) {
+
+                        firstChild.textContent =
+                            `${newLetter}.`;
+
+                        return;
+                    }
+                }
+
+
+                /* -------------------------------------
+                   CASO 4:
+                   la opción empieza directamente
+                   con A. B. C. D.
+                ------------------------------------- */
+
+                const html =
+                    option.innerHTML;
+
+
+                if (
+                    /^[\s]*[A-D][.)\-:]\s*/i.test(
+                        html
+                    )
+                ) {
+
+                    option.innerHTML =
+                        html.replace(
+                            /^[\s]*[A-D][.)\-:]\s*/i,
+                            `${newLetter}. `
+                        );
+
+                    return;
+                }
+
+
+                /* -------------------------------------
+                   CASO 5:
+                   guardar letra como atributo
+                ------------------------------------- */
+
+                option.dataset.optionLetter =
+                    newLetter;
+            }
+        );
+
+
+        /* ---------------------------------------------
+           ACTUALIZAR REFERENCIA
+        --------------------------------------------- */
+
+        challengeOptions =
+            container.querySelectorAll(
+                ".challenge-option"
+            );
+
+
+        console.log(
+            "✓ Opciones mezcladas correctamente."
+        );
+
+        options.forEach(
+            (
+                option,
+                index
+            ) => {
+
+                console.log(
+                    `${letters[index]} → correcta:`,
+                    option.dataset.correct === "true"
+                );
+
+            }
+        );
+    }
+
+
+    /* =====================================================
+       MODALES
+    ====================================================== */
+
+    const capabilityCards =
+        document.querySelectorAll(
+            ".capability-card"
+        );
+
+    const modals =
+        document.querySelectorAll(
+            ".modal"
+        );
+
+    let lastFocusedElement =
+        null;
+
+
+    capabilityCards.forEach(
+        card => {
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    const modalName =
+                        card.dataset.modal;
+
+
+                    const modal =
+                        document.getElementById(
+                            `modal-${modalName}`
+                        );
+
+
+                    if (!modal) {
+                        return;
+                    }
+
+
+                    lastFocusedElement =
+                        document.activeElement;
+
+
+                    modal.classList.add(
+                        "active"
+                    );
+
+
+                    modal.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+
+                    document.body.classList.add(
+                        "modal-open"
+                    );
+
+
+                    const closeButton =
+                        modal.querySelector(
+                            ".modal-close"
+                        );
+
+
+                    if (closeButton) {
+
+                        closeButton.focus();
+                    }
                 }
             );
+        }
+    );
 
 
-            const isCorrect =
-                option.dataset.correct ===
-                "true";
+    modals.forEach(
+        modal => {
+
+            const closeButton =
+                modal.querySelector(
+                    ".modal-close"
+                );
 
 
-            option.classList.add(
-                isCorrect
-                    ? "correct"
-                    : "incorrect"
-            );
+            const overlay =
+                modal.querySelector(
+                    ".modal-overlay"
+                );
 
 
-            if (!challengeFeedback) {
+            function closeModal() {
+
+                modal.classList.remove(
+                    "active"
+                );
+
+
+                modal.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+
+                const anotherModal =
+                    document.querySelector(
+                        ".modal.active"
+                    );
+
+
+                if (!anotherModal) {
+
+                    document.body.classList.remove(
+                        "modal-open"
+                    );
+
+
+                    if (
+                        lastFocusedElement &&
+                        typeof lastFocusedElement.focus ===
+                            "function"
+                    ) {
+
+                        lastFocusedElement.focus();
+                    }
+
+
+                    lastFocusedElement =
+                        null;
+                }
+            }
+
+
+            if (closeButton) {
+
+                closeButton.addEventListener(
+                    "click",
+                    closeModal
+                );
+            }
+
+
+            if (overlay) {
+
+                overlay.addEventListener(
+                    "click",
+                    closeModal
+                );
+            }
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key !==
+                "Escape"
+            ) {
+
                 return;
             }
 
 
-            challengeFeedback.className =
-                "challenge-feedback show";
-
-
-            if (isCorrect) {
-
-                challengeFeedback.classList.add(
-                    "correct"
+            const activeModal =
+                document.querySelector(
+                    ".modal.active"
                 );
 
-                challengeFeedback.innerHTML =
-                    "<strong>Correcto.</strong> Una solución integrada comienza comprendiendo el problema y el proceso, organizando los datos, definiendo dónde aporta valor la IA, automatizando las acciones adecuadas y validando el resultado.";
 
-            } else {
+            if (!activeModal) {
+                return;
+            }
 
-                challengeFeedback.classList.add(
+
+            activeModal.classList.remove(
+                "active"
+            );
+
+
+            activeModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+
+
+            if (
+                lastFocusedElement &&
+                typeof lastFocusedElement.focus ===
+                    "function"
+            ) {
+
+                lastFocusedElement.focus();
+            }
+
+
+            lastFocusedElement =
+                null;
+        }
+    );
+
+
+    /* =====================================================
+       CONTADOR
+    ====================================================== */
+
+    function updateSolutionCounter() {
+
+        if (
+            !solutionInput ||
+            !solutionCounter
+        ) {
+
+            return;
+        }
+
+
+        const maximum =
+            solutionInput.maxLength ||
+            700;
+
+
+        solutionCounter.textContent =
+            `${solutionInput.value.length} / ${maximum}`;
+    }
+
+
+    if (solutionInput) {
+
+        solutionInput.addEventListener(
+            "input",
+            updateSolutionCounter
+        );
+    }
+
+
+    updateSolutionCounter();
+
+
+    /* =====================================================
+       ANALIZAR / GUARDAR SOLUCIÓN
+    ====================================================== */
+
+    function analyzeSolution() {
+
+        if (!solutionInput) {
+            return;
+        }
+
+
+        const text =
+            solutionInput.value.trim();
+
+
+        const validation =
+            validateSolutionContent(
+                text
+            );
+
+
+        if (
+            !validation.valid
+        ) {
+
+            moduleState.activityCompleted =
+                false;
+
+
+            removeStorage(
+                STORAGE_SOLUTION
+            );
+
+
+            showSolutionFeedback(
+                `🔴 ${validation.message}`,
+                "error"
+            );
+
+
+            checkModuleCompletion();
+
+
+            solutionInput.focus();
+
+
+            return;
+        }
+
+
+        const data = {
+
+            solution:
+                text,
+
+            module:
+                "Módulo 05 — Integrar soluciones",
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+
+        const saved =
+            setStorage(
+                STORAGE_SOLUTION,
+                JSON.stringify(
+                    data
+                )
+            );
+
+
+        if (!saved) {
+
+            showSolutionFeedback(
+                "🔴 No fue posible guardar la actividad.",
+                "error"
+            );
+
+
+            return;
+        }
+
+
+        moduleState.activityCompleted =
+            true;
+
+
+        const normalized =
+            normalizeText(
+                text
+            );
+
+
+        const components = [];
+
+
+        if (
+            normalized.includes("dato") ||
+            normalized.includes("excel") ||
+            normalized.includes("reporte") ||
+            normalized.includes("indicador") ||
+            normalized.includes("kpi") ||
+            normalized.includes("power bi")
+        ) {
+
+            components.push(
+                "datos"
+            );
+        }
+
+
+        if (
+            normalized.includes("ia") ||
+            normalized.includes(
+                "inteligencia artificial"
+            ) ||
+            normalized.includes("chatgpt") ||
+            normalized.includes("copilot") ||
+            normalized.includes("gemini")
+        ) {
+
+            components.push(
+                "inteligencia artificial"
+            );
+        }
+
+
+        if (
+            normalized.includes(
+                "automat"
+            ) ||
+            normalized.includes(
+                "workflow"
+            ) ||
+            normalized.includes(
+                "flujo"
+            ) ||
+            normalized.includes(
+                "regla"
+            ) ||
+            normalized.includes(
+                "integrar"
+            )
+        ) {
+
+            components.push(
+                "automatización"
+            );
+        }
+
+
+        let recommendation =
+            "🟢 Solución válida. ";
+
+
+        recommendation +=
+            "Su propuesta identifica un problema y conecta recursos tecnológicos con un resultado esperado. ";
+
+
+        if (
+            components.length > 0
+        ) {
+
+            recommendation +=
+                `Componentes identificados: ${components.join(", ")}. `;
+        }
+
+
+        recommendation +=
+            "El siguiente paso es validar el flujo completo, comprobar los resultados y verificar que la solución realmente genere valor.";
+
+
+        if (solutionFeedback) {
+
+            solutionFeedback.textContent =
+                recommendation;
+
+
+            solutionFeedback.className =
+                "task-feedback show success";
+
+
+            solutionFeedback.style.color =
+                "#059669";
+
+
+            solutionFeedback.style.backgroundColor =
+                "rgba(5, 150, 105, 0.08)";
+
+
+            solutionFeedback.style.border =
+                "1px solid rgba(5, 150, 105, 0.25)";
+        }
+
+
+        if (buildSolution) {
+
+            const originalHTML =
+                buildSolution.innerHTML;
+
+
+            buildSolution.innerHTML =
+                "Solución guardada <span>✓</span>";
+
+
+            buildSolution.classList.add(
+                "saved"
+            );
+
+
+            buildSolution.disabled =
+                true;
+
+
+            setTimeout(
+                () => {
+
+                    buildSolution.innerHTML =
+                        originalHTML;
+
+
+                    buildSolution.classList.remove(
+                        "saved"
+                    );
+
+
+                    buildSolution.disabled =
+                        false;
+
+                },
+                2200
+            );
+        }
+
+
+        checkModuleCompletion();
+    }
+
+
+    if (buildSolution) {
+
+        buildSolution.addEventListener(
+            "click",
+            analyzeSolution
+        );
+    }
+
+
+    /* =====================================================
+       RECUPERAR ACTIVIDAD
+    ====================================================== */
+
+    function loadSavedSolution() {
+
+        if (!solutionInput) {
+            return;
+        }
+
+
+        const saved =
+            getStorage(
+                STORAGE_SOLUTION
+            );
+
+
+        if (!saved) {
+            return;
+        }
+
+
+        try {
+
+            const data =
+                JSON.parse(
+                    saved
+                );
+
+
+            if (
+                data &&
+                typeof data.solution ===
+                    "string"
+            ) {
+
+                const validation =
+                    validateSolutionContent(
+                        data.solution
+                    );
+
+
+                if (
+                    validation.valid
+                ) {
+
+                    solutionInput.value =
+                        data.solution;
+
+
+                    moduleState.activityCompleted =
+                        true;
+
+
+                    updateSolutionCounter();
+
+                } else {
+
+                    removeStorage(
+                        STORAGE_SOLUTION
+                    );
+                }
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "No fue posible recuperar la actividad.",
+                error
+            );
+
+
+            removeStorage(
+                STORAGE_SOLUTION
+            );
+        }
+    }
+
+
+    loadSavedSolution();
+
+
+    /* =====================================================
+       LIMPIAR FEEDBACK AL EDITAR
+    ====================================================== */
+
+    if (solutionInput) {
+
+        solutionInput.addEventListener(
+            "input",
+            () => {
+
+                if (solutionFeedback) {
+
+                    solutionFeedback.textContent =
+                        "";
+
+                    solutionFeedback.innerHTML =
+                        "";
+
+                    solutionFeedback.className =
+                        "task-feedback";
+
+                    solutionFeedback.style.color =
+                        "";
+
+                    solutionFeedback.style.backgroundColor =
+                        "";
+
+                    solutionFeedback.style.border =
+                        "";
+                }
+
+
+                moduleState.activityCompleted =
+                    false;
+
+
+                checkModuleCompletion();
+            }
+        );
+    }
+
+
+    /* =====================================================
+       RETO FINAL
+    ====================================================== */
+
+    function resetChallengeOptions() {
+
+        challengeOptions.forEach(
+            option => {
+
+                option.classList.remove(
+                    "correct",
                     "incorrect"
                 );
 
+            }
+        );
+    }
+
+
+    function answerChallenge(option) {
+
+        if (!option) {
+            return;
+        }
+
+
+        resetChallengeOptions();
+
+
+        const isCorrect =
+            option.dataset.correct ===
+            "true";
+
+
+        if (isCorrect) {
+
+            option.classList.add(
+                "correct"
+            );
+
+
+            moduleState.challengeCompleted =
+                true;
+
+
+            setStorage(
+                STORAGE_CHALLENGE,
+                "completado"
+            );
+
+
+            if (challengeFeedback) {
+
+                challengeFeedback.className =
+                    "challenge-feedback show correct";
+
+
                 challengeFeedback.innerHTML =
-                    "<strong>No es la mejor opción.</strong> Integrar no significa acumular herramientas ni reemplazar el criterio humano. Primero debe comprender el problema y después conectar los recursos que realmente aportan valor.";
+                    "<strong>✓ Correcto.</strong> Una solución integrada conecta el problema con los datos, la IA y la automatización que realmente aportan valor, y después valida el resultado.";
             }
-        }
-    );
-});
 
 
-/* =========================================================
-   ANIMACIONES DE SCROLL
-========================================================= */
-
-const animatedElements =
-    document.querySelectorAll(
-        ".capability-card, " +
-        ".method-step, " +
-        ".responsibility-card, " +
-        ".transformation-column, " +
-        ".result-list > div, " +
-        ".project-step"
-    );
+            checkModuleCompletion();
 
 
-if ("IntersectionObserver" in window) {
+        } else {
 
-    const observer =
-        new IntersectionObserver(
-            (entries, observerInstance) => {
+            option.classList.add(
+                "incorrect"
+            );
 
-                entries.forEach((entry) => {
 
-                    if (
-                        !entry.isIntersecting
-                    ) {
-                        return;
-                    }
+            moduleState.challengeCompleted =
+                false;
 
-                    entry.target.classList.add(
-                        "is-visible"
-                    );
 
-                    observerInstance.unobserve(
-                        entry.target
-                    );
-                });
-            },
-            {
-                threshold: 0.12
+            removeStorage(
+                STORAGE_CHALLENGE
+            );
+
+
+            if (challengeFeedback) {
+
+                challengeFeedback.className =
+                    "challenge-feedback show incorrect";
+
+
+                challengeFeedback.innerHTML =
+                    "<strong>✕ No es la mejor opción.</strong> Integrar no significa acumular herramientas. Debe partir del problema y conectar únicamente los recursos que aportan valor.";
             }
-        );
 
 
-    animatedElements.forEach(
-        (element, index) => {
-
-            element.style.setProperty(
-                "--animation-delay",
-                `${index * 0.06}s`
-            );
-
-            observer.observe(element);
+            checkModuleCompletion();
         }
-    );
-
-} else {
-
-    animatedElements.forEach(
-        (element) => {
-
-            element.classList.add(
-                "is-visible"
-            );
-        }
-    );
-}
+    }
 
 
-/* =========================================================
-   NAVEGACIÓN SUAVE
-========================================================= */
+    challengeOptions.forEach(
+        option => {
 
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach((anchor) => {
-
-        anchor.addEventListener(
-            "click",
-            (event) => {
-
-                const selector =
-                    anchor.getAttribute(
-                        "href"
-                    );
-
-                if (
-                    !selector ||
-                    selector === "#"
-                ) {
-                    return;
-                }
-
-                const target =
-                    document.querySelector(
-                        selector
-                    );
-
-                if (!target) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        );
-    });
-
-
-/* =========================================================
-   CERTIFICADO
-   CORPORACIÓN BÁRAKA
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        const certificateButton =
-            document.getElementById(
-                "certificateButton"
-            );
-
-        const certificateData =
-            document.getElementById(
-                "certificateData"
-            );
-
-        const generateCertificate =
-            document.getElementById(
-                "generateCertificate"
-            );
-
-        const studentName =
-            document.getElementById(
-                "studentName"
-            );
-
-        const studentEmail =
-            document.getElementById(
-                "studentEmail"
-            );
-
-        const certificateFeedback =
-            document.getElementById(
-                "certificateFeedback"
-            );
-
-
-        /* =================================================
-           MOSTRAR FORMULARIO
-        ================================================= */
-
-        if (
-            certificateButton &&
-            certificateData
-        ) {
-
-            certificateButton.addEventListener(
+            option.addEventListener(
                 "click",
                 () => {
 
-                    certificateData.classList.add(
-                        "active"
+                    answerChallenge(
+                        option
                     );
 
-                    certificateData.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-
-                    if (studentName) {
-
-                        setTimeout(
-                            () => {
-                                studentName.focus();
-                            },
-                            600
-                        );
-                    }
                 }
+            );
+        }
+    );
+
+
+    /* =====================================================
+       CARGAR ESTADO DEL RETO
+    ====================================================== */
+
+    function loadChallengeState() {
+
+        const savedChallenge =
+            getStorage(
+                STORAGE_CHALLENGE
+            );
+
+
+        if (
+            savedChallenge ===
+            "completado"
+        ) {
+
+            moduleState.challengeCompleted =
+                true;
+
+
+            resetChallengeOptions();
+
+
+            if (challengeFeedback) {
+
+                challengeFeedback.textContent =
+                    "";
+
+                challengeFeedback.innerHTML =
+                    "";
+
+                challengeFeedback.className =
+                    "challenge-feedback";
+            }
+        }
+    }
+
+
+    loadChallengeState();
+
+
+    /* =====================================================
+       CALCULAR PROGRESO
+    ====================================================== */
+
+    function calculateProgress() {
+
+        let completed =
+            0;
+
+
+        if (
+            moduleState.activityCompleted
+        ) {
+
+            completed++;
+        }
+
+
+        if (
+            moduleState.challengeCompleted
+        ) {
+
+            completed++;
+        }
+
+
+        if (
+            moduleState.moduleCompleted
+        ) {
+
+            completed++;
+        }
+
+
+        return Math.round(
+            (
+                completed /
+                3
+            ) * 100
+        );
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR REQUISITO
+    ====================================================== */
+
+    function updateRequirement(
+        element,
+        completed,
+        completedText,
+        pendingText
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+
+        const number =
+            element.querySelector(
+                ":scope > span"
+            );
+
+
+        const small =
+            element.querySelector(
+                "small"
+            );
+
+
+        element.classList.remove(
+            "completed",
+            "pending",
+            "locked"
+        );
+
+
+        if (completed) {
+
+            element.classList.add(
+                "completed"
+            );
+
+
+            if (number) {
+
+                number.textContent =
+                    "✓";
+            }
+
+
+            if (small) {
+
+                small.textContent =
+                    completedText;
+            }
+
+        } else {
+
+            element.classList.add(
+                "pending"
+            );
+
+
+            if (small) {
+
+                small.textContent =
+                    pendingText;
+            }
+        }
+    }
+
+
+    /* =====================================================
+       GUARDAR PROGRESO GENERAL
+    ====================================================== */
+
+    function saveCourseProgress(
+        moduleProgress
+    ) {
+
+        let courseProgress =
+            {};
+
+
+        try {
+
+            const existing =
+                getStorage(
+                    STORAGE_PROGRESS
+                );
+
+
+            if (existing) {
+
+                courseProgress =
+                    JSON.parse(
+                        existing
+                    );
+            }
+
+        } catch (error) {
+
+            courseProgress =
+                {};
+        }
+
+
+        courseProgress.modulo5 = {
+
+            actividad:
+                moduleState.activityCompleted,
+
+            reto:
+                moduleState.challengeCompleted,
+
+            completado:
+                moduleState.moduleCompleted,
+
+            progreso:
+                moduleProgress
+
+        };
+
+
+        setStorage(
+            STORAGE_PROGRESS,
+            JSON.stringify(
+                courseProgress
+            )
+        );
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR INTERFAZ
+    ====================================================== */
+
+    function updateModuleUI() {
+
+        const progress =
+            calculateProgress();
+
+
+        if (progressBar) {
+
+            progressBar.style.width =
+                `${progress}%`;
+
+
+            progressBar.style.setProperty(
+                "--progress",
+                `${progress}%`
             );
         }
 
 
-        /* =================================================
-           GENERAR CERTIFICADO
-        ================================================= */
+        if (progressPercentage) {
+
+            progressPercentage.textContent =
+                `${progress}%`;
+        }
+
+
+        updateRequirement(
+            requirementActivity,
+            moduleState.activityCompleted,
+            "Completada",
+            "Pendiente"
+        );
+
+
+        updateRequirement(
+            requirementChallenge,
+            moduleState.challengeCompleted,
+            "Aprobado",
+            "Pendiente"
+        );
+
+
+        if (requirementModule) {
+
+            const number =
+                requirementModule.querySelector(
+                    ":scope > span"
+                );
+
+
+            const small =
+                requirementModule.querySelector(
+                    "small"
+                );
+
+
+            requirementModule.classList.remove(
+                "completed",
+                "pending",
+                "locked"
+            );
+
+
+            if (
+                moduleState.moduleCompleted
+            ) {
+
+                requirementModule.classList.add(
+                    "completed"
+                );
+
+
+                if (number) {
+
+                    number.textContent =
+                        "✓";
+                }
+
+
+                if (small) {
+
+                    small.textContent =
+                        "Aprobado";
+                }
+
+
+            } else {
+
+                requirementModule.classList.add(
+                    "locked"
+                );
+
+
+                if (number) {
+
+                    number.textContent =
+                        "05";
+                }
+
+
+                if (small) {
+
+                    small.textContent =
+                        "Bloqueado";
+                }
+            }
+        }
+
+
+        if (
+            moduleState.moduleCompleted
+        ) {
+
+            unlockCourse();
+
+        } else {
+
+            lockCourse();
+        }
+
+
+        saveCourseProgress(
+            progress
+        );
+    }
+
+
+    /* =====================================================
+       COMPROBAR APROBACIÓN
+    ====================================================== */
+
+    function checkModuleCompletion() {
+
+        const completed =
+            moduleState.activityCompleted &&
+            moduleState.challengeCompleted;
+
+
+        if (completed) {
+
+            moduleState.moduleCompleted =
+                true;
+
+
+            setStorage(
+                STORAGE_MODULE,
+                "completado"
+            );
+
+
+        } else {
+
+            moduleState.moduleCompleted =
+                false;
+
+
+            removeStorage(
+                STORAGE_MODULE
+            );
+        }
+
+
+        updateModuleUI();
+    }
+
+
+    /* =====================================================
+       BLOQUEAR CURSO / CERTIFICADO
+    ====================================================== */
+
+    function lockCourse() {
+
+        if (courseComplete) {
+
+            courseComplete.classList.add(
+                "blocked"
+            );
+
+
+            courseComplete.classList.remove(
+                "completed"
+            );
+        }
+
+
+        if (completionLabel) {
+
+            completionLabel.textContent =
+                "CURSO BLOQUEADO";
+        }
+
+
+        if (completionMessage) {
+
+            completionMessage.textContent =
+                "Complete la actividad práctica y apruebe el reto final para finalizar el curso y habilitar la certificación.";
+        }
+
+
+        if (certificateButton) {
+
+            certificateButton.setAttribute(
+                "aria-disabled",
+                "true"
+            );
+
+
+            certificateButton.disabled =
+                true;
+
+
+            certificateButton.classList.remove(
+                "unlocked"
+            );
+
+
+            certificateButton.innerHTML = `
+                Certificado bloqueado
+                <span>🔒</span>
+            `;
+        }
+
+
+        if (certificateData) {
+
+            certificateData.classList.remove(
+                "unlocked"
+            );
+
+
+            certificateData.classList.add(
+                "blocked"
+            );
+        }
+
 
         if (generateCertificate) {
 
-            generateCertificate.addEventListener(
-                "click",
-                () => {
-
-                    if (
-                        !studentName ||
-                        !studentEmail ||
-                        !certificateFeedback
-                    ) {
-                        return;
-                    }
+            generateCertificate.disabled =
+                true;
+        }
+    }
 
 
-                    const nombre =
-                        studentName.value.trim();
+    /* =====================================================
+       DESBLOQUEAR CURSO / CERTIFICADO
+    ====================================================== */
 
-                    const correo =
-                        studentEmail.value.trim();
+    function unlockCourse() {
 
+        if (courseComplete) {
 
-                    /* -----------------------------------------
-                       VALIDAR NOMBRE
-                    ----------------------------------------- */
-
-                    if (nombre === "") {
-
-                        certificateFeedback.textContent =
-                            "Por favor, escriba su nombre completo.";
-
-                        certificateFeedback.className =
-                            "certificate-feedback error";
-
-                        studentName.focus();
-
-                        return;
-                    }
+            courseComplete.classList.remove(
+                "blocked"
+            );
 
 
-                    /* -----------------------------------------
-                       VALIDAR CORREO
-                    ----------------------------------------- */
-
-                    if (correo === "") {
-
-                        certificateFeedback.textContent =
-                            "Por favor, escriba su correo electrónico.";
-
-                        certificateFeedback.className =
-                            "certificate-feedback error";
-
-                        studentEmail.focus();
-
-                        return;
-                    }
+            courseComplete.classList.add(
+                "completed"
+            );
+        }
 
 
-                    const emailValido =
-                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (completionLabel) {
+
+            completionLabel.textContent =
+                "CURSO COMPLETADO";
+        }
 
 
-                    if (
-                        !emailValido.test(correo)
-                    ) {
+        if (completionMessage) {
 
-                        certificateFeedback.textContent =
-                            "Ingrese un correo electrónico válido.";
-
-                        certificateFeedback.className =
-                            "certificate-feedback error";
-
-                        studentEmail.focus();
-
-                        return;
-                    }
+            completionMessage.textContent =
+                "¡Felicitaciones! Completó y aprobó los cinco módulos. Ya puede generar su certificado de finalización.";
+        }
 
 
-                    /* -----------------------------------------
-                       FECHA
-                    ----------------------------------------- */
+        if (certificateButton) {
 
-                    const fecha =
-                        new Date();
-
-
-                    const fechaFormateada =
-                        fecha.toLocaleDateString(
-                            "es-CO",
-                            {
-                                day: "2-digit",
-                                month: "long",
-                                year: "numeric"
-                            }
-                        );
+            certificateButton.setAttribute(
+                "aria-disabled",
+                "false"
+            );
 
 
-                    /* -----------------------------------------
-                       CÓDIGO
-                    ----------------------------------------- */
-
-                    const codigo =
-                        generarCodigoCertificado();
+            certificateButton.disabled =
+                false;
 
 
-                    /* -----------------------------------------
-                       DATOS
-                    ----------------------------------------- */
-
-                    const datosCertificado = {
-
-                        nombre: nombre,
-
-                        correo: correo,
-
-                        fecha: fechaFormateada,
-
-                        codigo: codigo,
-
-                        curso:
-                            "El Empleado Aumentado",
-
-                        modulos: 5,
-
-                        entidad:
-                            "Corporación BÁRAKA",
-
-                        nit:
-                            "901844127-7"
-
-                    };
+            certificateButton.classList.add(
+                "unlocked"
+            );
 
 
-                    /* -----------------------------------------
-                       GUARDAR
-                    ----------------------------------------- */
+            certificateButton.innerHTML = `
+                Obtener certificado
+                <span>↓</span>
+            `;
+        }
 
-                    localStorage.setItem(
-                        "datosCertificado",
+
+        if (generateCertificate) {
+
+            generateCertificate.disabled =
+                false;
+        }
+    }
+
+
+    /* =====================================================
+       ABRIR FORMULARIO DEL CERTIFICADO
+    ====================================================== */
+
+    if (certificateButton) {
+
+        certificateButton.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    !moduleState.moduleCompleted
+                ) {
+
+                    return;
+                }
+
+
+                if (!certificateData) {
+
+                    return;
+                }
+
+
+                certificateData.classList.remove(
+                    "blocked"
+                );
+
+
+                certificateData.classList.add(
+                    "unlocked"
+                );
+
+
+                certificateData.scrollIntoView({
+
+                    behavior:
+                        "smooth",
+
+                    block:
+                        "start"
+                });
+
+
+                setTimeout(
+                    () => {
+
+                        if (studentName) {
+
+                            studentName.focus();
+                        }
+
+                    },
+                    650
+                );
+            }
+        );
+    }
+
+
+    /* =====================================================
+       VALIDAR DATOS DEL CERTIFICADO
+    ====================================================== */
+
+    if (generateCertificate) {
+
+        generateCertificate.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    !moduleState.moduleCompleted
+                ) {
+
+                    return;
+                }
+
+
+                if (
+                    !studentName ||
+                    !studentEmail ||
+                    !certificateFeedback
+                ) {
+
+                    return;
+                }
+
+
+                const nombre =
+                    studentName.value.trim();
+
+
+                const correo =
+                    studentEmail.value.trim();
+
+
+                certificateFeedback.className =
+                    "certificate-feedback";
+
+
+                certificateFeedback.style.color =
+                    "";
+
+
+                if (
+                    nombre === ""
+                ) {
+
+                    certificateFeedback.textContent =
+                        "Por favor, escriba su nombre completo.";
+
+
+                    certificateFeedback.className =
+                        "certificate-feedback error";
+
+
+                    studentName.focus();
+
+
+                    return;
+                }
+
+
+                if (
+                    nombre.length < 3
+                ) {
+
+                    certificateFeedback.textContent =
+                        "El nombre debe contener al menos 3 caracteres.";
+
+
+                    certificateFeedback.className =
+                        "certificate-feedback error";
+
+
+                    studentName.focus();
+
+
+                    return;
+                }
+
+
+                if (
+                    correo === ""
+                ) {
+
+                    certificateFeedback.textContent =
+                        "Por favor, escriba su correo electrónico.";
+
+
+                    certificateFeedback.className =
+                        "certificate-feedback error";
+
+
+                    studentEmail.focus();
+
+
+                    return;
+                }
+
+
+                const emailValido =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+                if (
+                    !emailValido.test(
+                        correo
+                    )
+                ) {
+
+                    certificateFeedback.textContent =
+                        "Ingrese un correo electrónico válido.";
+
+
+                    certificateFeedback.className =
+                        "certificate-feedback error";
+
+
+                    studentEmail.focus();
+
+
+                    return;
+                }
+
+
+                const fecha =
+                    new Date();
+
+
+                const fechaFormateada =
+                    fecha.toLocaleDateString(
+                        "es-CO",
+                        {
+                            day:
+                                "2-digit",
+
+                            month:
+                                "long",
+
+                            year:
+                                "numeric"
+                        }
+                    );
+
+
+                const codigo =
+                    generarCodigoCertificado();
+
+
+                const datosCertificado = {
+
+                    nombre:
+                        nombre,
+
+                    correo:
+                        correo,
+
+                    fecha:
+                        fechaFormateada,
+
+                    codigo:
+                        codigo,
+
+                    curso:
+                        "El Empleado Aumentado",
+
+                    modulos:
+                        5,
+
+                    entidad:
+                        "Corporación BÁRAKA",
+
+                    nit:
+                        "901844127-7"
+                };
+
+
+                const saved =
+                    setStorage(
+                        STORAGE_CERTIFICATE,
                         JSON.stringify(
                             datosCertificado
                         )
                     );
 
 
-                    /* -----------------------------------------
-                       MENSAJE
-                    ----------------------------------------- */
+                if (!saved) {
 
                     certificateFeedback.textContent =
-                        "Certificado generado correctamente.";
+                        "No fue posible guardar los datos del certificado.";
+
 
                     certificateFeedback.className =
-                        "certificate-feedback success";
+                        "certificate-feedback error";
 
 
-                    /* -----------------------------------------
-                       MOSTRAR
-                    ----------------------------------------- */
-
-                    mostrarCertificado(
-                        datosCertificado
-                    );
+                    return;
                 }
-            );
-        }
 
 
-        /* =================================================
-           GENERAR CÓDIGO
-        ================================================= */
-
-        function generarCodigoCertificado() {
-
-            const caracteres =
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-            let codigo =
-                "EA-2026-";
+                certificateFeedback.textContent =
+                    "Certificado generado correctamente.";
 
 
-            for (
-                let i = 0;
-                i < 6;
-                i++
-            ) {
+                certificateFeedback.className =
+                    "certificate-feedback success";
 
-                const posicion =
-                    Math.floor(
-                        Math.random() *
-                        caracteres.length
-                    );
 
-                codigo +=
-                    caracteres[posicion];
+                mostrarCertificado(
+                    datosCertificado
+                );
             }
+        );
+    }
 
 
-            return codigo;
-        }
+    /* =====================================================
+       GENERAR CÓDIGO DE CERTIFICADO
+    ====================================================== */
+
+    function generarCodigoCertificado() {
+
+        const caracteres =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 
-        /* =================================================
-           MOSTRAR CERTIFICADO
-        ================================================= */
+        let codigo =
+            "EA-2026-";
 
-        function mostrarCertificado(
-            datos
+
+        for (
+            let i = 0;
+            i < 6;
+            i++
         ) {
 
-            const certificadoExistente =
-                document.getElementById(
-                    "certificateResult"
+            const posicion =
+                Math.floor(
+                    Math.random() *
+                    caracteres.length
                 );
 
 
-            if (
-                certificadoExistente
-            ) {
-
-                certificadoExistente.remove();
-            }
+            codigo +=
+                caracteres[posicion];
+        }
 
 
-            const certificado =
-                document.createElement(
-                    "section"
-                );
+        return codigo;
+    }
 
 
-            certificado.id =
-                "certificateResult";
+    /* =====================================================
+       MOSTRAR CERTIFICADO
+    ====================================================== */
 
-            certificado.className =
-                "certificate-result";
+    function mostrarCertificado(
+        datos
+    ) {
 
-
-            certificado.innerHTML = `
-
-                <div class="certificate-container">
-
-                    <div class="certificate">
-
-                        <div class="certificate-border">
+        const certificadoExistente =
+            document.getElementById(
+                "certificateResult"
+            );
 
 
-                            <!-- =================================
-                                 ENCABEZADO
-                            ================================== -->
+        if (
+            certificadoExistente
+        ) {
 
-                            <div class="certificate-header">
+            certificadoExistente.remove();
+        }
 
-                                <div class="certificate-logo">
 
-                                    <img
-                                        src="../../assets/logo.png"
-                                        alt="Corporación BÁRAKA"
-                                    >
+        const certificado =
+            document.createElement(
+                "section"
+            );
+
+
+        certificado.id =
+            "certificateResult";
+
+
+        certificado.className =
+            "certificate-result";
+
+
+        certificado.innerHTML = `
+
+            <div class="certificate-container">
+
+                <div class="certificate">
+
+                    <div class="certificate-border">
+
+                        <div class="certificate-header">
+
+                            <div class="certificate-logo">
+
+                                <img
+                                    src="../../assets/logo.png"
+                                    alt="Corporación BÁRAKA"
+                                >
+
+                            </div>
+
+
+                            <div class="certificate-label">
+
+                                CERTIFICADO
+                                <br>
+                                DE FINALIZACIÓN
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="certificate-body">
+
+                            <p class="certificate-issuer">
+                                La Corporación BÁRAKA
+                            </p>
+
+
+                            <p class="certificate-intro">
+                                certifica que
+                            </p>
+
+
+                            <h1>
+                                ${escapeHTML(
+                                    datos.nombre
+                                )}
+                            </h1>
+
+
+                            <p class="certificate-text">
+
+                                completó y aprobó
+                                satisfactoriamente el curso
+
+                            </p>
+
+
+                            <h2>
+                                EL EMPLEADO AUMENTADO
+                            </h2>
+
+
+                            <p class="certificate-description">
+
+                                Formación orientada a la integración
+                                de procesos, datos, inteligencia
+                                artificial, automatización y
+                                tecnología aplicada al trabajo.
+
+                            </p>
+
+
+                            <div class="certificate-details">
+
+                                <div>
+
+                                    <span>
+                                        DURACIÓN
+                                    </span>
+
+                                    <strong>
+                                        5 módulos
+                                    </strong>
 
                                 </div>
 
 
-                                <div class="certificate-label">
+                                <div>
 
-                                    CERTIFICADO
-                                    DE FINALIZACIÓN
+                                    <span>
+                                        FECHA DE FINALIZACIÓN
+                                    </span>
+
+                                    <strong>
+                                        ${escapeHTML(
+                                            datos.fecha
+                                        )}
+                                    </strong>
 
                                 </div>
 
                             </div>
 
 
-                            <!-- =================================
-                                 CUERPO
-                            ================================== -->
+                            <div class="certificate-footer">
 
-                            <div class="certificate-body">
+                                <div class="certificate-signature">
 
-                                <p class="certificate-issuer">
-
-                                    La Corporación BÁRAKA
-
-                                </p>
+                                    <img
+                                        src="../../assets/Firma.png"
+                                        alt="Firma"
+                                        class="signature-image"
+                                    >
 
 
-                                <p class="certificate-intro">
-
-                                    certifica que
-
-                                </p>
+                                    <div class="signature-line"></div>
 
 
-                                <h1>
-
-                                    ${escapeHTML(
-                                        datos.nombre
-                                    )}
-
-                                </h1>
+                                    <span>
+                                        Corporación BÁRAKA
+                                    </span>
 
 
-                                <p class="certificate-text">
+                                    <small>
+                                        NIT 901844127-7
+                                    </small>
 
-                                    completó y aprobó
-                                    satisfactoriamente el curso
-
-                                </p>
-
-
-                                <h2>
-
-                                    EL EMPLEADO AUMENTADO
-
-                                </h2>
+                                </div>
 
 
-                                <p class="certificate-description">
+                                <div class="certificate-code">
 
-                                    Formación orientada a la integración
-                                    de procesos, datos, inteligencia
-                                    artificial, automatización y
-                                    tecnología aplicada al trabajo.
-
-                                </p>
+                                    <span>
+                                        CÓDIGO DEL CERTIFICADO
+                                    </span>
 
 
-                                <!-- =================================
-                                     INFORMACIÓN COMO TEXTO
-                                ================================== -->
-
-                                <p class="certificate-info">
-
-                                    <strong>DURACIÓN:</strong>
-                                    5 módulos
-
-                                </p>
-
-
-                                <p class="certificate-info">
-
-                                    <strong>FECHA DE FINALIZACIÓN:</strong>
-                                    ${datos.fecha}
-
-                                </p>
-
-
-                                <!-- =================================
-                                     FIRMA Y CÓDIGO
-                                ================================== -->
-
-                                <div class="certificate-footer">
-
-                                    <div class="certificate-signature">
-
-                                        <img
-                                            src="../../assets/Firma.png"
-                                            alt="Firma"
-                                            class="signature-image"
-                                        >
-
-
-                                        <div class="signature-line"></div>
-
-
-                                        <span>
-                                            Corporación BÁRAKA
-                                        </span>
-
-
-                                        <small>
-                                            NIT 901844127-7
-                                        </small>
-
-                                    </div>
-
-
-                                    <div class="certificate-code">
-
-                                        <span>
-                                            CÓDIGO DEL CERTIFICADO
-                                        </span>
-
-
-                                        <strong>
-                                            ${datos.codigo}
-                                        </strong>
-
-                                    </div>
+                                    <strong>
+                                        ${escapeHTML(
+                                            datos.codigo
+                                        )}
+                                    </strong>
 
                                 </div>
 
@@ -996,93 +2887,379 @@ document.addEventListener(
 
                     </div>
 
+                </div>
 
-                    <!-- =================================
-                         BOTÓN
-                    ================================== -->
 
-                    <div class="certificate-actions">
+                <div class="certificate-actions">
 
-                        <button
-                            type="button"
-                            class="button button-primary"
-                            id="printCertificate"
-                        >
+                    <button
+                        type="button"
+                        class="button button-primary"
+                        id="printCertificate"
+                    >
 
-                            Imprimir / Guardar PDF
+                        Imprimir / Guardar PDF
 
-                            <span>
-                                ↓
-                            </span>
+                        <span>
+                            ↓
+                        </span>
 
-                        </button>
-
-                    </div>
+                    </button>
 
                 </div>
-            `;
+
+            </div>
+
+        `;
 
 
-            const main =
-                document.querySelector(
-                    "main"
-                );
-
-
-            if (!main) {
-                return;
-            }
-
-
-            main.appendChild(
-                certificado
+        const main =
+            document.querySelector(
+                "main"
             );
 
 
-            certificado.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+        if (!main) {
+            return;
+        }
 
 
-            const printButton =
-                document.getElementById(
-                    "printCertificate"
+        main.appendChild(
+            certificado
+        );
+
+
+        certificado.scrollIntoView({
+
+            behavior:
+                "smooth",
+
+            block:
+                "start"
+        });
+
+
+        const printButton =
+            document.getElementById(
+                "printCertificate"
+            );
+
+
+        if (printButton) {
+
+            printButton.addEventListener(
+                "click",
+                () => {
+
+                    window.print();
+
+                }
+            );
+        }
+    }
+
+
+    /* =====================================================
+       ESCAPAR HTML
+    ====================================================== */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            text;
+
+
+        return div.innerHTML;
+    }
+
+
+    /* =====================================================
+       CARGAR CERTIFICADO GUARDADO
+    ====================================================== */
+
+    function loadSavedCertificate() {
+
+        const saved =
+            getStorage(
+                STORAGE_CERTIFICATE
+            );
+
+
+        if (!saved) {
+            return;
+        }
+
+
+        try {
+
+            const data =
+                JSON.parse(
+                    saved
                 );
 
 
-            if (printButton) {
+            if (
+                data &&
+                typeof data.nombre ===
+                    "string" &&
+                typeof data.correo ===
+                    "string" &&
+                typeof data.codigo ===
+                    "string"
+            ) {
 
-                printButton.addEventListener(
+                if (studentName) {
+
+                    studentName.value =
+                        data.nombre;
+                }
+
+
+                if (studentEmail) {
+
+                    studentEmail.value =
+                        data.correo;
+                }
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "No fue posible recuperar el certificado.",
+                error
+            );
+        }
+    }
+
+
+    loadSavedCertificate();
+
+
+    /* =====================================================
+       ANIMACIONES
+    ====================================================== */
+
+    const animatedElements =
+        document.querySelectorAll(
+            ".capability-card, " +
+            ".method-step, " +
+            ".responsibility-card, " +
+            ".transformation-column, " +
+            ".result-list > div, " +
+            ".project-step"
+        );
+
+
+    if (
+        "IntersectionObserver" in window
+    ) {
+
+        const observer =
+            new IntersectionObserver(
+                (
+                    entries,
+                    observerInstance
+                ) => {
+
+                    entries.forEach(
+                        entry => {
+
+                            if (
+                                !entry.isIntersecting
+                            ) {
+
+                                return;
+                            }
+
+
+                            entry.target.classList.add(
+                                "is-visible"
+                            );
+
+
+                            observerInstance.unobserve(
+                                entry.target
+                            );
+                        }
+                    );
+
+                },
+                {
+                    threshold:
+                        0.12
+                }
+            );
+
+
+        animatedElements.forEach(
+            (
+                element,
+                index
+            ) => {
+
+                element.style.setProperty(
+                    "--animation-delay",
+                    `${index * 0.06}s`
+                );
+
+
+                observer.observe(
+                    element
+                );
+            }
+        );
+
+
+    } else {
+
+        animatedElements.forEach(
+            element => {
+
+                element.classList.add(
+                    "is-visible"
+                );
+            }
+        );
+    }
+
+
+    /* =====================================================
+       NAVEGACIÓN SUAVE
+    ====================================================== */
+
+    document
+        .querySelectorAll(
+            'a[href^="#"]'
+        )
+        .forEach(
+            anchor => {
+
+                anchor.addEventListener(
                     "click",
-                    () => {
+                    event => {
 
-                        window.print();
+                        const selector =
+                            anchor.getAttribute(
+                                "href"
+                            );
 
+
+                        if (
+                            !selector ||
+                            selector === "#"
+                        ) {
+
+                            return;
+                        }
+
+
+                        const target =
+                            document.querySelector(
+                                selector
+                            );
+
+
+                        if (!target) {
+
+                            return;
+                        }
+
+
+                        event.preventDefault();
+
+
+                        const header =
+                            document.querySelector(
+                                ".module-header"
+                            );
+
+
+                        const headerHeight =
+                            header
+                                ? header.offsetHeight
+                                : 0;
+
+
+                        const targetPosition =
+                            target
+                                .getBoundingClientRect()
+                                .top +
+                            window.scrollY -
+                            headerHeight -
+                            20;
+
+
+                        window.scrollTo({
+
+                            top:
+                                targetPosition,
+
+                            behavior:
+                                "smooth"
+
+                        });
                     }
                 );
             }
-        }
+        );
 
 
-        /* =================================================
-           PROTEGER TEXTO HTML
-        ================================================= */
+    /* =====================================================
+       ESTADO INICIAL
+    ====================================================== */
 
-        function escapeHTML(
-            text
-        ) {
+    const savedModule =
+        getStorage(
+            STORAGE_MODULE
+        );
 
-            const div =
-                document.createElement(
-                    "div"
-                );
 
-            div.textContent =
-                text;
+    if (
+        savedModule ===
+        "completado"
+    ) {
 
-            return div.innerHTML;
-        }
-
+        moduleState.moduleCompleted =
+            true;
     }
-);
+
+
+    checkModuleCompletion();
+
+
+    /* =====================================================
+       PROTEGER ACCESO AL MÓDULO 05
+    ====================================================== */
+
+    protectModuleFive();
+
+
+    /* =====================================================
+       MEZCLAR OPCIONES DEL RETO
+       IMPORTANTE:
+       ESTA ES LA ÚNICA FUNCIÓN DE MEZCLA
+    ====================================================== */
+
+    shuffleChallengeOptions();
+
+
+    /* =====================================================
+       INICIO
+    ====================================================== */
+
+    body.classList.add(
+        "js-ready"
+    );
+
+
+    console.log(
+        "✓ El Empleado Aumentado — Módulo 05 cargado correctamente."
+    );
+
+});
