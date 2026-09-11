@@ -2455,6 +2455,19 @@ select {
     font-size: 10px;
 }
 
+/* =====================================================
+   PÚBLICO OBJETIVO
+===================================================== */
+
+.audience {
+    padding: 0 0 80px;
+    background: var(--bg);
+}
+
+.audience .container {
+    max-width: 1100px;
+}
+
 .audience-text {
     max-width: 900px;
     margin: 0 auto;
