@@ -1,10 +1,47 @@
 "use strict";
 
+/* =========================================================
+   GOOGLE ANALYTICS
+========================================================= */
+
+function trackEvent(eventName, parameters = {}) {
+    if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, parameters);
+    }
+}
+
+function trackEventOnce(eventName, storageKey, parameters = {}) {
+    try {
+        if (sessionStorage.getItem(storageKey) === "true") {
+            return;
+        }
+
+        trackEvent(eventName, parameters);
+        sessionStorage.setItem(storageKey, "true");
+
+    } catch (error) {
+        trackEvent(eventName, parameters);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =========================================================
+    /* =====================================================
+       GOOGLE ANALYTICS — MÓDULO VISTO
+    ====================================================== */
+
+    trackEventOnce(
+        "modulo_visto",
+        "analytics_modulo4_visto",
+        {
+            modulo: "4",
+            nombre_modulo: "Automatizar tareas y procesos"
+        }
+    );
+
+    /* =====================================================
        STORAGE
-    ========================================================= */
+    ====================================================== */
 
     const STORAGE_TASK =
         "empleadoAumentado_modulo4_task";
@@ -18,10 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const STORAGE_PROGRESS =
         "empleadoAumentado_progreso";
 
-
-    /* =========================================================
+    /* =====================================================
        ELEMENTOS
-    ========================================================= */
+    ====================================================== */
 
     const body =
         document.body;
@@ -101,82 +137,52 @@ document.addEventListener("DOMContentLoaded", () => {
             "nextModuleButton"
         );
 
-
-    /* =========================================================
+    /* =====================================================
        ESTADO
-    ========================================================= */
+    ====================================================== */
 
     const moduleState = {
-
         activityCompleted: false,
-
         challengeCompleted: false,
-
         moduleCompleted: false
-
     };
 
-
-    /* =========================================================
+    /* =====================================================
        STORAGE HELPERS
-    ========================================================= */
+    ====================================================== */
 
     function getStorage(key) {
-
         try {
-
-            return localStorage.getItem(
-                key
-            );
-
+            return localStorage.getItem(key);
         } catch (error) {
-
             console.warn(
                 `No fue posible leer ${key}.`,
                 error
             );
-
             return null;
         }
     }
 
-
-    function setStorage(
-        key,
-        value
-    ) {
-
+    function setStorage(key, value) {
         try {
-
             localStorage.setItem(
                 key,
                 value
             );
-
             return true;
-
         } catch (error) {
-
             console.warn(
                 `No fue posible guardar ${key}.`,
                 error
             );
-
             return false;
         }
     }
 
-
     function removeStorage(key) {
-
         try {
-
-            localStorage.removeItem(
-                key
-            );
-
+            localStorage.removeItem(key);
         } catch (error) {
-
             console.warn(
                 `No fue posible eliminar ${key}.`,
                 error
@@ -184,13 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    /* =========================================================
+    /* =====================================================
        NORMALIZAR TEXTO
-    ========================================================= */
+    ====================================================== */
 
     function normalizeText(text) {
-
         return String(text || "")
             .toLowerCase()
             .normalize("NFD")
@@ -209,10 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .trim();
     }
 
-
-    /* =========================================================
+    /* =====================================================
        VALIDAR TEXTO BASURA
-    ========================================================= */
+    ====================================================== */
 
     function detectInvalidText(text) {
 
@@ -220,14 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
             normalizeText(text);
 
         const compact =
-            value.replace(
-                /\s/g,
-                ""
-            );
-
+            value.replace(/\s/g, "");
 
         if (!value) {
-
             return {
                 invalid: true,
                 message:
@@ -235,18 +233,13 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
-        if (
-            value.length < 40
-        ) {
-
+        if (value.length < 40) {
             return {
                 invalid: true,
                 message:
                     "La respuesta es demasiado corta. Explique con mayor detalle la tarea que realiza."
             };
         }
-
 
         const words =
             value
@@ -256,11 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         word.length > 1
                 );
 
-
-        if (
-            words.length < 7
-        ) {
-
+        if (words.length < 7) {
             return {
                 invalid: true,
                 message:
@@ -268,11 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
-        if (
-            /(.)\1{4,}/iu.test(value)
-        ) {
-
+        if (/(.)\1{4,}/iu.test(value)) {
             return {
                 invalid: true,
                 message:
@@ -280,30 +265,21 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const suspiciousPatterns = [
-
             "asdfgh",
             "qwerty",
             "zxcvbn",
             "poiuy",
             "lkjhg",
             "mnbvc"
-
         ];
 
-
-        const suspicious =
+        if (
             suspiciousPatterns.some(
                 pattern =>
-                    value.includes(
-                        pattern
-                    )
-            );
-
-
-        if (suspicious) {
-
+                    value.includes(pattern)
+            )
+        ) {
             return {
                 invalid: true,
                 message:
@@ -311,44 +287,35 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const wordCount = {};
 
+        words.forEach(word => {
+            wordCount[word] =
+                (
+                    wordCount[word] ||
+                    0
+                ) + 1;
+        });
 
-        words.forEach(
-            word => {
-
-                wordCount[word] =
-                    (
-                        wordCount[word] ||
-                        0
-                    ) + 1;
-
-            }
-        );
-
+        const repetitions =
+            Object.values(wordCount);
 
         const highestRepetition =
-            Math.max(
-                ...Object.values(
-                    wordCount
-                )
-            );
-
+            repetitions.length
+                ? Math.max(...repetitions)
+                : 0;
 
         if (
             highestRepetition >= 4 &&
             highestRepetition >=
                 words.length / 2
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta repite demasiado las mismas palabras. Escriba una descripción real de la tarea."
             };
         }
-
 
         const letters =
             (
@@ -357,7 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         const numbers =
             (
                 value.match(
@@ -365,12 +331,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         if (
             numbers > letters &&
             numbers > 5
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -378,17 +342,10 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const uniqueCharacters =
-            new Set(
-                compact
-            ).size;
+            new Set(compact).size;
 
-
-        if (
-            uniqueCharacters < 8
-        ) {
-
+        if (uniqueCharacters < 8) {
             return {
                 invalid: true,
                 message:
@@ -396,30 +353,22 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             invalid: false,
             message: ""
         };
     }
 
-
-    /* =========================================================
+    /* =====================================================
        VALIDAR ACTIVIDAD DE AUTOMATIZACIÓN
-    ========================================================= */
+    ====================================================== */
 
     function validateAutomationTask(text) {
 
         const basicValidation =
-            detectInvalidText(
-                text
-            );
+            detectInvalidText(text);
 
-
-        if (
-            basicValidation.invalid
-        ) {
-
+        if (basicValidation.invalid) {
             return {
                 valid: false,
                 message:
@@ -427,15 +376,10 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const value =
-            normalizeText(
-                text
-            );
-
+            normalizeText(text);
 
         const automationKeywords = [
-
             "automatizar",
             "automatizacion",
             "automatizado",
@@ -455,12 +399,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "sistema",
             "integracion",
             "integrar"
-
         ];
 
-
         const taskKeywords = [
-
             "tarea",
             "trabajo",
             "actividad",
@@ -492,12 +433,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "enviar",
             "consolidar",
             "consolidado"
-
         ];
 
-
         const repetitionKeywords = [
-
             "cada",
             "diario",
             "diaria",
@@ -514,12 +452,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "frecuencia",
             "varias veces",
             "todos los dias"
-
         ];
 
-
         const actionKeywords = [
-
             "recibir",
             "recibo",
             "registrar",
@@ -555,51 +490,33 @@ document.addEventListener("DOMContentLoaded", () => {
             "comparo",
             "validar",
             "valido"
-
         ];
-
 
         const detectedAutomation =
             automationKeywords.filter(
                 keyword =>
-                    value.includes(
-                        keyword
-                    )
+                    value.includes(keyword)
             );
-
 
         const detectedTasks =
             taskKeywords.filter(
                 keyword =>
-                    value.includes(
-                        keyword
-                    )
+                    value.includes(keyword)
             );
-
 
         const detectedRepetition =
             repetitionKeywords.filter(
                 keyword =>
-                    value.includes(
-                        keyword
-                    )
+                    value.includes(keyword)
             );
-
 
         const detectedActions =
             actionKeywords.filter(
                 keyword =>
-                    value.includes(
-                        keyword
-                    )
+                    value.includes(keyword)
             );
 
-
-        if (
-            detectedTasks.length <
-            1
-        ) {
-
+        if (detectedTasks.length < 1) {
             return {
                 valid: false,
                 message:
@@ -607,12 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
-        if (
-            detectedActions.length <
-            1
-        ) {
-
+        if (detectedActions.length < 1) {
             return {
                 valid: false,
                 message:
@@ -620,14 +532,10 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
-            detectedAutomation.length <
-                1 &&
-            detectedRepetition.length <
-                1
+            detectedAutomation.length < 1 &&
+            detectedRepetition.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -635,18 +543,13 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
-        if (
-            value.length < 50
-        ) {
-
+        if (value.length < 50) {
             return {
                 valid: false,
                 message:
                     "Explique qué hace actualmente, qué parte se repite y qué podría automatizarse."
             };
         }
-
 
         return {
             valid: true,
@@ -655,12 +558,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-
-    /* =========================================================
+    /* =====================================================
        FEEDBACK
-       ROJO = INCORRECTO
-       VERDE = CORRECTO
-    ========================================================= */
+    ====================================================== */
 
     function showTaskFeedback(
         message,
@@ -671,27 +571,23 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        taskFeedback.textContent =
+            message;
 
         taskFeedback.className =
             "task-feedback show";
 
-
-        if (
-            type === "error"
-        ) {
+        if (type === "error") {
 
             taskFeedback.classList.add(
                 "error"
             );
 
-
             taskFeedback.style.color =
                 "#dc2626";
 
-
             taskFeedback.style.backgroundColor =
                 "rgba(220, 38, 38, 0.08)";
-
 
             taskFeedback.style.border =
                 "1px solid rgba(220, 38, 38, 0.25)";
@@ -702,31 +598,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 "success"
             );
 
-
             taskFeedback.style.color =
                 "#059669";
-
 
             taskFeedback.style.backgroundColor =
                 "rgba(5, 150, 105, 0.08)";
 
-
             taskFeedback.style.border =
                 "1px solid rgba(5, 150, 105, 0.25)";
         }
-
-
-        taskFeedback.textContent =
-            message;
     }
 
-
-    /* =========================================================
+    /* =====================================================
        VALIDAR ACCESO DESDE MÓDULO 03
-    ========================================================= */
+    ====================================================== */
 
     function moduleThreeIsCompleted() {
-
         return (
             getStorage(
                 "empleadoAumentado_modulo3_completado"
@@ -735,27 +622,17 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     function protectModuleFour() {
 
-        if (
-            moduleThreeIsCompleted()
-        ) {
-
+        if (moduleThreeIsCompleted()) {
             return;
         }
 
-
         const warning =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         warning.innerHTML = `
-
             <div class="module-access-message">
-
                 <strong>
                     🔒 Módulo 04 bloqueado
                 </strong>
@@ -767,48 +644,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="../modulo-3/index.html">
                     Ir al Módulo 03
                 </a>
-
             </div>
-
         `;
-
 
         document.body.prepend(
             warning
         );
 
-
         document.body.classList.add(
             "module-access-blocked"
         );
 
-
         if (automationInput) {
-
             automationInput.disabled =
                 true;
         }
 
-
         if (analyzeTask) {
-
             analyzeTask.disabled =
                 true;
         }
 
-
         challengeOptions.forEach(
             option => {
-
                 option.disabled =
                     true;
-
             }
         );
 
-
         if (nextModuleButton) {
-
             nextModuleButton.setAttribute(
                 "aria-disabled",
                 "true"
@@ -816,10 +680,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    /* =========================================================
+    /* =====================================================
        MODALES
-    ========================================================= */
+    ====================================================== */
 
     const capabilityCards =
         document.querySelectorAll(
@@ -834,7 +697,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let lastFocusedElement =
         null;
 
-
     capabilityCards.forEach(
         card => {
 
@@ -845,53 +707,43 @@ document.addEventListener("DOMContentLoaded", () => {
                     const modalName =
                         card.dataset.modal;
 
-
                     const modal =
                         document.getElementById(
                             `modal-${modalName}`
                         );
 
-
                     if (!modal) {
                         return;
                     }
 
-
                     lastFocusedElement =
                         document.activeElement;
-
 
                     modal.classList.add(
                         "active"
                     );
-
 
                     modal.setAttribute(
                         "aria-hidden",
                         "false"
                     );
 
-
                     document.body.classList.add(
                         "modal-open"
                     );
-
 
                     const closeButton =
                         modal.querySelector(
                             ".modal-close"
                         );
 
-
                     if (closeButton) {
-
                         closeButton.focus();
                     }
                 }
             );
         }
     );
-
 
     modals.forEach(
         modal => {
@@ -901,12 +753,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     ".modal-close"
                 );
 
-
             const overlay =
                 modal.querySelector(
                     ".modal-overlay"
                 );
-
 
             function closeModal() {
 
@@ -914,18 +764,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     "active"
                 );
 
-
                 modal.setAttribute(
                     "aria-hidden",
                     "true"
                 );
 
-
                 const anotherModal =
                     document.querySelector(
                         ".modal.active"
                     );
-
 
                 if (!anotherModal) {
 
@@ -933,34 +780,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         "modal-open"
                     );
 
-
                     if (
                         lastFocusedElement &&
                         typeof lastFocusedElement.focus ===
                             "function"
                     ) {
-
                         lastFocusedElement.focus();
                     }
-
 
                     lastFocusedElement =
                         null;
                 }
             }
 
-
             if (closeButton) {
-
                 closeButton.addEventListener(
                     "click",
                     closeModal
                 );
             }
 
-
             if (overlay) {
-
                 overlay.addEventListener(
                     "click",
                     closeModal
@@ -969,66 +809,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     document.addEventListener(
         "keydown",
         event => {
 
-            if (
-                event.key !==
-                "Escape"
-            ) {
-
+            if (event.key !== "Escape") {
                 return;
             }
-
 
             const openModal =
                 document.querySelector(
                     ".modal.active"
                 );
 
-
             if (!openModal) {
                 return;
             }
 
-
             openModal.classList.remove(
                 "active"
             );
-
 
             openModal.setAttribute(
                 "aria-hidden",
                 "true"
             );
 
-
             document.body.classList.remove(
                 "modal-open"
             );
-
 
             if (
                 lastFocusedElement &&
                 typeof lastFocusedElement.focus ===
                     "function"
             ) {
-
                 lastFocusedElement.focus();
             }
-
 
             lastFocusedElement =
                 null;
         }
     );
 
-
-    /* =========================================================
+    /* =====================================================
        CONTADOR
-    ========================================================= */
+    ====================================================== */
 
     function updateCounter() {
 
@@ -1036,20 +862,16 @@ document.addEventListener("DOMContentLoaded", () => {
             !automationInput ||
             !characterCounter
         ) {
-
             return;
         }
-
 
         const maximum =
             automationInput.maxLength ||
             500;
 
-
         characterCounter.textContent =
             `${automationInput.value.length} / ${maximum}`;
     }
-
 
     if (automationInput) {
 
@@ -1057,15 +879,13 @@ document.addEventListener("DOMContentLoaded", () => {
             "input",
             updateCounter
         );
+
+        updateCounter();
     }
 
-
-    updateCounter();
-
-
-    /* =========================================================
+    /* =====================================================
        ANALIZAR / GUARDAR ACTIVIDAD
-    ========================================================= */
+    ====================================================== */
 
     function analyzeAutomationTask() {
 
@@ -1073,48 +893,34 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const task =
             automationInput.value.trim();
 
-
         const validation =
-            validateAutomationTask(
-                task
-            );
+            validateAutomationTask(task);
 
-
-        if (
-            !validation.valid
-        ) {
+        if (!validation.valid) {
 
             moduleState.activityCompleted =
                 false;
 
-
             removeStorage(
                 STORAGE_TASK
             );
-
 
             showTaskFeedback(
                 `🔴 ${validation.message}`,
                 "error"
             );
 
-
             checkModuleCompletion();
 
-
             automationInput.focus();
-
 
             return;
         }
 
-
         const data = {
-
             task:
                 task,
 
@@ -1123,18 +929,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createdAt:
                 new Date().toISOString()
-
         };
-
 
         const saved =
             setStorage(
                 STORAGE_TASK,
-                JSON.stringify(
-                    data
-                )
+                JSON.stringify(data)
             );
-
 
         if (!saved) {
 
@@ -1143,23 +944,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             return;
         }
 
+        const wasAlreadyCompleted =
+            moduleState.activityCompleted;
 
         moduleState.activityCompleted =
             true;
 
+        if (!wasAlreadyCompleted) {
+
+            trackEventOnce(
+                "actividad_completada",
+                "analytics_modulo4_actividad",
+                {
+                    modulo: "4",
+                    actividad: "analisis_de_automatizacion"
+                }
+            );
+        }
 
         const normalized =
-            normalizeText(
-                task
-            );
-
+            normalizeText(task);
 
         const indicators = [];
-
 
         if (
             normalized.includes("cada") ||
@@ -1176,7 +985,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         if (
             normalized.includes("excel") ||
             normalized.includes("archivo") ||
@@ -1190,7 +998,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "La tarea trabaja con información que puede estructurarse."
             );
         }
-
 
         if (
             normalized.includes("correo") ||
@@ -1206,14 +1013,10 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         let message =
             "<strong>🟢 Actividad válida.</strong> ";
 
-
-        if (
-            indicators.length > 0
-        ) {
+        if (indicators.length > 0) {
 
             message +=
                 indicators.join(" ");
@@ -1224,52 +1027,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 "La tarea puede descomponerse en entradas, reglas, acciones y resultado.";
         }
 
-
         message +=
             " Antes de seleccionar una herramienta, identifique qué parte se repite, qué reglas aplica y cómo verificar el resultado.";
-
 
         if (taskFeedback) {
 
             taskFeedback.innerHTML =
                 message;
 
-
             taskFeedback.className =
                 "task-feedback show success";
-
 
             taskFeedback.style.color =
                 "#059669";
 
-
             taskFeedback.style.backgroundColor =
                 "rgba(5, 150, 105, 0.08)";
-
 
             taskFeedback.style.border =
                 "1px solid rgba(5, 150, 105, 0.25)";
         }
-
 
         if (analyzeTask) {
 
             const originalHTML =
                 analyzeTask.innerHTML;
 
-
             analyzeTask.innerHTML =
                 "Actividad guardada <span>✓</span>";
-
 
             analyzeTask.classList.add(
                 "saved"
             );
 
-
             analyzeTask.disabled =
                 true;
-
 
             setTimeout(
                 () => {
@@ -1277,11 +1069,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     analyzeTask.innerHTML =
                         originalHTML;
 
-
                     analyzeTask.classList.remove(
                         "saved"
                     );
-
 
                     analyzeTask.disabled =
                         false;
@@ -1291,10 +1081,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         checkModuleCompletion();
     }
-
 
     if (analyzeTask) {
 
@@ -1304,10 +1092,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        CARGAR ACTIVIDAD GUARDADA
-    ========================================================= */
+    ====================================================== */
 
     function loadSavedTask() {
 
@@ -1315,25 +1102,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const saved =
             getStorage(
                 STORAGE_TASK
             );
 
-
         if (!saved) {
             return;
         }
 
-
         try {
 
             const data =
-                JSON.parse(
-                    saved
-                );
-
+                JSON.parse(saved);
 
             if (
                 data &&
@@ -1346,18 +1127,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         data.task
                     );
 
-
-                if (
-                    validation.valid
-                ) {
+                if (validation.valid) {
 
                     automationInput.value =
                         data.task;
 
-
                     moduleState.activityCompleted =
                         true;
-
 
                     updateCounter();
 
@@ -1376,20 +1152,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 error
             );
 
-
             removeStorage(
                 STORAGE_TASK
             );
         }
     }
 
-
     loadSavedTask();
 
-
-    /* =========================================================
+    /* =====================================================
        LIMPIAR FEEDBACK AL EDITAR
-    ========================================================= */
+    ====================================================== */
 
     if (automationInput) {
 
@@ -1418,21 +1191,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         "";
                 }
 
-
                 moduleState.activityCompleted =
                     false;
-
 
                 checkModuleCompletion();
             }
         );
     }
 
-
-    /* =========================================================
-       MEZCLAR OPCIONES
-       LA CORRECTA PUEDE QUEDAR EN A, B, C O D
-    ========================================================= */
+    /* =====================================================
+       MEZCLAR OPCIONES DEL RETO
+    ====================================================== */
 
     function shuffleChallengeOptions() {
 
@@ -1440,7 +1209,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector(
                 ".challenge-options"
             );
-
 
         if (!container) {
 
@@ -1451,7 +1219,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         let options =
             Array.from(
                 container.querySelectorAll(
@@ -1459,15 +1226,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         if (options.length <= 1) {
             return;
         }
 
-
-        /* ---------------------------------------------
-           MEZCLA ALEATORIA
-        --------------------------------------------- */
+        /* Fisher-Yates */
 
         for (
             let i =
@@ -1482,7 +1245,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     (i + 1)
                 );
 
-
             [
                 options[i],
                 options[j]
@@ -1493,25 +1255,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ];
         }
 
-
-        /* ---------------------------------------------
-           REINSERTAR EN EL NUEVO ORDEN
-        --------------------------------------------- */
+        /* Reinserta en nuevo orden */
 
         options.forEach(
             option => {
-
                 container.appendChild(
                     option
                 );
-
             }
         );
 
-
-        /* ---------------------------------------------
-           ACTUALIZAR LETRAS A B C D
-        --------------------------------------------- */
+        /* Actualizar letras */
 
         const letters = [
             "A",
@@ -1519,7 +1273,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "C",
             "D"
         ];
-
 
         options.forEach(
             (
@@ -1530,19 +1283,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const newLetter =
                     letters[index];
 
-
-                /* -------------------------------------
-                   Buscar elemento que representa
-                   la letra de la opción
-                ------------------------------------- */
-
                 const letterElement =
                     option.querySelector(
                         ".option-letter, " +
                         ".challenge-letter, " +
                         ".answer-letter"
                     );
-
 
                 if (letterElement) {
 
@@ -1557,17 +1303,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -------------------------------------
-                   Buscar cualquier elemento
-                   con data-letter
-                ------------------------------------- */
-
                 const dataLetterElement =
                     option.querySelector(
                         "[data-letter]"
                     );
-
 
                 if (dataLetterElement) {
 
@@ -1582,21 +1321,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -------------------------------------
-                   Si el primer hijo es A/B/C/D
-                ------------------------------------- */
-
                 const firstChild =
                     option.firstElementChild;
-
 
                 if (firstChild) {
 
                     const firstText =
                         firstChild.textContent
                             .trim();
-
 
                     if (
                         /^[A-D]$/i.test(
@@ -1609,7 +1341,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         return;
                     }
-
 
                     if (
                         /^[A-D][.)\-:]$/i.test(
@@ -1624,53 +1355,37 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-
-                /* -------------------------------------
-                   Si la letra está directamente
-                   dentro del HTML
-                ------------------------------------- */
-
                 const html =
                     option.innerHTML;
 
-
                 if (
-                    /^[\s]*[A-D][.)\-:]\s*/i.test(
+                    /^\s*[A-D][.)\-:]\s*/i.test(
                         html
                     )
                 ) {
 
                     option.innerHTML =
                         html.replace(
-                            /^[\s]*[A-D][.)\-:]\s*/i,
+                            /^\s*[A-D][.)\-:]\s*/i,
                             `${newLetter}. `
                         );
 
                     return;
                 }
 
-
-                /* -------------------------------------
-                   Guardar igualmente la posición
-                ------------------------------------- */
-
                 option.dataset.optionLetter =
                     newLetter;
-
             }
         );
-
 
         challengeOptions =
             container.querySelectorAll(
                 ".challenge-option"
             );
 
-
         console.log(
             "✓ Opciones del Módulo 04 mezcladas."
         );
-
 
         options.forEach(
             (
@@ -1682,15 +1397,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     `${letters[index]} → correcta:`,
                     option.dataset.correct === "true"
                 );
-
             }
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        RETO
-    ========================================================= */
+    ====================================================== */
 
     function resetChallengeOptions() {
 
@@ -1701,11 +1414,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     "correct",
                     "incorrect"
                 );
-
             }
         );
     }
-
 
     function answerChallenge(option) {
 
@@ -1713,14 +1424,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         resetChallengeOptions();
-
 
         const isCorrect =
             option.dataset.correct ===
             "true";
-
 
         if (isCorrect) {
 
@@ -1728,30 +1436,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 "correct"
             );
 
+            const wasAlreadyCompleted =
+                moduleState.challengeCompleted;
 
             moduleState.challengeCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_CHALLENGE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "reto_aprobado",
+                    "analytics_modulo4_reto",
+                    {
+                        modulo: "4"
+                    }
+                );
+            }
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show correct";
 
-
                 challengeFeedback.innerHTML =
                     "<strong>✓ Correcto.</strong> Antes de automatizar, primero debe documentar y comprender el flujo actual: entradas, reglas, pasos, excepciones y resultado esperado.";
             }
 
-
             checkModuleCompletion();
-
 
         } else {
 
@@ -1759,31 +1475,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 "incorrect"
             );
 
-
             moduleState.challengeCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_CHALLENGE
             );
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show incorrect";
 
-
                 challengeFeedback.innerHTML =
                     "<strong>✕ No es el primer paso.</strong> Antes de elegir una herramienta debe comprender y estructurar el proceso que desea automatizar.";
             }
 
-
             checkModuleCompletion();
         }
     }
-
 
     challengeOptions.forEach(
         option => {
@@ -1795,16 +1505,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     answerChallenge(
                         option
                     );
-
                 }
             );
         }
     );
 
-
-    /* =========================================================
+    /* =====================================================
        CARGAR ESTADO DEL RETO
-    ========================================================= */
+    ====================================================== */
 
     function loadChallengeState() {
 
@@ -1812,7 +1520,6 @@ document.addEventListener("DOMContentLoaded", () => {
             getStorage(
                 STORAGE_CHALLENGE
             );
-
 
         if (
             savedChallenge ===
@@ -1822,9 +1529,7 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.challengeCompleted =
                 true;
 
-
             resetChallengeOptions();
-
 
             if (challengeFeedback) {
 
@@ -1840,43 +1545,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     loadChallengeState();
 
-
-    /* =========================================================
+    /* =====================================================
        PROGRESO
-    ========================================================= */
+    ====================================================== */
 
     function calculateProgress() {
 
-        let completed =
-            0;
-
+        let completed = 0;
 
         if (
             moduleState.activityCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.challengeCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.moduleCompleted
         ) {
-
             completed++;
         }
-
 
         return Math.round(
             (
@@ -1886,10 +1581,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        ACTUALIZAR REQUISITOS
-    ========================================================= */
+    ====================================================== */
 
     function updateRequirement(
         element,
@@ -1902,18 +1596,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const number =
             element.querySelector(
                 ":scope > span"
             );
 
-
         const small =
             element.querySelector(
                 "small"
             );
-
 
         element.classList.remove(
             "completed",
@@ -1921,23 +1612,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "locked"
         );
 
-
         if (completed) {
 
             element.classList.add(
                 "completed"
             );
 
-
             if (number) {
-
                 number.textContent =
                     "✓";
             }
 
-
             if (small) {
-
                 small.textContent =
                     completedText;
             }
@@ -1948,31 +1634,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 "pending"
             );
 
-
             if (small) {
-
                 small.textContent =
                     pendingText;
             }
         }
     }
 
-
-    /* =========================================================
+    /* =====================================================
        ACTUALIZAR INTERFAZ
-    ========================================================= */
+    ====================================================== */
 
     function updateModuleUI() {
 
         const progress =
             calculateProgress();
 
-
         if (progressBar) {
 
             progressBar.style.width =
                 `${progress}%`;
-
 
             progressBar.style.setProperty(
                 "--progress",
@@ -1980,13 +1661,11 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         if (progressPercentage) {
 
             progressPercentage.textContent =
                 `${progress}%`;
         }
-
 
         updateRequirement(
             requirementActivity,
@@ -1995,14 +1674,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "Pendiente"
         );
 
-
         updateRequirement(
             requirementChallenge,
             moduleState.challengeCompleted,
             "Aprobado",
             "Pendiente"
         );
-
 
         if (requirementModule) {
 
@@ -2011,19 +1688,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     ":scope > span"
                 );
 
-
             const small =
                 requirementModule.querySelector(
                     "small"
                 );
-
 
             requirementModule.classList.remove(
                 "completed",
                 "pending",
                 "locked"
             );
-
 
             if (
                 moduleState.moduleCompleted
@@ -2033,16 +1707,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "completed"
                 );
 
-
                 if (number) {
-
                     number.textContent =
                         "✓";
                 }
 
-
                 if (small) {
-
                     small.textContent =
                         "Aprobado";
                 }
@@ -2053,52 +1723,40 @@ document.addEventListener("DOMContentLoaded", () => {
                     "locked"
                 );
 
-
                 if (number) {
-
                     number.textContent =
                         "04";
                 }
 
-
                 if (small) {
-
                     small.textContent =
                         "Bloqueado";
                 }
             }
         }
 
-
         if (
             moduleState.moduleCompleted
         ) {
-
             unlockNextModule();
-
         } else {
-
             lockNextModule();
         }
-
 
         saveCourseProgress(
             progress
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        GUARDAR PROGRESO GENERAL
-    ========================================================= */
+    ====================================================== */
 
     function saveCourseProgress(
         moduleProgress
     ) {
 
-        let courseProgress =
-            {};
-
+        let courseProgress = {};
 
         try {
 
@@ -2106,7 +1764,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 getStorage(
                     STORAGE_PROGRESS
                 );
-
 
             if (existing) {
 
@@ -2118,10 +1775,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
 
-            courseProgress =
-                {};
+            courseProgress = {};
         }
-
 
         courseProgress.modulo4 = {
 
@@ -2136,9 +1791,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             progreso:
                 moduleProgress
-
         };
-
 
         setStorage(
             STORAGE_PROGRESS,
@@ -2148,10 +1801,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        COMPROBAR APROBACIÓN
-    ========================================================= */
+    ====================================================== */
 
     function checkModuleCompletion() {
 
@@ -2159,37 +1811,48 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted &&
             moduleState.challengeCompleted;
 
-
         if (completed) {
+
+            const wasAlreadyCompleted =
+                moduleState.moduleCompleted;
 
             moduleState.moduleCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_MODULE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "modulo_completado",
+                    "analytics_modulo4_completado",
+                    {
+                        modulo: "4",
+                        nombre_modulo:
+                            "Automatizar tareas y procesos"
+                    }
+                );
+            }
+
         } else {
 
             moduleState.moduleCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_MODULE
             );
         }
 
-
         updateModuleUI();
     }
 
-
-    /* =========================================================
+    /* =====================================================
        BLOQUEAR MÓDULO 05
-    ========================================================= */
+    ====================================================== */
 
     function lockNextModule() {
 
@@ -2197,23 +1860,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "true"
         );
 
-
         nextModuleButton.classList.remove(
             "unlocked"
         );
-
 
         nextModuleButton.innerHTML = `
             Módulo 05 bloqueado
             <span>🔒</span>
         `;
-
 
         if (moduleComplete) {
 
@@ -2221,19 +1880,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.remove(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
             completionLabel.textContent =
                 "MÓDULO 04 BLOQUEADO";
         }
-
 
         if (completionMessage) {
 
@@ -2242,10 +1898,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    /* =========================================================
+    /* =====================================================
        DESBLOQUEAR MÓDULO 05
-    ========================================================= */
+    ====================================================== */
 
     function unlockNextModule() {
 
@@ -2253,23 +1908,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "false"
         );
 
-
         nextModuleButton.classList.add(
             "unlocked"
         );
-
 
         nextModuleButton.innerHTML = `
             Ir al Módulo 05
             <span>→</span>
         `;
-
 
         if (moduleComplete) {
 
@@ -2277,19 +1928,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.add(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
             completionLabel.textContent =
                 "MÓDULO 04 COMPLETADO";
         }
-
 
         if (completionMessage) {
 
@@ -2298,10 +1946,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    /* =========================================================
+    /* =====================================================
        PROTEGER BOTÓN DEL MÓDULO 05
-    ========================================================= */
+    ====================================================== */
 
     if (nextModuleButton) {
 
@@ -2315,19 +1962,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     event.preventDefault();
 
-
-                    if (
-                        completionMessage
-                    ) {
+                    if (completionMessage) {
 
                         completionMessage.textContent =
                             "Primero debe completar la actividad y aprobar el reto final.";
                     }
 
-
                     return;
                 }
-
 
                 nextModuleButton.setAttribute(
                     "aria-disabled",
@@ -2337,10 +1979,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        ANIMACIONES
-    ========================================================= */
+    ====================================================== */
 
     const animatedElements =
         document.querySelectorAll(
@@ -2350,7 +1991,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".transformation-column, " +
             ".result-list > div"
         );
-
 
     if (
         "IntersectionObserver" in window
@@ -2369,29 +2009,24 @@ document.addEventListener("DOMContentLoaded", () => {
                             if (
                                 !entry.isIntersecting
                             ) {
-
                                 return;
                             }
-
 
                             entry.target.classList.add(
                                 "is-visible"
                             );
-
 
                             observerInstance.unobserve(
                                 entry.target
                             );
                         }
                     );
-
                 },
                 {
                     threshold:
                         0.12
                 }
             );
-
 
         animatedElements.forEach(
             (
@@ -2403,7 +2038,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "--animation-delay",
                     `${index * 0.06}s`
                 );
-
 
                 observer.observe(
                     element
@@ -2423,10 +2057,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
-    /* =========================================================
+    /* =====================================================
        ANCLAS SUAVES
-    ========================================================= */
+    ====================================================== */
 
     document
         .querySelectorAll(
@@ -2444,42 +2077,33 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "href"
                             );
 
-
                         if (
                             !selector ||
                             selector === "#"
                         ) {
-
                             return;
                         }
-
 
                         const target =
                             document.querySelector(
                                 selector
                             );
 
-
                         if (!target) {
-
                             return;
                         }
 
-
                         event.preventDefault();
-
 
                         const header =
                             document.querySelector(
                                 ".module-header"
                             );
 
-
                         const headerHeight =
                             header
                                 ? header.offsetHeight
                                 : 0;
-
 
                         const targetPosition =
                             target
@@ -2489,31 +2113,25 @@ document.addEventListener("DOMContentLoaded", () => {
                             headerHeight -
                             20;
 
-
                         window.scrollTo({
-
                             top:
                                 targetPosition,
-
                             behavior:
                                 "smooth"
-
                         });
                     }
                 );
             }
         );
 
-
-    /* =========================================================
+    /* =====================================================
        ESTADO INICIAL
-    ========================================================= */
+    ====================================================== */
 
     const savedModule =
         getStorage(
             STORAGE_MODULE
         );
-
 
     if (
         savedModule ===
@@ -2524,37 +2142,38 @@ document.addEventListener("DOMContentLoaded", () => {
             true;
     }
 
-
     checkModuleCompletion();
 
-
-    /* =========================================================
+    /* =====================================================
        PROTEGER ACCESO AL MÓDULO 04
-    ========================================================= */
+    ====================================================== */
 
     protectModuleFour();
 
-
-    /* =========================================================
+    /* =====================================================
        MEZCLAR OPCIONES DEL RETO
-
-       ESTA ES LA ÚNICA LLAMADA
-    ========================================================= */
+       ÚNICA LLAMADA
+    ====================================================== */
 
     shuffleChallengeOptions();
 
-
-    /* =========================================================
+    /* =====================================================
        INICIO
-    ========================================================= */
+    ====================================================== */
 
-    body.classList.add(
-        "js-ready"
-    );
+    if (body) {
 
+        body.classList.add(
+            "js-ready"
+        );
+    }
+
+    /* =====================================================
+       LOG
+    ====================================================== */
 
     console.log(
-        "✓ El Empleado Aumentado — Módulo 04 cargado correctamente."
+        "✓ El Empleado Aumentado — Módulo 04 cargado correctamente con Google Analytics."
     );
 
 });

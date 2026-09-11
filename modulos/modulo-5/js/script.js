@@ -2,12 +2,52 @@
    EL EMPLEADO AUMENTADO
    MÓDULO 05 — JAVASCRIPT COMPLETO
    VALIDACIÓN REAL + FEEDBACK + RETO ALEATORIO
-   CERTIFICACIÓN
+   CERTIFICACIÓN + GOOGLE ANALYTICS
 ========================================================= */
 
 "use strict";
 
+/* =========================================================
+   GOOGLE ANALYTICS
+========================================================= */
+
+function trackEvent(eventName, parameters = {}) {
+    if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, parameters);
+    }
+}
+
+function trackEventOnce(eventName, storageKey, parameters = {}) {
+    try {
+        if (sessionStorage.getItem(storageKey) === "true") {
+            return;
+        }
+
+        trackEvent(eventName, parameters);
+
+        sessionStorage.setItem(storageKey, "true");
+
+    } catch (error) {
+        trackEvent(eventName, parameters);
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       GOOGLE ANALYTICS — MÓDULO VISTO
+    ====================================================== */
+
+    trackEventOnce(
+        "modulo_visto",
+        "analytics_modulo5_visto",
+        {
+            modulo: "5",
+            nombre_modulo: "Integrar soluciones"
+        }
+    );
+
 
     /* =====================================================
        STORAGE
@@ -844,7 +884,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "true"
             );
 
-
             certificateButton.disabled =
                 true;
         }
@@ -1105,6 +1144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(
             "✓ Opciones mezcladas correctamente."
         );
+
 
         options.forEach(
             (
@@ -1453,8 +1493,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        /* =================================================
+           GOOGLE ANALYTICS — ACTIVIDAD COMPLETADA
+        ================================================== */
+
+        const wasAlreadyCompleted =
+            moduleState.activityCompleted;
+
         moduleState.activityCompleted =
             true;
+
+        if (!wasAlreadyCompleted) {
+
+            trackEventOnce(
+                "actividad_completada",
+                "analytics_modulo5_actividad",
+                {
+                    modulo: "5",
+                    actividad:
+                        "integracion_de_soluciones"
+                }
+            );
+        }
 
 
         const normalized =
@@ -1783,6 +1843,13 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
+            /* =================================================
+               GOOGLE ANALYTICS — RETO APROBADO
+            ================================================== */
+
+            const wasAlreadyCompleted =
+                moduleState.challengeCompleted;
+
             moduleState.challengeCompleted =
                 true;
 
@@ -1791,6 +1858,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_CHALLENGE,
                 "completado"
             );
+
+
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "reto_aprobado",
+                    "analytics_modulo5_reto",
+                    {
+                        modulo: "5"
+                    }
+                );
+            }
 
 
             if (challengeFeedback) {
@@ -2162,7 +2241,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Aprobado";
                 }
 
-
             } else {
 
                 requirementModule.classList.add(
@@ -2217,6 +2295,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (completed) {
 
+            const wasAlreadyCompleted =
+                moduleState.moduleCompleted;
+
             moduleState.moduleCompleted =
                 true;
 
@@ -2226,6 +2307,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 "completado"
             );
 
+
+            /* =================================================
+               GOOGLE ANALYTICS — MÓDULO COMPLETADO
+            ================================================== */
+
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "modulo_completado",
+                    "analytics_modulo5_completado",
+                    {
+                        modulo: "5",
+                        nombre_modulo:
+                            "Integrar soluciones"
+                    }
+                );
+            }
 
         } else {
 

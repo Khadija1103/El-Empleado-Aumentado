@@ -2,11 +2,49 @@
    EL EMPLEADO AUMENTADO
    MÓDULO 01 — JAVASCRIPT COMPLETO
    VALIDACIÓN REAL + FEEDBACK + RETO ALEATORIO
+   + GOOGLE ANALYTICS
 ========================================================= */
 
 "use strict";
 
+/* =========================================================
+   GOOGLE ANALYTICS
+========================================================= */
+
+function trackEvent(eventName, parameters = {}) {
+    if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, parameters);
+    }
+}
+
+function trackEventOnce(eventName, storageKey, parameters = {}) {
+    try {
+        if (sessionStorage.getItem(storageKey) === "true") {
+            return;
+        }
+
+        trackEvent(eventName, parameters);
+        sessionStorage.setItem(storageKey, "true");
+
+    } catch (error) {
+        trackEvent(eventName, parameters);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       GOOGLE ANALYTICS — MÓDULO VISTO
+    ====================================================== */
+
+    trackEventOnce(
+        "modulo_visto",
+        "analytics_modulo1_visto",
+        {
+            modulo: "1",
+            nombre_modulo: "Comprender el trabajo"
+        }
+    );
 
     /* =====================================================
        ELEMENTOS PRINCIPALES
@@ -95,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "requirementModule"
         );
 
-
     /* =====================================================
        ALMACENAMIENTO
     ====================================================== */
@@ -112,39 +149,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const STORAGE_PROGRESS =
         "empleadoAumentado_progreso";
 
-
     /* =====================================================
        ESTADO DEL MÓDULO
     ====================================================== */
 
     const moduleState = {
-
-        activityCompleted:
-            false,
-
-        challengeCompleted:
-            false,
-
-        moduleCompleted:
-            false
-
+        activityCompleted: false,
+        challengeCompleted: false,
+        moduleCompleted: false
     };
-
 
     /* =====================================================
        LOCALSTORAGE
     ====================================================== */
 
     function getStorage(key) {
-
         try {
-
-            return localStorage.getItem(
-                key
-            );
-
+            return localStorage.getItem(key);
         } catch (error) {
-
             console.warn(
                 `No fue posible leer ${key}.`,
                 error
@@ -154,14 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    function setStorage(
-        key,
-        value
-    ) {
-
+    function setStorage(key, value) {
         try {
-
             localStorage.setItem(
                 key,
                 value
@@ -170,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return true;
 
         } catch (error) {
-
             console.warn(
                 `No fue posible guardar ${key}.`,
                 error
@@ -180,17 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function removeStorage(key) {
-
         try {
-
             localStorage.removeItem(
                 key
             );
 
         } catch (error) {
-
             console.warn(
                 `No fue posible eliminar ${key}.`,
                 error
@@ -198,13 +209,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     /* =====================================================
        NORMALIZAR TEXTO
     ====================================================== */
 
     function normalizeText(text) {
-
         return String(text || "")
             .toLowerCase()
             .normalize("NFD")
@@ -223,7 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .trim();
     }
 
-
     /* =====================================================
        DETECTAR TEXTO REPETITIVO / BASURA
     ====================================================== */
@@ -239,11 +247,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 ""
             );
 
-
         /* Texto vacío */
 
         if (!value) {
-
             return {
                 invalid: true,
                 message:
@@ -251,20 +257,15 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         /* Muy corto */
 
-        if (
-            value.length < 40
-        ) {
-
+        if (value.length < 40) {
             return {
                 invalid: true,
                 message:
                     "La descripción es demasiado corta. Explique con mayor detalle el proceso o actividad."
             };
         }
-
 
         /* Menos de 7 palabras */
 
@@ -276,18 +277,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         word.length > 1
                 );
 
-
-        if (
-            words.length < 7
-        ) {
-
+        if (words.length < 7) {
             return {
                 invalid: true,
                 message:
                     "Explique el proceso con mayor detalle. Escriba al menos siete palabras."
             };
         }
-
 
         /* Caracteres repetidos */
 
@@ -296,7 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 value
             )
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -304,20 +299,16 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         /* Secuencias de teclado */
 
         const suspiciousPatterns = [
-
             "asdfgh",
             "qwerty",
             "zxcvbn",
             "poiuy",
             "lkjhg",
             "mnbvc"
-
         ];
-
 
         const suspicious =
             suspiciousPatterns.some(
@@ -327,9 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         if (suspicious) {
-
             return {
                 invalid: true,
                 message:
@@ -337,46 +326,41 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         /* Una misma palabra repetida */
 
         const wordCount = {};
 
-
         words.forEach(
             word => {
-
                 wordCount[word] =
                     (
                         wordCount[word] ||
                         0
                     ) + 1;
-
             }
         );
 
-
-        const highestRepetition =
-            Math.max(
-                ...Object.values(
-                    wordCount
-                )
+        const repetitions =
+            Object.values(
+                wordCount
             );
 
+        const highestRepetition =
+            repetitions.length
+                ? Math.max(...repetitions)
+                : 0;
 
         if (
             highestRepetition >= 4 &&
             highestRepetition >=
                 words.length / 2
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta repite demasiado las mismas palabras. Escriba una descripción real del proceso."
             };
         }
-
 
         /* Exceso de números */
 
@@ -387,7 +371,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         const numbers =
             (
                 value.match(
@@ -395,19 +378,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         if (
             numbers > letters &&
             numbers > 5
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta contiene demasiados números y no parece una descripción del proceso."
             };
         }
-
 
         /* Poca variedad */
 
@@ -416,18 +396,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 compact
             ).size;
 
-
         if (
             uniqueCharacters < 8
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta no contiene suficiente variedad de contenido."
             };
         }
-
 
         /* Demasiados números */
 
@@ -438,11 +415,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 compact.length
             );
 
-
         if (
             digitRatio > 0.6
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -450,13 +425,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             invalid: false,
             message: ""
         };
     }
-
 
     /* =====================================================
        VALIDACIÓN REAL DEL PROCESO
@@ -469,17 +442,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 text
             );
 
-
         const basicValidation =
             isClearlyInvalidText(
                 text
             );
 
-
         if (
             basicValidation.invalid
         ) {
-
             return {
                 valid: false,
                 message:
@@ -487,9 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const processKeywords = [
-
             "proceso",
             "actividad",
             "tarea",
@@ -521,9 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "respuesta",
             "control",
             "gestion"
-
         ];
-
 
         const detectedKeywords =
             processKeywords.filter(
@@ -533,11 +499,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         if (
             detectedKeywords.length < 2
         ) {
-
             return {
                 valid: false,
                 message:
@@ -545,9 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const actionKeywords = [
-
             "hacer",
             "realizar",
             "recibir",
@@ -571,9 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "procesar",
             "coordinar",
             "validar"
-
         ];
-
 
         const hasAction =
             actionKeywords.some(
@@ -583,9 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         if (!hasAction) {
-
             return {
                 valid: false,
                 message:
@@ -593,14 +551,12 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             valid: true,
             message:
                 "La descripción del proceso es válida."
         };
     }
-
 
     /* =====================================================
        FEEDBACK
@@ -617,14 +573,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         processFeedback.textContent =
             message;
 
-
         processFeedback.className =
             "process-feedback show";
-
 
         if (
             type === "error"
@@ -634,14 +587,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             processFeedback.style.color =
                 "#dc2626";
 
-
             processFeedback.style.backgroundColor =
                 "rgba(220, 38, 38, 0.08)";
-
 
             processFeedback.style.border =
                 "1px solid rgba(220, 38, 38, 0.25)";
@@ -652,20 +602,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "success"
             );
 
-
             processFeedback.style.color =
                 "#059669";
 
-
             processFeedback.style.backgroundColor =
                 "rgba(5, 150, 105, 0.08)";
-
 
             processFeedback.style.border =
                 "1px solid rgba(5, 150, 105, 0.25)";
         }
     }
-
 
     /* =====================================================
        MEZCLAR OPCIONES DEL RETO
@@ -679,16 +625,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".challenge-options"
             );
 
-
         if (!container) {
-
             console.warn(
                 "No se encontró .challenge-options"
             );
 
             return;
         }
-
 
         let options =
             Array.from(
@@ -697,18 +640,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         if (
             options.length <= 1
         ) {
-
             return;
         }
 
-
-        /* =================================================
-           FISHER-YATES
-        ================================================== */
+        /* Fisher-Yates */
 
         for (
             let i =
@@ -723,7 +661,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     (i + 1)
                 );
 
-
             [
                 options[i],
                 options[j]
@@ -734,25 +671,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ];
         }
 
-
-        /* =================================================
-           REINSERTAR EN EL NUEVO ORDEN
-        ================================================== */
+        /* Reinserta las opciones */
 
         options.forEach(
             option => {
-
                 container.appendChild(
                     option
                 );
-
             }
         );
 
-
-        /* =================================================
-           ACTUALIZAR LETRAS A B C D
-        ================================================== */
+        /* Actualizar letras A B C D */
 
         const letters = [
             "A",
@@ -760,7 +689,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "C",
             "D"
         ];
-
 
         options.forEach(
             (
@@ -771,10 +699,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const newLetter =
                     letters[index];
 
-
-                /* -----------------------------------------
-                   CLASES PARA LA LETRA
-                ----------------------------------------- */
+                /* Clases para la letra */
 
                 const letterElement =
                     option.querySelector(
@@ -782,7 +707,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         ".challenge-letter, " +
                         ".answer-letter"
                     );
-
 
                 if (letterElement) {
 
@@ -797,16 +721,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   ELEMENTO CON DATA-LETTER
-                ----------------------------------------- */
+                /* Elemento con data-letter */
 
                 const dataLetterElement =
                     option.querySelector(
                         "[data-letter]"
                     );
-
 
                 if (dataLetterElement) {
 
@@ -821,21 +741,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   PRIMER HIJO = LETRA
-                ----------------------------------------- */
+                /* Primer hijo = letra */
 
                 const firstChild =
                     option.firstElementChild;
-
 
                 if (firstChild) {
 
                     const firstText =
                         firstChild.textContent
                             .trim();
-
 
                     if (
                         /^[A-D]$/i.test(
@@ -848,7 +763,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         return;
                     }
-
 
                     if (
                         /^[A-D][.)\-:]$/i.test(
@@ -863,55 +777,41 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-
-                /* -----------------------------------------
-                   LETRA DIRECTAMENTE EN EL HTML
-                ----------------------------------------- */
+                /* Letra directamente en HTML */
 
                 const html =
                     option.innerHTML;
 
-
                 if (
-                    /^[\s]*[A-D][.)\-:]\s*/i.test(
+                    /^\s*[A-D][.)\-:]\s*/i.test(
                         html
                     )
                 ) {
 
                     option.innerHTML =
                         html.replace(
-                            /^[\s]*[A-D][.)\-:]\s*/i,
+                            /^\s*[A-D][.)\-:]\s*/i,
                             `${newLetter}. `
                         );
 
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   RESPALDO
-                ----------------------------------------- */
+                /* Respaldo */
 
                 option.dataset.optionLetter =
                     newLetter;
             }
         );
 
-
-        /* =================================================
-           ACTUALIZAR REFERENCIA
-        ================================================== */
-
         challengeOptions =
             container.querySelectorAll(
                 ".challenge-option"
             );
 
-
         console.log(
             "✓ Opciones del Módulo 01 mezcladas correctamente."
         );
-
 
         options.forEach(
             (
@@ -923,11 +823,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     `${letters[index]} → correcta:`,
                     option.dataset.correct === "true"
                 );
-
             }
         );
     }
-
 
     /* =====================================================
        CARGAR ESTADO DEL MÓDULO
@@ -950,7 +848,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_MODULE
             );
 
-
         if (
             savedProcess &&
             validateProcessContent(
@@ -967,17 +864,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 false;
         }
 
-
         moduleState.challengeCompleted =
             savedChallenge ===
             "completado";
-
 
         moduleState.moduleCompleted =
             savedModule ===
             "completado";
     }
-
 
     /* =====================================================
        GUARDAR PROGRESO GENERAL
@@ -985,9 +879,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function saveCourseProgress() {
 
-        let progress =
-            {};
-
+        let progress = {};
 
         try {
 
@@ -995,7 +887,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.getItem(
                     STORAGE_PROGRESS
                 );
-
 
             if (stored) {
 
@@ -1013,7 +904,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         progress.modulo1 = {
 
             actividad:
@@ -1024,9 +914,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             completado:
                 moduleState.moduleCompleted
-
         };
-
 
         setStorage(
             STORAGE_PROGRESS,
@@ -1036,40 +924,31 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     /* =====================================================
        CALCULAR PROGRESO
     ====================================================== */
 
     function calculateModuleProgress() {
 
-        let completed =
-            0;
-
+        let completed = 0;
 
         if (
             moduleState.activityCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.challengeCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.moduleCompleted
         ) {
-
             completed++;
         }
-
 
         return Math.round(
             (
@@ -1078,7 +957,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ) * 100
         );
     }
-
 
     /* =====================================================
        ACTUALIZAR REQUISITOS
@@ -1095,18 +973,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const number =
             element.querySelector(
                 ":scope > span"
             );
 
-
         const small =
             element.querySelector(
                 "small"
             );
-
 
         element.classList.remove(
             "completed",
@@ -1114,23 +989,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "locked"
         );
 
-
         if (completed) {
 
             element.classList.add(
                 "completed"
             );
 
-
             if (number) {
-
                 number.textContent =
                     "✓";
             }
 
-
             if (small) {
-
                 small.textContent =
                     completedText;
             }
@@ -1141,15 +1011,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "pending"
             );
 
-
             if (small) {
-
                 small.textContent =
                     pendingText;
             }
         }
     }
-
 
     /* =====================================================
        ACTUALIZAR INTERFAZ
@@ -1160,7 +1027,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const progress =
             calculateModuleProgress();
 
-
         if (progressBar) {
 
             progressBar.style.setProperty(
@@ -1168,18 +1034,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 `${progress}%`
             );
 
-
             progressBar.style.width =
                 `${progress}%`;
         }
-
 
         if (progressPercentage) {
 
             progressPercentage.textContent =
                 `${progress}%`;
         }
-
 
         updateRequirement(
             requirementActivity,
@@ -1188,7 +1051,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "Pendiente"
         );
 
-
         updateRequirement(
             requirementChallenge,
             moduleState.challengeCompleted,
@@ -1196,14 +1058,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "Pendiente"
         );
 
-
         updateRequirement(
             requirementModule,
             moduleState.moduleCompleted,
             "Módulo aprobado",
             "Bloqueado"
         );
-
 
         if (
             moduleState.moduleCompleted
@@ -1216,10 +1076,8 @@ document.addEventListener("DOMContentLoaded", () => {
             lockNextModule();
         }
 
-
         saveCourseProgress();
     }
-
 
     /* =====================================================
        BLOQUEAR MÓDULO 2
@@ -1231,28 +1089,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "true"
         );
 
-
         nextModuleButton.classList.remove(
             "unlocked"
         );
 
-
         nextModuleButton.innerHTML = `
-
             Módulo 2 bloqueado
-
             <span>
                 🔒
             </span>
-
         `;
-
 
         if (moduleComplete) {
 
@@ -1260,12 +1111,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.remove(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
@@ -1273,14 +1122,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "MÓDULO 01 BLOQUEADO";
         }
 
-
         if (completionMessage) {
 
             completionMessage.textContent =
                 "Complete la actividad práctica y el reto de comprensión para habilitar el siguiente módulo.";
         }
     }
-
 
     /* =====================================================
        DESBLOQUEAR MÓDULO 2
@@ -1292,28 +1139,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "false"
         );
 
-
         nextModuleButton.classList.add(
             "unlocked"
         );
 
-
         nextModuleButton.innerHTML = `
-
             Ir al Módulo 2
-
             <span>
                 →
             </span>
-
         `;
-
 
         if (moduleComplete) {
 
@@ -1321,12 +1161,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.add(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
@@ -1334,14 +1172,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "MÓDULO 01 COMPLETADO";
         }
 
-
         if (completionMessage) {
 
             completionMessage.textContent =
                 "¡Felicitaciones! Usted completó y aprobó el Módulo 1. Ahora puede continuar con el Módulo 2.";
         }
     }
-
 
     /* =====================================================
        CONTROL DEL ENLACE AL MÓDULO 2
@@ -1359,7 +1195,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     event.preventDefault();
 
-
                     if (
                         completionMessage
                     ) {
@@ -1368,32 +1203,26 @@ document.addEventListener("DOMContentLoaded", () => {
                             "El Módulo 2 permanece bloqueado. Complete la actividad práctica y responda correctamente el reto.";
                     }
 
-
                     if (moduleComplete) {
 
                         moduleComplete.animate(
                             [
-
                                 {
                                     transform:
                                         "translateX(0)"
                                 },
-
                                 {
                                     transform:
                                         "translateX(-6px)"
                                 },
-
                                 {
                                     transform:
                                         "translateX(6px)"
                                 },
-
                                 {
                                     transform:
                                         "translateX(0)"
                                 }
-
                             ],
                             {
                                 duration:
@@ -1406,7 +1235,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     /* =====================================================
        INICIO DEL MÓDULO
     ====================================================== */
@@ -1417,28 +1245,31 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
+                trackEventOnce(
+                    "inicio_modulo",
+                    "analytics_modulo1_inicio",
+                    {
+                        modulo: "1"
+                    }
+                );
+
                 const introduction =
                     document.getElementById(
                         "introduccion"
                     );
 
-
                 if (introduction) {
 
                     introduction.scrollIntoView({
-
                         behavior:
                             "smooth",
-
                         block:
                             "start"
-
                     });
                 }
             }
         );
     }
-
 
     /* =====================================================
        MODALES
@@ -1464,49 +1295,40 @@ document.addEventListener("DOMContentLoaded", () => {
             ".modal-overlay"
         );
 
-
     function openModal(modal) {
 
         if (!modal) {
             return;
         }
 
-
         modal.classList.add(
             "active"
         );
-
 
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-
         body.classList.add(
             "modal-open"
         );
-
 
         const closeButton =
             modal.querySelector(
                 ".modal-close"
             );
 
-
         if (closeButton) {
 
             setTimeout(
                 () => {
-
                     closeButton.focus();
-
                 },
                 100
             );
         }
     }
-
 
     function closeModal(modal) {
 
@@ -1514,23 +1336,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         modal.classList.remove(
             "active"
         );
-
 
         modal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-
         const activeModal =
             document.querySelector(
                 ".modal.active"
             );
-
 
         if (!activeModal) {
 
@@ -1539,7 +1357,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
     }
-
 
     function closeAllModals() {
 
@@ -1550,21 +1367,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     "active"
                 );
 
-
                 modal.setAttribute(
                     "aria-hidden",
                     "true"
                 );
-
             }
         );
-
 
         body.classList.remove(
             "modal-open"
         );
     }
-
 
     modalTriggers.forEach(
         trigger => {
@@ -1578,17 +1391,14 @@ document.addEventListener("DOMContentLoaded", () => {
                             "data-modal"
                         );
 
-
                     if (!modalId) {
                         return;
                     }
-
 
                     const modal =
                         document.getElementById(
                             modalId
                         );
-
 
                     openModal(
                         modal
@@ -1597,7 +1407,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
     );
-
 
     modalCloseButtons.forEach(
         button => {
@@ -1611,12 +1420,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             ".modal"
                         )
                     );
-
                 }
             );
         }
     );
-
 
     modalOverlays.forEach(
         overlay => {
@@ -1630,12 +1437,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             ".modal"
                         )
                     );
-
                 }
             );
         }
     );
-
 
     document.addEventListener(
         "keydown",
@@ -1645,16 +1450,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.key !==
                 "Escape"
             ) {
-
                 return;
             }
-
 
             const activeModal =
                 document.querySelector(
                     ".modal.active"
                 );
-
 
             if (activeModal) {
 
@@ -1664,7 +1466,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     );
-
 
     /* =====================================================
        CONTADOR
@@ -1676,24 +1477,19 @@ document.addEventListener("DOMContentLoaded", () => {
             !processInput ||
             !inputCounter
         ) {
-
             return;
         }
 
-
         const length =
             processInput.value.length;
-
 
         const maximum =
             processInput.maxLength ||
             1500;
 
-
         inputCounter.textContent =
             `${length} / ${maximum}`;
     }
-
 
     if (processInput) {
 
@@ -1702,10 +1498,8 @@ document.addEventListener("DOMContentLoaded", () => {
             updateCounter
         );
 
-
         updateCounter();
     }
-
 
     /* =====================================================
        GUARDAR PROCESO
@@ -1717,16 +1511,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const value =
             processInput.value.trim();
-
 
         const validation =
             validateProcessContent(
                 value
             );
-
 
         /* INCORRECTA */
 
@@ -1737,27 +1528,21 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted =
                 false;
 
-
             removeStorage(
                 STORAGE_PROCESS
             );
-
 
             showProcessFeedback(
                 `🔴 ${validation.message}`,
                 "error"
             );
 
-
             checkModuleCompletion();
-
 
             processInput.focus();
 
-
             return;
         }
-
 
         /* CORRECTA */
 
@@ -1767,7 +1552,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 value
             );
 
-
         if (!saved) {
 
             showProcessFeedback(
@@ -1775,38 +1559,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             return;
         }
 
+        const wasAlreadyCompleted =
+            moduleState.activityCompleted;
 
         moduleState.activityCompleted =
             true;
-
 
         showProcessFeedback(
             "🟢 Proceso guardado correctamente. Actividad completada.",
             "success"
         );
 
+        if (!wasAlreadyCompleted) {
+
+            trackEventOnce(
+                "actividad_completada",
+                "analytics_modulo1_actividad",
+                {
+                    modulo: "1",
+                    actividad: "descripcion_proceso"
+                }
+            );
+        }
 
         if (saveProcess) {
 
             saveProcess.textContent =
                 "Proceso guardado ✓";
 
-
             saveProcess.classList.add(
                 "saved"
             );
-
 
             setTimeout(
                 () => {
 
                     saveProcess.textContent =
                         "Actualizar proceso";
-
 
                     saveProcess.classList.remove(
                         "saved"
@@ -1817,10 +1609,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         checkModuleCompletion();
     }
-
 
     if (saveProcess) {
 
@@ -1829,7 +1619,6 @@ document.addEventListener("DOMContentLoaded", () => {
             saveUserProcess
         );
     }
-
 
     /* =====================================================
        RECUPERAR PROCESO
@@ -1841,23 +1630,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const savedProcess =
             getStorage(
                 STORAGE_PROCESS
             );
 
-
         if (!savedProcess) {
             return;
         }
-
 
         const validation =
             validateProcessContent(
                 savedProcess
             );
-
 
         if (
             validation.valid
@@ -1866,19 +1651,15 @@ document.addEventListener("DOMContentLoaded", () => {
             processInput.value =
                 savedProcess;
 
-
             moduleState.activityCompleted =
                 true;
 
-
             updateCounter();
-
 
             showProcessFeedback(
                 "🟢 Proceso guardado previamente recuperado.",
                 "success"
             );
-
 
             if (saveProcess) {
 
@@ -1893,9 +1674,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     restoreProcess();
-
 
     /* =====================================================
        LIMPIAR FEEDBACK AL ESCRIBIR
@@ -1912,36 +1691,28 @@ document.addEventListener("DOMContentLoaded", () => {
                     processFeedback.textContent =
                         "";
 
-
                     processFeedback.className =
                         "process-feedback";
-
 
                     processFeedback.style.color =
                         "";
 
-
                     processFeedback.style.backgroundColor =
                         "";
-
 
                     processFeedback.style.border =
                         "";
                 }
 
-
                 moduleState.activityCompleted =
                     false;
 
-
                 checkModuleCompletion();
-
 
                 if (saveProcess) {
 
                     saveProcess.textContent =
                         "Guardar proceso";
-
 
                     saveProcess.classList.remove(
                         "saved"
@@ -1950,7 +1721,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
-
 
     /* =====================================================
        FOCUS DEL TEXTAREA
@@ -1965,10 +1735,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 processInput.classList.add(
                     "input-active"
                 );
-
             }
         );
-
 
         processInput.addEventListener(
             "blur",
@@ -1977,11 +1745,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 processInput.classList.remove(
                     "input-active"
                 );
-
             }
         );
     }
-
 
     /* =====================================================
        CTRL + ENTER
@@ -2002,11 +1768,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     saveUserProcess();
                 }
-
             }
         );
     }
-
 
     /* =====================================================
        RETO DEL MÓDULO
@@ -2021,11 +1785,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     "correct",
                     "incorrect"
                 );
-
             }
         );
     }
-
 
     function answerChallenge(option) {
 
@@ -2033,14 +1795,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         resetChallengeOptions();
-
 
         const isCorrect =
             option.dataset.correct ===
             "true";
-
 
         if (isCorrect) {
 
@@ -2048,27 +1807,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 "correct"
             );
 
+            const wasAlreadyCompleted =
+                moduleState.challengeCompleted;
 
             moduleState.challengeCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_CHALLENGE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "reto_aprobado",
+                    "analytics_modulo1_reto",
+                    {
+                        modulo: "1"
+                    }
+                );
+            }
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show correct";
 
-
                 challengeFeedback.textContent =
                     "✓ Correcto. Primero debemos comprender y mejorar el proceso antes de decidir qué tecnología utilizar.";
             }
-
 
             checkModuleCompletion();
 
@@ -2078,31 +1846,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 "incorrect"
             );
 
-
             moduleState.challengeCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_CHALLENGE
             );
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show incorrect";
 
-
                 challengeFeedback.textContent =
                     "✕ Aún no. Antes de comprar o desarrollar una herramienta, debemos comprender qué está ocurriendo en el proceso.";
             }
 
-
             checkModuleCompletion();
         }
     }
-
 
     challengeOptions.forEach(
         option => {
@@ -2114,12 +1876,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     answerChallenge(
                         option
                     );
-
                 }
             );
         }
     );
-
 
     /* =====================================================
        CARGAR RETO GUARDADO
@@ -2132,7 +1892,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_CHALLENGE
             );
 
-
         if (
             completed ===
             "completado"
@@ -2141,15 +1900,12 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.challengeCompleted =
                 true;
 
-
             resetChallengeOptions();
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.textContent =
                     "";
-
 
                 challengeFeedback.className =
                     "challenge-feedback";
@@ -2157,9 +1913,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     loadChallengeState();
-
 
     /* =====================================================
        VERIFICAR FINALIZACIÓN
@@ -2171,33 +1925,43 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted &&
             moduleState.challengeCompleted;
 
-
         if (completed) {
+
+            const wasAlreadyCompleted =
+                moduleState.moduleCompleted;
 
             moduleState.moduleCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_MODULE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "modulo_completado",
+                    "analytics_modulo1_completado",
+                    {
+                        modulo: "1",
+                        nombre_modulo: "Comprender el trabajo"
+                    }
+                );
+            }
+
         } else {
 
             moduleState.moduleCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_MODULE
             );
         }
 
-
         updateModuleUI();
     }
-
 
     /* =====================================================
        ANIMACIONES
@@ -2215,7 +1979,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".process-map"
         );
 
-
     revealElements.forEach(
         element => {
 
@@ -2224,7 +1987,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
     );
-
 
     if (
         "IntersectionObserver" in window
@@ -2245,14 +2007,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                     "is-visible"
                                 );
 
-
                                 observer.unobserve(
                                     entry.target
                                 );
                             }
                         }
                     );
-
                 },
                 {
                     threshold:
@@ -2262,7 +2022,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         "0px 0px -40px 0px"
                 }
             );
-
 
         revealElements.forEach(
             element => {
@@ -2285,7 +2044,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     /* =====================================================
        NAVEGACIÓN SUAVE
     ====================================================== */
@@ -2306,45 +2064,35 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "href"
                             );
 
-
                         if (
                             !targetId ||
                             targetId === "#"
                         ) {
-
                             return;
                         }
-
 
                         const target =
                             document.querySelector(
                                 targetId
                             );
 
-
                         if (!target) {
-
                             return;
                         }
 
-
                         event.preventDefault();
 
-
                         target.scrollIntoView({
-
                             behavior:
                                 "smooth",
 
                             block:
                                 "start"
-
                         });
                     }
                 );
             }
         );
-
 
     /* =====================================================
        MAPA DE PROCESOS
@@ -2354,7 +2102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             ".map-step"
         );
-
 
     mapSteps.forEach(
         (
@@ -2385,7 +2132,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
             step.addEventListener(
                 "mouseleave",
                 () => {
@@ -2401,7 +2147,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
     );
-
 
     /* =====================================================
        MODALES — SCROLL
@@ -2421,7 +2166,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         event.preventDefault();
                     }
-
                 },
                 {
                     passive:
@@ -2431,7 +2175,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     /* =====================================================
        LIMPIAR MODALES AL SALIR
     ====================================================== */
@@ -2439,12 +2182,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener(
         "beforeunload",
         () => {
-
             closeAllModals();
-
         }
     );
-
 
     /* =====================================================
        ESTADO INICIAL
@@ -2456,14 +2196,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateCounter();
 
-
     /* =====================================================
        MEZCLAR OPCIONES
        ÚNICA LLAMADA
     ====================================================== */
 
     shuffleChallengeOptions();
-
 
     /* =====================================================
        INICIO
@@ -2476,13 +2214,12 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     /* =====================================================
        LOG
     ====================================================== */
 
     console.log(
-        "✓ El Empleado Aumentado — Módulo 01 cargado correctamente."
+        "✓ El Empleado Aumentado — Módulo 01 cargado correctamente con Google Analytics."
     );
 
 });

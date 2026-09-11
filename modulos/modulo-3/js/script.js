@@ -2,11 +2,49 @@
    EL EMPLEADO AUMENTADO
    MÓDULO 03 — JAVASCRIPT COMPLETO
    VALIDACIÓN REAL + FEEDBACK + RETO ALEATORIO
+   + GOOGLE ANALYTICS
 ========================================================= */
 
 "use strict";
 
+/* =========================================================
+   GOOGLE ANALYTICS
+========================================================= */
+
+function trackEvent(eventName, parameters = {}) {
+    if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, parameters);
+    }
+}
+
+function trackEventOnce(eventName, storageKey, parameters = {}) {
+    try {
+        if (sessionStorage.getItem(storageKey) === "true") {
+            return;
+        }
+
+        trackEvent(eventName, parameters);
+        sessionStorage.setItem(storageKey, "true");
+
+    } catch (error) {
+        trackEvent(eventName, parameters);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       GOOGLE ANALYTICS — MÓDULO VISTO
+    ====================================================== */
+
+    trackEventOnce(
+        "modulo_visto",
+        "analytics_modulo3_visto",
+        {
+            modulo: "3",
+            nombre_modulo: "Datos para decidir"
+        }
+    );
 
     /* =====================================================
        CONFIGURACIÓN Y STORAGE
@@ -23,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const STORAGE_PROGRESS =
         "empleadoAumentado_progreso";
-
 
     /* =====================================================
        ELEMENTOS
@@ -107,39 +144,26 @@ document.addEventListener("DOMContentLoaded", () => {
             "nextModuleButton"
         );
 
-
     /* =====================================================
        ESTADO DEL MÓDULO
     ====================================================== */
 
     const moduleState = {
-
-        activityCompleted:
-            false,
-
-        challengeCompleted:
-            false,
-
-        moduleCompleted:
-            false
-
+        activityCompleted: false,
+        challengeCompleted: false,
+        moduleCompleted: false
     };
-
 
     /* =====================================================
        STORAGE
     ====================================================== */
 
     function getStorage(key) {
-
         try {
-
             return localStorage.getItem(
                 key
             );
-
         } catch (error) {
-
             console.warn(
                 `No fue posible leer ${key}.`,
                 error
@@ -149,14 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function setStorage(
         key,
         value
     ) {
-
         try {
-
             localStorage.setItem(
                 key,
                 value
@@ -165,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return true;
 
         } catch (error) {
-
             console.warn(
                 `No fue posible guardar ${key}.`,
                 error
@@ -175,17 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function removeStorage(key) {
-
         try {
-
             localStorage.removeItem(
                 key
             );
 
         } catch (error) {
-
             console.warn(
                 `No fue posible eliminar ${key}.`,
                 error
@@ -193,13 +209,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     /* =====================================================
        NORMALIZAR TEXTO
     ====================================================== */
 
     function normalizeText(text) {
-
         return String(text || "")
             .toLowerCase()
             .normalize("NFD")
@@ -218,7 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .trim();
     }
 
-
     /* =====================================================
        DETECTAR TEXTO INVÁLIDO
     ====================================================== */
@@ -234,9 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ""
             );
 
-
         if (!value) {
-
             return {
                 invalid: true,
                 message:
@@ -244,18 +255,15 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
             value.length < 35
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta es demasiado corta. Explique el indicador y qué información permite conocer."
             };
         }
-
 
         const words =
             value
@@ -265,11 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         word.length > 1
                 );
 
-
         if (
             words.length < 6
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -277,11 +283,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
             /(.)\1{4,}/iu.test(value)
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -289,18 +293,14 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const suspiciousPatterns = [
-
             "asdfgh",
             "qwerty",
             "zxcvbn",
             "poiuy",
             "lkjhg",
             "mnbvc"
-
         ];
-
 
         if (
             suspiciousPatterns.some(
@@ -310,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             )
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -318,44 +317,41 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const wordCount = {};
-
 
         words.forEach(
             word => {
-
                 wordCount[word] =
                     (
                         wordCount[word] ||
                         0
                     ) + 1;
-
             }
         );
 
-
-        const highestRepetition =
-            Math.max(
-                ...Object.values(
-                    wordCount
-                )
+        const repetitions =
+            Object.values(
+                wordCount
             );
 
+        const highestRepetition =
+            repetitions.length
+                ? Math.max(
+                    ...repetitions
+                )
+                : 0;
 
         if (
             highestRepetition >= 4 &&
             highestRepetition >=
                 words.length / 2
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta repite demasiado las mismas palabras. Explique el indicador con contenido real."
             };
         }
-
 
         const letters =
             (
@@ -364,7 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         const numbers =
             (
                 value.match(
@@ -372,12 +367,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         if (
             numbers > letters &&
             numbers > 5
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -385,17 +378,14 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const uniqueCharacters =
             new Set(
                 compact
             ).size;
 
-
         if (
             uniqueCharacters < 8
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -403,13 +393,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             invalid: false,
             message: ""
         };
     }
-
 
     /* =====================================================
        VALIDAR INDICADOR
@@ -424,11 +412,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 text
             );
 
-
         if (
             basicValidation.invalid
         ) {
-
             return {
                 valid: false,
                 message:
@@ -436,15 +422,12 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const value =
             normalizeText(
                 text
             );
 
-
         const dataKeywords = [
-
             "dato",
             "datos",
             "indicador",
@@ -461,12 +444,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "tasa",
             "valor",
             "frecuencia"
-
         ];
 
-
         const processKeywords = [
-
             "proceso",
             "actividad",
             "tarea",
@@ -485,12 +465,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "empleado",
             "caso",
             "solicitud"
-
         ];
 
-
         const decisionKeywords = [
-
             "decision",
             "decidir",
             "decisiones",
@@ -509,9 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "evaluacion",
             "gestionar",
             "priorizar"
-
         ];
-
 
         const detectedData =
             dataKeywords.filter(
@@ -521,7 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         const detectedProcess =
             processKeywords.filter(
                 keyword =>
@@ -529,7 +503,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         keyword
                     )
             );
-
 
         const detectedDecision =
             decisionKeywords.filter(
@@ -539,12 +512,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         if (
-            detectedData.length <
-            1
+            detectedData.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -552,12 +522,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
-            detectedProcess.length <
-            1
+            detectedProcess.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -565,12 +532,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
-            detectedDecision.length <
-            1
+            detectedDecision.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -578,14 +542,12 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             valid: true,
             message:
                 "El indicador está relacionado con datos, un proceso y la toma de decisiones."
         };
     }
-
 
     /* =====================================================
        FEEDBACK
@@ -602,14 +564,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         indicatorFeedback.textContent =
             message;
 
-
         indicatorFeedback.className =
             "task-feedback show";
-
 
         if (
             type === "error"
@@ -619,14 +578,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             indicatorFeedback.style.color =
                 "#dc2626";
 
-
             indicatorFeedback.style.backgroundColor =
                 "rgba(220, 38, 38, 0.08)";
-
 
             indicatorFeedback.style.border =
                 "1px solid rgba(220, 38, 38, 0.25)";
@@ -637,20 +593,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "success"
             );
 
-
             indicatorFeedback.style.color =
                 "#059669";
 
-
             indicatorFeedback.style.backgroundColor =
                 "rgba(5, 150, 105, 0.08)";
-
 
             indicatorFeedback.style.border =
                 "1px solid rgba(5, 150, 105, 0.25)";
         }
     }
-
 
     /* =====================================================
        VALIDAR ACCESO DESDE MÓDULO 02
@@ -666,27 +618,21 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     function protectModuleThree() {
 
         if (
             moduleTwoIsCompleted()
         ) {
-
             return;
         }
-
 
         const warning =
             document.createElement(
                 "div"
             );
 
-
         warning.innerHTML = `
-
             <div class="module-access-message">
-
                 <strong>
                     🔒 Módulo 03 bloqueado
                 </strong>
@@ -698,55 +644,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="../modulo-2/index.html">
                     Ir al Módulo 02
                 </a>
-
             </div>
-
         `;
-
 
         document.body.prepend(
             warning
         );
 
-
         document.body.classList.add(
             "module-access-blocked"
         );
 
-
         if (indicatorInput) {
-
             indicatorInput.disabled =
                 true;
         }
 
-
         if (saveIndicator) {
-
             saveIndicator.disabled =
                 true;
         }
 
-
         challengeOptions.forEach(
             option => {
-
                 option.disabled =
                     true;
-
             }
         );
 
-
         if (nextModuleButton) {
-
             nextModuleButton.setAttribute(
                 "aria-disabled",
                 "true"
             );
         }
     }
-
 
     /* =====================================================
        MEZCLAR OPCIONES DEL RETO
@@ -760,7 +692,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".challenge-options"
             );
 
-
         if (!container) {
 
             console.warn(
@@ -770,7 +701,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         let options =
             Array.from(
                 container.querySelectorAll(
@@ -778,18 +708,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         if (
             options.length <= 1
         ) {
-
             return;
         }
 
-
-        /* =================================================
-           MEZCLA ALEATORIA
-        ================================================== */
+        /* Mezcla Fisher-Yates */
 
         for (
             let i =
@@ -804,7 +729,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     (i + 1)
                 );
 
-
             [
                 options[i],
                 options[j]
@@ -815,25 +739,17 @@ document.addEventListener("DOMContentLoaded", () => {
             ];
         }
 
-
-        /* =================================================
-           REINSERTAR EN NUEVO ORDEN
-        ================================================== */
+        /* Reinserta en nuevo orden */
 
         options.forEach(
             option => {
-
                 container.appendChild(
                     option
                 );
-
             }
         );
 
-
-        /* =================================================
-           ACTUALIZAR LETRAS A B C D
-        ================================================== */
+        /* Actualizar letras A B C D */
 
         const letters = [
             "A",
@@ -841,7 +757,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "C",
             "D"
         ];
-
 
         options.forEach(
             (
@@ -852,18 +767,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const newLetter =
                     letters[index];
 
-
-                /* -----------------------------------------
-                   CLASES COMUNES PARA LA LETRA
-                ----------------------------------------- */
-
                 const letterElement =
                     option.querySelector(
                         ".option-letter, " +
                         ".challenge-letter, " +
                         ".answer-letter"
                     );
-
 
                 if (letterElement) {
 
@@ -878,16 +787,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   ELEMENTO CON DATA-LETTER
-                ----------------------------------------- */
-
                 const dataLetterElement =
                     option.querySelector(
                         "[data-letter]"
                     );
-
 
                 if (dataLetterElement) {
 
@@ -902,21 +805,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   PRIMER HIJO = LETRA
-                ----------------------------------------- */
-
                 const firstChild =
                     option.firstElementChild;
-
 
                 if (firstChild) {
 
                     const firstText =
                         firstChild.textContent
                             .trim();
-
 
                     if (
                         /^[A-D]$/i.test(
@@ -929,7 +825,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         return;
                     }
-
 
                     if (
                         /^[A-D][.)\-:]$/i.test(
@@ -944,56 +839,37 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-
-                /* -----------------------------------------
-                   LETRA DENTRO DEL HTML
-                   EJEMPLO: A. Texto...
-                ----------------------------------------- */
-
                 const html =
                     option.innerHTML;
 
-
                 if (
-                    /^[\s]*[A-D][.)\-:]\s*/i.test(
+                    /^\s*[A-D][.)\-:]\s*/i.test(
                         html
                     )
                 ) {
 
                     option.innerHTML =
                         html.replace(
-                            /^[\s]*[A-D][.)\-:]\s*/i,
+                            /^\s*[A-D][.)\-:]\s*/i,
                             `${newLetter}. `
                         );
 
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   GUARDAR POSICIÓN COMO RESPALDO
-                ----------------------------------------- */
-
                 option.dataset.optionLetter =
                     newLetter;
             }
         );
-
-
-        /* =================================================
-           ACTUALIZAR REFERENCIA
-        ================================================== */
 
         challengeOptions =
             container.querySelectorAll(
                 ".challenge-option"
             );
 
-
         console.log(
             "✓ Opciones del Módulo 03 mezcladas correctamente."
         );
-
 
         options.forEach(
             (
@@ -1005,11 +881,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     `${letters[index]} → correcta:`,
                     option.dataset.correct === "true"
                 );
-
             }
         );
     }
-
 
     /* =====================================================
        MODALES
@@ -1033,7 +907,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let lastFocusedElement =
         null;
 
-
     function openModal(name) {
 
         const modal =
@@ -1041,44 +914,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 `modal-${name}`
             );
 
-
         if (!modal) {
             return;
         }
 
-
         lastFocusedElement =
             document.activeElement;
-
 
         modal.classList.add(
             "active"
         );
-
 
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-
         document.body.classList.add(
             "modal-open"
         );
-
 
         const closeButton =
             modal.querySelector(
                 ".modal-close"
             );
 
-
         if (closeButton) {
-
             closeButton.focus();
         }
     }
-
 
     function closeModal(modal) {
 
@@ -1086,30 +950,25 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         modal.classList.remove(
             "active"
         );
-
 
         modal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-
         const activeModal =
             document.querySelector(
                 ".modal.active"
             );
-
 
         if (!activeModal) {
 
             document.body.classList.remove(
                 "modal-open"
             );
-
 
             if (
                 lastFocusedElement &&
@@ -1120,12 +979,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 lastFocusedElement.focus();
             }
 
-
             lastFocusedElement =
                 null;
         }
     }
-
 
     modalButtons.forEach(
         button => {
@@ -1137,12 +994,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     openModal(
                         button.dataset.modal
                     );
-
                 }
             );
         }
     );
-
 
     modalCloseButtons.forEach(
         button => {
@@ -1156,12 +1011,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             ".modal"
                         )
                     );
-
                 }
             );
         }
     );
-
 
     modalOverlays.forEach(
         overlay => {
@@ -1175,12 +1028,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             ".modal"
                         )
                     );
-
                 }
             );
         }
     );
-
 
     document.addEventListener(
         "keydown",
@@ -1190,16 +1041,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.key !==
                 "Escape"
             ) {
-
                 return;
             }
-
 
             const activeModal =
                 document.querySelector(
                     ".modal.active"
                 );
-
 
             if (activeModal) {
 
@@ -1209,7 +1057,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     );
-
 
     /* =====================================================
        CONTADOR
@@ -1221,20 +1068,16 @@ document.addEventListener("DOMContentLoaded", () => {
             !indicatorInput ||
             !indicatorCounter
         ) {
-
             return;
         }
-
 
         const maximum =
             indicatorInput.maxLength ||
             500;
 
-
         indicatorCounter.textContent =
             `${indicatorInput.value.length} / ${maximum}`;
     }
-
 
     if (indicatorInput) {
 
@@ -1246,7 +1089,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateIndicatorCounter();
     }
 
-
     /* =====================================================
        GUARDAR INDICADOR
     ====================================================== */
@@ -1257,16 +1099,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const indicator =
             indicatorInput.value.trim();
-
 
         const validation =
             validateIndicatorContent(
                 indicator
             );
-
 
         if (
             !validation.valid
@@ -1275,30 +1114,23 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted =
                 false;
 
-
             removeStorage(
                 STORAGE_INDICATOR
             );
-
 
             showIndicatorFeedback(
                 `🔴 ${validation.message}`,
                 "error"
             );
 
-
             checkModuleCompletion();
 
-
             indicatorInput.focus();
-
 
             return;
         }
 
-
         const data = {
-
             indicator:
                 indicator,
 
@@ -1307,9 +1139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createdAt:
                 new Date().toISOString()
-
         };
-
 
         const saved =
             setStorage(
@@ -1319,7 +1149,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         if (!saved) {
 
             showIndicatorFeedback(
@@ -1327,39 +1156,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             return;
         }
 
+        const wasAlreadyCompleted =
+            moduleState.activityCompleted;
 
         moduleState.activityCompleted =
             true;
-
 
         showIndicatorFeedback(
             "🟢 Indicador guardado correctamente. Actividad completada.",
             "success"
         );
 
+        if (!wasAlreadyCompleted) {
+
+            trackEventOnce(
+                "actividad_completada",
+                "analytics_modulo3_actividad",
+                {
+                    modulo: "3",
+                    actividad: "indicador_para_la_toma_de_decisiones"
+                }
+            );
+        }
 
         if (saveIndicator) {
 
             const originalHTML =
                 saveIndicator.innerHTML;
 
-
             saveIndicator.innerHTML =
                 "Guardado <span>✓</span>";
-
 
             saveIndicator.classList.add(
                 "saved"
             );
 
-
             saveIndicator.disabled =
                 true;
-
 
             setTimeout(
                 () => {
@@ -1367,11 +1203,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     saveIndicator.innerHTML =
                         originalHTML;
 
-
                     saveIndicator.classList.remove(
                         "saved"
                     );
-
 
                     saveIndicator.disabled =
                         false;
@@ -1381,10 +1215,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         checkModuleCompletion();
     }
-
 
     if (saveIndicator) {
 
@@ -1393,7 +1225,6 @@ document.addEventListener("DOMContentLoaded", () => {
             saveIndicatorData
         );
     }
-
 
     /* =====================================================
        RECUPERAR INDICADOR
@@ -1405,17 +1236,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const saved =
             getStorage(
                 STORAGE_INDICATOR
             );
 
-
         if (!saved) {
             return;
         }
-
 
         try {
 
@@ -1423,7 +1251,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 JSON.parse(
                     saved
                 );
-
 
             if (
                 data &&
@@ -1436,7 +1263,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         data.indicator
                     );
 
-
                 if (
                     validation.valid
                 ) {
@@ -1444,10 +1270,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     indicatorInput.value =
                         data.indicator;
 
-
                     moduleState.activityCompleted =
                         true;
-
 
                     updateIndicatorCounter();
 
@@ -1466,16 +1290,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 error
             );
 
-
             removeStorage(
                 STORAGE_INDICATOR
             );
         }
     }
 
-
     loadSavedIndicator();
-
 
     /* =====================================================
        LIMPIAR FEEDBACK AL EDITAR
@@ -1505,16 +1326,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         "";
                 }
 
-
                 moduleState.activityCompleted =
                     false;
-
 
                 checkModuleCompletion();
             }
         );
     }
-
 
     /* =====================================================
        RETO FINAL
@@ -1529,11 +1347,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     "correct",
                     "incorrect"
                 );
-
             }
         );
     }
-
 
     function answerChallenge(option) {
 
@@ -1541,14 +1357,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         resetChallengeOptions();
-
 
         const isCorrect =
             option.dataset.correct ===
             "true";
-
 
         if (isCorrect) {
 
@@ -1556,30 +1369,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 "correct"
             );
 
+            const wasAlreadyCompleted =
+                moduleState.challengeCompleted;
 
             moduleState.challengeCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_CHALLENGE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "reto_aprobado",
+                    "analytics_modulo3_reto",
+                    {
+                        modulo: "3"
+                    }
+                );
+            }
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show correct";
 
-
                 challengeFeedback.textContent =
                     "✓ Correcto. Un resultado debe compararse, contextualizarse y validarse antes de convertirse en una conclusión o decisión.";
             }
 
-
             checkModuleCompletion();
-
 
         } else {
 
@@ -1587,31 +1408,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 "incorrect"
             );
 
-
             moduleState.challengeCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_CHALLENGE
             );
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show incorrect";
 
-
                 challengeFeedback.textContent =
                     "✕ Esa opción no representa un análisis profesional. Primero debe comparar, contextualizar e investigar antes de concluir.";
             }
 
-
             checkModuleCompletion();
         }
     }
-
 
     challengeOptions.forEach(
         option => {
@@ -1623,12 +1438,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     answerChallenge(
                         option
                     );
-
                 }
             );
         }
     );
-
 
     /* =====================================================
        RECUPERAR RETO
@@ -1641,7 +1454,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_CHALLENGE
             );
 
-
         if (
             challenge ===
             "completado"
@@ -1650,15 +1462,12 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.challengeCompleted =
                 true;
 
-
             resetChallengeOptions();
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.textContent =
                     "";
-
 
                 challengeFeedback.className =
                     "challenge-feedback";
@@ -1666,9 +1475,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     loadChallengeState();
-
 
     /* =====================================================
        CALCULAR PROGRESO
@@ -1676,33 +1483,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function calculateProgress() {
 
-        let completed =
-            0;
-
+        let completed = 0;
 
         if (
             moduleState.activityCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.challengeCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.moduleCompleted
         ) {
-
             completed++;
         }
-
 
         return Math.round(
             (
@@ -1711,7 +1510,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ) * 100
         );
     }
-
 
     /* =====================================================
        ACTUALIZAR REQUISITO
@@ -1728,18 +1526,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const number =
             element.querySelector(
                 ":scope > span"
             );
 
-
         const small =
             element.querySelector(
                 "small"
             );
-
 
         element.classList.remove(
             "completed",
@@ -1747,20 +1542,17 @@ document.addEventListener("DOMContentLoaded", () => {
             "locked"
         );
 
-
         if (completed) {
 
             element.classList.add(
                 "completed"
             );
 
-
             if (number) {
 
                 number.textContent =
                     "✓";
             }
-
 
             if (small) {
 
@@ -1774,7 +1566,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "pending"
             );
 
-
             if (small) {
 
                 small.textContent =
@@ -1782,7 +1573,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-
 
     /* =====================================================
        ACTUALIZAR INTERFAZ
@@ -1793,12 +1583,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const progress =
             calculateProgress();
 
-
         if (progressBar) {
 
             progressBar.style.width =
                 `${progress}%`;
-
 
             progressBar.style.setProperty(
                 "--progress",
@@ -1806,13 +1594,11 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         if (progressPercentage) {
 
             progressPercentage.textContent =
                 `${progress}%`;
         }
-
 
         updateRequirement(
             requirementActivity,
@@ -1821,14 +1607,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "Pendiente"
         );
 
-
         updateRequirement(
             requirementChallenge,
             moduleState.challengeCompleted,
             "Reto completado",
             "Pendiente"
         );
-
 
         if (requirementModule) {
 
@@ -1838,18 +1622,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 "locked"
             );
 
-
             const number =
                 requirementModule.querySelector(
                     ":scope > span"
                 );
 
-
             const small =
                 requirementModule.querySelector(
                     "small"
                 );
-
 
             if (
                 moduleState.moduleCompleted
@@ -1859,13 +1640,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     "completed"
                 );
 
-
                 if (number) {
 
                     number.textContent =
                         "✓";
                 }
-
 
                 if (small) {
 
@@ -1879,13 +1658,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     "locked"
                 );
 
-
                 if (number) {
 
                     number.textContent =
                         "03";
                 }
-
 
                 if (small) {
 
@@ -1894,7 +1671,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-
 
         if (
             moduleState.moduleCompleted
@@ -1907,12 +1683,10 @@ document.addEventListener("DOMContentLoaded", () => {
             lockNextModule();
         }
 
-
         saveCourseProgress(
             progress
         );
     }
-
 
     /* =====================================================
        GUARDAR PROGRESO GENERAL
@@ -1925,14 +1699,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let courseProgress =
             {};
 
-
         try {
 
             const existing =
                 getStorage(
                     STORAGE_PROGRESS
                 );
-
 
             if (existing) {
 
@@ -1948,7 +1720,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 {};
         }
 
-
         courseProgress.modulo3 = {
 
             actividad:
@@ -1962,9 +1733,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             progreso:
                 moduleProgress
-
         };
-
 
         setStorage(
             STORAGE_PROGRESS,
@@ -1973,7 +1742,6 @@ document.addEventListener("DOMContentLoaded", () => {
             )
         );
     }
-
 
     /* =====================================================
        COMPLETAR MÓDULO
@@ -1985,33 +1753,43 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted &&
             moduleState.challengeCompleted;
 
-
         if (completed) {
+
+            const wasAlreadyCompleted =
+                moduleState.moduleCompleted;
 
             moduleState.moduleCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_MODULE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "modulo_completado",
+                    "analytics_modulo3_completado",
+                    {
+                        modulo: "3",
+                        nombre_modulo: "Datos para decidir"
+                    }
+                );
+            }
+
         } else {
 
             moduleState.moduleCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_MODULE
             );
         }
 
-
         updateModuleUI();
     }
-
 
     /* =====================================================
        BLOQUEAR MÓDULO 04
@@ -2023,28 +1801,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "true"
         );
 
-
         nextModuleButton.classList.remove(
             "unlocked"
         );
 
-
         nextModuleButton.innerHTML = `
-
             Módulo 04 bloqueado
-
             <span>
                 🔒
             </span>
-
         `;
-
 
         if (moduleComplete) {
 
@@ -2052,12 +1823,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.remove(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
@@ -2065,14 +1834,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "MÓDULO 03 BLOQUEADO";
         }
 
-
         if (completionMessage) {
 
             completionMessage.textContent =
                 "Complete la actividad práctica y el reto de comprensión para habilitar el siguiente módulo.";
         }
     }
-
 
     /* =====================================================
        DESBLOQUEAR MÓDULO 04
@@ -2084,28 +1851,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "false"
         );
 
-
         nextModuleButton.classList.add(
             "unlocked"
         );
 
-
         nextModuleButton.innerHTML = `
-
             Ir al Módulo 04
-
             <span>
                 →
             </span>
-
         `;
-
 
         if (moduleComplete) {
 
@@ -2113,12 +1873,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.add(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
@@ -2126,14 +1884,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "MÓDULO 03 COMPLETADO";
         }
 
-
         if (completionMessage) {
 
             completionMessage.textContent =
                 "Excelente. Completó la actividad y aprobó el reto. Ahora puede avanzar al Módulo 04.";
         }
     }
-
 
     /* =====================================================
        PROTEGER BOTÓN DEL MÓDULO 04
@@ -2151,7 +1907,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     event.preventDefault();
 
-
                     if (
                         completionMessage
                     ) {
@@ -2160,10 +1915,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             "Primero debe completar la actividad y aprobar el reto final.";
                     }
 
-
                     return;
                 }
-
 
                 nextModuleButton.setAttribute(
                     "aria-disabled",
@@ -2172,7 +1925,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
-
 
     /* =====================================================
        ANIMACIONES
@@ -2186,7 +1938,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".transformation-column, " +
             ".result-list > div"
         );
-
 
     if (
         "IntersectionObserver" in window
@@ -2205,29 +1956,24 @@ document.addEventListener("DOMContentLoaded", () => {
                             if (
                                 !entry.isIntersecting
                             ) {
-
                                 return;
                             }
-
 
                             entry.target.classList.add(
                                 "is-visible"
                             );
-
 
                             observerInstance.unobserve(
                                 entry.target
                             );
                         }
                     );
-
                 },
                 {
                     threshold:
                         0.12
                 }
             );
-
 
         animatedElements.forEach(
             (
@@ -2239,7 +1985,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "--animation-delay",
                     `${index * 0.06}s`
                 );
-
 
                 observer.observe(
                     element
@@ -2258,7 +2003,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
-
 
     /* =====================================================
        ANCLAJES SUAVES
@@ -2280,42 +2024,33 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "href"
                             );
 
-
                         if (
                             !targetId ||
                             targetId === "#"
                         ) {
-
                             return;
                         }
-
 
                         const target =
                             document.querySelector(
                                 targetId
                             );
 
-
                         if (!target) {
-
                             return;
                         }
 
-
                         event.preventDefault();
-
 
                         const header =
                             document.querySelector(
                                 ".module-header"
                             );
 
-
                         const headerHeight =
                             header
                                 ? header.offsetHeight
                                 : 0;
-
 
                         const targetPosition =
                             target
@@ -2325,21 +2060,16 @@ document.addEventListener("DOMContentLoaded", () => {
                             headerHeight -
                             20;
 
-
                         window.scrollTo({
-
                             top:
                                 targetPosition,
-
                             behavior:
                                 "smooth"
-
                         });
                     }
                 );
             }
         );
-
 
     /* =====================================================
        ESTADO INICIAL
@@ -2350,7 +2080,6 @@ document.addEventListener("DOMContentLoaded", () => {
             STORAGE_MODULE
         );
 
-
     if (
         savedModule ===
         "completado"
@@ -2360,13 +2089,11 @@ document.addEventListener("DOMContentLoaded", () => {
             true;
     }
 
-
     protectModuleThree();
 
     checkModuleCompletion();
 
     updateIndicatorCounter();
-
 
     /* =====================================================
        MEZCLAR OPCIONES
@@ -2375,18 +2102,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     shuffleChallengeOptions();
 
-
     /* =====================================================
        INICIO
     ====================================================== */
 
-    body.classList.add(
-        "js-ready"
-    );
+    if (body) {
 
+        body.classList.add(
+            "js-ready"
+        );
+    }
+
+    /* =====================================================
+       LOG
+    ====================================================== */
 
     console.log(
-        "✓ El Empleado Aumentado — Módulo 03 cargado correctamente."
+        "✓ El Empleado Aumentado — Módulo 03 cargado correctamente con Google Analytics."
     );
 
 });

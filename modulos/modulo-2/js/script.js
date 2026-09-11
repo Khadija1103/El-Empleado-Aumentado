@@ -2,11 +2,49 @@
    EL EMPLEADO AUMENTADO
    MÓDULO 02 — JAVASCRIPT COMPLETO
    VALIDACIÓN REAL + FEEDBACK + RETO ALEATORIO
+   + GOOGLE ANALYTICS
 ========================================================= */
 
 "use strict";
 
+/* =========================================================
+   GOOGLE ANALYTICS
+========================================================= */
+
+function trackEvent(eventName, parameters = {}) {
+    if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, parameters);
+    }
+}
+
+function trackEventOnce(eventName, storageKey, parameters = {}) {
+    try {
+        if (sessionStorage.getItem(storageKey) === "true") {
+            return;
+        }
+
+        trackEvent(eventName, parameters);
+        sessionStorage.setItem(storageKey, "true");
+
+    } catch (error) {
+        trackEvent(eventName, parameters);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       GOOGLE ANALYTICS — MÓDULO VISTO
+    ====================================================== */
+
+    trackEventOnce(
+        "modulo_visto",
+        "analytics_modulo2_visto",
+        {
+            modulo: "2",
+            nombre_modulo: "IA como asistente de trabajo"
+        }
+    );
 
     /* =====================================================
        CONFIGURACIÓN
@@ -26,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const STORAGE_MODULE1 =
         "empleadoAumentado_modulo1_completado";
-
 
     /* =====================================================
        ELEMENTOS
@@ -110,39 +147,26 @@ document.addEventListener("DOMContentLoaded", () => {
             "nextModuleButton"
         );
 
-
     /* =====================================================
        ESTADO
     ====================================================== */
 
     const moduleState = {
-
-        activityCompleted:
-            false,
-
-        challengeCompleted:
-            false,
-
-        moduleCompleted:
-            false
-
+        activityCompleted: false,
+        challengeCompleted: false,
+        moduleCompleted: false
     };
-
 
     /* =====================================================
        LOCALSTORAGE
     ====================================================== */
 
     function getStorage(key) {
-
         try {
-
             return localStorage.getItem(
                 key
             );
-
         } catch (error) {
-
             console.warn(
                 `No fue posible leer ${key}.`,
                 error
@@ -152,14 +176,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function setStorage(
         key,
         value
     ) {
-
         try {
-
             localStorage.setItem(
                 key,
                 value
@@ -168,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return true;
 
         } catch (error) {
-
             console.warn(
                 `No fue posible guardar ${key}.`,
                 error
@@ -178,17 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function removeStorage(key) {
-
         try {
-
             localStorage.removeItem(
                 key
             );
 
         } catch (error) {
-
             console.warn(
                 `No fue posible eliminar ${key}.`,
                 error
@@ -196,13 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     /* =====================================================
        NORMALIZAR TEXTO
     ====================================================== */
 
     function normalizeText(text) {
-
         return String(text || "")
             .toLowerCase()
             .normalize("NFD")
@@ -221,7 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .trim();
     }
 
-
     /* =====================================================
        DETECTAR TEXTO REPETITIVO O BASURA
     ====================================================== */
@@ -237,9 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ""
             );
 
-
         if (!value) {
-
             return {
                 invalid: true,
                 message:
@@ -247,18 +258,15 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
             value.length < 40
         ) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta es demasiado corta. Explique con mayor detalle la tarea que realiza."
             };
         }
-
 
         const words =
             value
@@ -268,11 +276,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         word.length > 1
                 );
 
-
         if (
             words.length < 7
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -280,13 +286,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
             /(.)\1{4,}/iu.test(
                 value
             )
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -294,37 +298,35 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const wordCount = {};
-
 
         words.forEach(
             word => {
-
                 wordCount[word] =
                     (
                         wordCount[word] ||
                         0
                     ) + 1;
-
             }
         );
 
-
-        const highestRepetition =
-            Math.max(
-                ...Object.values(
-                    wordCount
-                )
+        const repetitions =
+            Object.values(
+                wordCount
             );
 
+        const highestRepetition =
+            repetitions.length
+                ? Math.max(
+                    ...repetitions
+                )
+                : 0;
 
         if (
             highestRepetition >= 4 &&
             highestRepetition >=
                 words.length / 2
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -332,18 +334,14 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const suspiciousPatterns = [
-
             "asdfgh",
             "qwerty",
             "zxcvbn",
             "poiuy",
             "lkjhg",
             "mnbvc"
-
         ];
-
 
         const suspicious =
             suspiciousPatterns.some(
@@ -353,16 +351,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         if (suspicious) {
-
             return {
                 invalid: true,
                 message:
                     "La respuesta no parece contener una descripción real."
             };
         }
-
 
         const letters =
             (
@@ -371,7 +366,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         const numbers =
             (
                 value.match(
@@ -379,12 +373,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) || []
             ).length;
 
-
         if (
             numbers > letters &&
             numbers > 5
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -392,17 +384,14 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const uniqueCharacters =
             new Set(
                 compact
             ).size;
 
-
         if (
             uniqueCharacters < 8
         ) {
-
             return {
                 invalid: true,
                 message:
@@ -410,13 +399,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             invalid: false,
             message: ""
         };
     }
-
 
     /* =====================================================
        VALIDAR CONTENIDO DE LA ACTIVIDAD
@@ -431,11 +418,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 text
             );
 
-
         if (
             basicValidation.invalid
         ) {
-
             return {
                 valid: false,
                 message:
@@ -443,15 +428,12 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         const value =
             normalizeText(
                 text
             );
 
-
         const aiKeywords = [
-
             "ia",
             "inteligencia artificial",
             "artificial",
@@ -470,12 +452,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "resumir",
             "clasificar",
             "redactar"
-
         ];
 
-
         const workKeywords = [
-
             "tarea",
             "trabajo",
             "proceso",
@@ -496,12 +475,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "solicitud",
             "caso",
             "empleado"
-
         ];
 
-
         const actionKeywords = [
-
             "analizar",
             "analizo",
             "redactar",
@@ -536,12 +512,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "identifico",
             "procesar",
             "proceso"
-
         ];
 
-
         const resultKeywords = [
-
             "resultado",
             "tiempo",
             "error",
@@ -559,9 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "decision",
             "decidir",
             "productivo"
-
         ];
-
 
         const detectedAI =
             aiKeywords.filter(
@@ -571,7 +542,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         const detectedWork =
             workKeywords.filter(
                 keyword =>
@@ -579,7 +549,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         keyword
                     )
             );
-
 
         const detectedActions =
             actionKeywords.filter(
@@ -589,7 +558,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         const detectedResults =
             resultKeywords.filter(
                 keyword =>
@@ -598,12 +566,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
             );
 
-
         if (
-            detectedAI.length <
-            1
+            detectedAI.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -611,12 +576,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
-            detectedWork.length <
-            1
+            detectedWork.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -624,12 +586,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
-            detectedActions.length <
-            1
+            detectedActions.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -637,12 +596,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         if (
-            detectedResults.length <
-            1
+            detectedResults.length < 1
         ) {
-
             return {
                 valid: false,
                 message:
@@ -650,14 +606,12 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-
         return {
             valid: true,
             message:
                 "La actividad contiene una situación laboral concreta y un uso pertinente de la IA."
         };
     }
-
 
     /* =====================================================
        FEEDBACK
@@ -674,14 +628,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         taskFeedback.textContent =
             message;
 
-
         taskFeedback.className =
             "task-feedback show";
-
 
         if (
             type === "error"
@@ -691,14 +642,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             taskFeedback.style.color =
                 "#dc2626";
 
-
             taskFeedback.style.backgroundColor =
                 "rgba(220, 38, 38, 0.08)";
-
 
             taskFeedback.style.border =
                 "1px solid rgba(220, 38, 38, 0.25)";
@@ -709,20 +657,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "success"
             );
 
-
             taskFeedback.style.color =
                 "#059669";
 
-
             taskFeedback.style.backgroundColor =
                 "rgba(5, 150, 105, 0.08)";
-
 
             taskFeedback.style.border =
                 "1px solid rgba(5, 150, 105, 0.25)";
         }
     }
-
 
     /* =====================================================
        VERIFICAR MÓDULO 1
@@ -738,27 +682,21 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
     function protectModuleTwo() {
 
         if (
             moduleOneIsCompleted()
         ) {
-
             return;
         }
-
 
         const warning =
             document.createElement(
                 "div"
             );
 
-
         warning.innerHTML = `
-
             <div class="module-access-message">
-
                 <strong>
                     🔒 Módulo 02 bloqueado
                 </strong>
@@ -770,55 +708,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="../modulo-1/index.html">
                     Ir al Módulo 01
                 </a>
-
             </div>
-
         `;
-
 
         document.body.prepend(
             warning
         );
 
-
         document.body.classList.add(
             "module-access-blocked"
         );
 
-
         if (taskInput) {
-
             taskInput.disabled =
                 true;
         }
 
-
         if (saveTaskButton) {
-
             saveTaskButton.disabled =
                 true;
         }
 
-
         challengeOptions.forEach(
             option => {
-
                 option.disabled =
                     true;
-
             }
         );
 
-
         if (nextModuleButton) {
-
             nextModuleButton.setAttribute(
                 "aria-disabled",
                 "true"
             );
         }
     }
-
 
     /* =====================================================
        MEZCLAR RETO
@@ -832,7 +756,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ".challenge-options"
             );
 
-
         if (!container) {
 
             console.warn(
@@ -842,7 +765,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         let options =
             Array.from(
                 container.querySelectorAll(
@@ -850,18 +772,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         if (
             options.length <= 1
         ) {
-
             return;
         }
 
-
-        /* =================================================
-           FISHER-YATES
-        ================================================== */
+        /* Fisher-Yates */
 
         for (
             let i =
@@ -876,7 +793,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     (i + 1)
                 );
 
-
             [
                 options[i],
                 options[j]
@@ -887,10 +803,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ];
         }
 
-
-        /* =================================================
-           REINSERTAR EN EL NUEVO ORDEN
-        ================================================== */
+        /* Reinserta en el nuevo orden */
 
         options.forEach(
             option => {
@@ -898,14 +811,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.appendChild(
                     option
                 );
-
             }
         );
 
-
-        /* =================================================
-           ACTUALIZAR LETRAS A B C D
-        ================================================== */
+        /* Actualizar letras A B C D */
 
         const letters = [
             "A",
@@ -913,7 +822,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "C",
             "D"
         ];
-
 
         options.forEach(
             (
@@ -924,19 +832,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const newLetter =
                     letters[index];
 
-
-                /* -----------------------------------------
-                   Buscar elemento que representa
-                   la letra de la opción
-                ----------------------------------------- */
-
                 const letterElement =
                     option.querySelector(
                         ".option-letter, " +
                         ".challenge-letter, " +
                         ".answer-letter"
                     );
-
 
                 if (letterElement) {
 
@@ -951,16 +852,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   Buscar elemento con data-letter
-                ----------------------------------------- */
-
                 const dataLetterElement =
                     option.querySelector(
                         "[data-letter]"
                     );
-
 
                 if (dataLetterElement) {
 
@@ -975,21 +870,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   Si el primer hijo es la letra
-                ----------------------------------------- */
-
                 const firstChild =
                     option.firstElementChild;
-
 
                 if (firstChild) {
 
                     const firstText =
                         firstChild.textContent
                             .trim();
-
 
                     if (
                         /^[A-D]$/i.test(
@@ -1002,7 +890,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         return;
                     }
-
 
                     if (
                         /^[A-D][.)\-:]$/i.test(
@@ -1017,55 +904,37 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-
-                /* -----------------------------------------
-                   Si la opción empieza con A., B., C. o D.
-                ----------------------------------------- */
-
                 const html =
                     option.innerHTML;
 
-
                 if (
-                    /^[\s]*[A-D][.)\-:]\s*/i.test(
+                    /^\s*[A-D][.)\-:]\s*/i.test(
                         html
                     )
                 ) {
 
                     option.innerHTML =
                         html.replace(
-                            /^[\s]*[A-D][.)\-:]\s*/i,
+                            /^\s*[A-D][.)\-:]\s*/i,
                             `${newLetter}. `
                         );
 
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   Guardar la posición como respaldo
-                ----------------------------------------- */
-
                 option.dataset.optionLetter =
                     newLetter;
             }
         );
-
-
-        /* =================================================
-           ACTUALIZAR REFERENCIA
-        ================================================== */
 
         challengeOptions =
             container.querySelectorAll(
                 ".challenge-option"
             );
 
-
         console.log(
             "✓ Opciones del Módulo 02 mezcladas correctamente."
         );
-
 
         options.forEach(
             (
@@ -1077,11 +946,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     `${letters[index]} → correcta:`,
                     option.dataset.correct === "true"
                 );
-
             }
         );
     }
-
 
     /* =====================================================
        MODALES
@@ -1107,7 +974,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".modal-overlay"
         );
 
-
     function openModal(name) {
 
         const modal =
@@ -1115,47 +981,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 `modal-${name}`
             );
 
-
         if (!modal) {
             return;
         }
 
-
         modal.classList.add(
             "active"
         );
-
 
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-
         body.classList.add(
             "modal-open"
         );
-
 
         const closeButton =
             modal.querySelector(
                 ".modal-close"
             );
 
-
         if (closeButton) {
 
             setTimeout(
                 () => {
-
                     closeButton.focus();
-
                 },
                 100
             );
         }
     }
-
 
     function closeModal(modal) {
 
@@ -1163,23 +1020,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         modal.classList.remove(
             "active"
         );
-
 
         modal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-
         const activeModal =
             document.querySelector(
                 ".modal.active"
             );
-
 
         if (!activeModal) {
 
@@ -1188,7 +1041,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
     }
-
 
     function closeAllModals() {
 
@@ -1199,21 +1051,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     "active"
                 );
 
-
                 modal.setAttribute(
                     "aria-hidden",
                     "true"
                 );
-
             }
         );
-
 
         body.classList.remove(
             "modal-open"
         );
     }
-
 
     modalButtons.forEach(
         button => {
@@ -1225,12 +1073,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     openModal(
                         button.dataset.modal
                     );
-
                 }
             );
         }
     );
-
 
     modalCloseButtons.forEach(
         button => {
@@ -1244,12 +1090,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             ".modal"
                         )
                     );
-
                 }
             );
         }
     );
-
 
     modalOverlays.forEach(
         overlay => {
@@ -1263,12 +1107,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             ".modal"
                         )
                     );
-
                 }
             );
         }
     );
-
 
     document.addEventListener(
         "keydown",
@@ -1278,16 +1120,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.key !==
                 "Escape"
             ) {
-
                 return;
             }
-
 
             const activeModal =
                 document.querySelector(
                     ".modal.active"
                 );
-
 
             if (activeModal) {
 
@@ -1297,7 +1136,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     );
-
 
     /* =====================================================
        CONTADOR
@@ -1309,24 +1147,19 @@ document.addEventListener("DOMContentLoaded", () => {
             !taskInput ||
             !characterCounter
         ) {
-
             return;
         }
 
-
         const currentLength =
             taskInput.value.length;
-
 
         const maxLength =
             taskInput.maxLength ||
             500;
 
-
         characterCounter.textContent =
             `${currentLength} / ${maxLength}`;
     }
-
 
     if (taskInput) {
 
@@ -1335,10 +1168,8 @@ document.addEventListener("DOMContentLoaded", () => {
             updateCharacterCounter
         );
 
-
         updateCharacterCounter();
     }
-
 
     /* =====================================================
        GUARDAR TAREA
@@ -1350,20 +1181,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const task =
             taskInput.value.trim();
-
 
         const validation =
             validateTaskContent(
                 task
             );
 
-
-        /* =================================================
-           INCORRECTA
-        ================================================= */
+        /* INCORRECTA */
 
         if (
             !validation.valid
@@ -1372,34 +1198,25 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted =
                 false;
 
-
             removeStorage(
                 STORAGE_TASK
             );
-
 
             showTaskFeedback(
                 `🔴 ${validation.message}`,
                 "error"
             );
 
-
             checkModuleCompletion();
 
-
             taskInput.focus();
-
 
             return;
         }
 
-
-        /* =================================================
-           CORRECTA
-        ================================================= */
+        /* CORRECTA */
 
         const savedTask = {
-
             task:
                 task,
 
@@ -1408,9 +1225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createdAt:
                 new Date().toISOString()
-
         };
-
 
         const saved =
             setStorage(
@@ -1420,7 +1235,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-
         if (!saved) {
 
             showTaskFeedback(
@@ -1428,38 +1242,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
 
-
             return;
         }
 
+        const wasAlreadyCompleted =
+            moduleState.activityCompleted;
 
         moduleState.activityCompleted =
             true;
-
 
         showTaskFeedback(
             "🟢 Tarea guardada correctamente. Actividad completada.",
             "success"
         );
 
+        if (!wasAlreadyCompleted) {
+
+            trackEventOnce(
+                "actividad_completada",
+                "analytics_modulo2_actividad",
+                {
+                    modulo: "2",
+                    actividad: "uso_ia_en_tarea_laboral"
+                }
+            );
+        }
 
         if (saveTaskButton) {
 
             saveTaskButton.innerHTML =
                 "Guardado <span>✓</span>";
 
-
             saveTaskButton.classList.add(
                 "saved"
             );
-
 
             setTimeout(
                 () => {
 
                     saveTaskButton.innerHTML =
                         "Actualizar tarea <span>→</span>";
-
 
                     saveTaskButton.classList.remove(
                         "saved"
@@ -1470,10 +1292,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         checkModuleCompletion();
     }
-
 
     if (saveTaskButton) {
 
@@ -1482,7 +1302,6 @@ document.addEventListener("DOMContentLoaded", () => {
             saveTask
         );
     }
-
 
     /* =====================================================
        RECUPERAR TAREA
@@ -1494,17 +1313,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const storedTask =
             getStorage(
                 STORAGE_TASK
             );
 
-
         if (!storedTask) {
             return;
         }
-
 
         try {
 
@@ -1512,7 +1328,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 JSON.parse(
                     storedTask
                 );
-
 
             if (
                 savedTask &&
@@ -1525,7 +1340,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         savedTask.task
                     );
 
-
                 if (
                     validation.valid
                 ) {
@@ -1533,13 +1347,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     taskInput.value =
                         savedTask.task;
 
-
                     moduleState.activityCompleted =
                         true;
 
-
                     updateCharacterCounter();
-
 
                     if (saveTaskButton) {
 
@@ -1562,16 +1373,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 error
             );
 
-
             removeStorage(
                 STORAGE_TASK
             );
         }
     }
 
-
     loadSavedTask();
-
 
     /* =====================================================
        LIMPIAR FEEDBACK AL ESCRIBIR
@@ -1601,16 +1409,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         "";
                 }
 
-
                 moduleState.activityCompleted =
                     false;
-
 
                 checkModuleCompletion();
             }
         );
     }
-
 
     /* =====================================================
        RETO FINAL
@@ -1625,11 +1430,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     "correct",
                     "incorrect"
                 );
-
             }
         );
     }
-
 
     function answerChallenge(option) {
 
@@ -1637,14 +1440,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         resetChallengeOptions();
-
 
         const isCorrect =
             option.dataset.correct ===
             "true";
-
 
         if (isCorrect) {
 
@@ -1652,27 +1452,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 "correct"
             );
 
+            const wasAlreadyCompleted =
+                moduleState.challengeCompleted;
 
             moduleState.challengeCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_CHALLENGE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "reto_aprobado",
+                    "analytics_modulo2_reto",
+                    {
+                        modulo: "2"
+                    }
+                );
+            }
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show correct";
 
-
                 challengeFeedback.textContent =
                     "✓ Correcto. La IA puede apoyar el trabajo, pero usted mantiene el control, aporta el contexto y revisa el resultado.";
             }
-
 
             checkModuleCompletion();
 
@@ -1682,31 +1491,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 "incorrect"
             );
 
-
             moduleState.challengeCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_CHALLENGE
             );
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.className =
                     "challenge-feedback show incorrect";
 
-
                 challengeFeedback.textContent =
                     "✕ No es la mejor opción. Recuerde que la IA debe utilizarse como apoyo y usted debe revisar y validar sus resultados.";
             }
 
-
             checkModuleCompletion();
         }
     }
-
 
     challengeOptions.forEach(
         option => {
@@ -1718,12 +1521,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     answerChallenge(
                         option
                     );
-
                 }
             );
         }
     );
-
 
     /* =====================================================
        RECUPERAR ESTADO DEL RETO
@@ -1736,7 +1537,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 STORAGE_CHALLENGE
             );
 
-
         if (
             completed ===
             "completado"
@@ -1745,15 +1545,12 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.challengeCompleted =
                 true;
 
-
             resetChallengeOptions();
-
 
             if (challengeFeedback) {
 
                 challengeFeedback.textContent =
                     "";
-
 
                 challengeFeedback.className =
                     "challenge-feedback";
@@ -1761,9 +1558,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     loadChallengeState();
-
 
     /* =====================================================
        CALCULAR PROGRESO
@@ -1771,33 +1566,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function calculateProgress() {
 
-        let completed =
-            0;
-
+        let completed = 0;
 
         if (
             moduleState.activityCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.challengeCompleted
         ) {
-
             completed++;
         }
-
 
         if (
             moduleState.moduleCompleted
         ) {
-
             completed++;
         }
-
 
         return Math.round(
             (
@@ -1806,7 +1593,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ) * 100
         );
     }
-
 
     /* =====================================================
        REQUISITOS
@@ -1823,18 +1609,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const number =
             element.querySelector(
                 ":scope > span"
             );
 
-
         const small =
             element.querySelector(
                 "small"
             );
-
 
         element.classList.remove(
             "completed",
@@ -1842,20 +1625,17 @@ document.addEventListener("DOMContentLoaded", () => {
             "locked"
         );
 
-
         if (completed) {
 
             element.classList.add(
                 "completed"
             );
 
-
             if (number) {
 
                 number.textContent =
                     "✓";
             }
-
 
             if (small) {
 
@@ -1869,7 +1649,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "pending"
             );
 
-
             if (small) {
 
                 small.textContent =
@@ -1877,7 +1656,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-
 
     /* =====================================================
        ACTUALIZAR INTERFAZ
@@ -1888,26 +1666,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const progress =
             calculateProgress();
 
-
         if (progressPercentage) {
 
             progressPercentage.textContent =
                 `${progress}%`;
         }
 
-
         if (progressBar) {
 
             progressBar.style.width =
                 `${progress}%`;
-
 
             progressBar.style.setProperty(
                 "--progress",
                 `${progress}%`
             );
         }
-
 
         updateRequirement(
             requirementActivity,
@@ -1916,7 +1690,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "Pendiente"
         );
 
-
         updateRequirement(
             requirementChallenge,
             moduleState.challengeCompleted,
@@ -1924,14 +1697,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "Pendiente"
         );
 
-
         updateRequirement(
             requirementModule,
             moduleState.moduleCompleted,
             "Módulo aprobado",
             "Bloqueado"
         );
-
 
         if (
             moduleState.moduleCompleted
@@ -1944,10 +1715,8 @@ document.addEventListener("DOMContentLoaded", () => {
             lockNextModule();
         }
 
-
         saveCourseProgress();
     }
-
 
     /* =====================================================
        GUARDAR PROGRESO GENERAL
@@ -1955,9 +1724,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function saveCourseProgress() {
 
-        let existingProgress =
-            {};
-
+        let existingProgress = {};
 
         try {
 
@@ -1965,7 +1732,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.getItem(
                     STORAGE_PROGRESS
                 );
-
 
             if (stored) {
 
@@ -1983,7 +1749,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-
         existingProgress.modulo2 = {
 
             actividad:
@@ -1994,9 +1759,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             completado:
                 moduleState.moduleCompleted
-
         };
-
 
         setStorage(
             STORAGE_PROGRESS,
@@ -2005,7 +1768,6 @@ document.addEventListener("DOMContentLoaded", () => {
             )
         );
     }
-
 
     /* =====================================================
        COMPLETAR MÓDULO
@@ -2017,33 +1779,43 @@ document.addEventListener("DOMContentLoaded", () => {
             moduleState.activityCompleted &&
             moduleState.challengeCompleted;
 
-
         if (completed) {
+
+            const wasAlreadyCompleted =
+                moduleState.moduleCompleted;
 
             moduleState.moduleCompleted =
                 true;
-
 
             setStorage(
                 STORAGE_MODULE,
                 "completado"
             );
 
+            if (!wasAlreadyCompleted) {
+
+                trackEventOnce(
+                    "modulo_completado",
+                    "analytics_modulo2_completado",
+                    {
+                        modulo: "2",
+                        nombre_modulo: "IA como asistente de trabajo"
+                    }
+                );
+            }
+
         } else {
 
             moduleState.moduleCompleted =
                 false;
-
 
             removeStorage(
                 STORAGE_MODULE
             );
         }
 
-
         updateModuleUI();
     }
-
 
     /* =====================================================
        BLOQUEAR SIGUIENTE
@@ -2055,28 +1827,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "true"
         );
 
-
         nextModuleButton.classList.remove(
             "unlocked"
         );
 
-
         nextModuleButton.innerHTML = `
-
             Módulo 3 bloqueado
-
             <span>
                 🔒
             </span>
-
         `;
-
 
         if (moduleComplete) {
 
@@ -2084,12 +1849,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.remove(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
@@ -2097,14 +1860,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "MÓDULO 02 BLOQUEADO";
         }
 
-
         if (completionMessage) {
 
             completionMessage.textContent =
                 "Complete la actividad práctica y responda correctamente el reto para habilitar el Módulo 3.";
         }
     }
-
 
     /* =====================================================
        DESBLOQUEAR SIGUIENTE
@@ -2116,28 +1877,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         nextModuleButton.setAttribute(
             "aria-disabled",
             "false"
         );
 
-
         nextModuleButton.classList.add(
             "unlocked"
         );
 
-
         nextModuleButton.innerHTML = `
-
             Ir al Módulo 3
-
             <span>
                 →
             </span>
-
         `;
-
 
         if (moduleComplete) {
 
@@ -2145,12 +1899,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "blocked"
             );
 
-
             moduleComplete.classList.add(
                 "completed"
             );
         }
-
 
         if (completionLabel) {
 
@@ -2158,14 +1910,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "MÓDULO 02 COMPLETADO";
         }
 
-
         if (completionMessage) {
 
             completionMessage.textContent =
                 "¡Felicitaciones! Usted completó y aprobó el Módulo 2. Ahora puede continuar con el Módulo 3.";
         }
     }
-
 
     /* =====================================================
        PROTEGER ENLACE AL MÓDULO 3
@@ -2183,7 +1933,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     event.preventDefault();
 
-
                     if (
                         completionMessage
                     ) {
@@ -2195,7 +1944,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
-
 
     /* =====================================================
        ANIMACIONES
@@ -2209,7 +1957,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".transformation-column, " +
             ".result-list > div"
         );
-
 
     if (
         "IntersectionObserver" in window
@@ -2228,32 +1975,26 @@ document.addEventListener("DOMContentLoaded", () => {
                             if (
                                 !entry.isIntersecting
                             ) {
-
                                 return;
                             }
-
 
                             entry.target.style.opacity =
                                 "1";
 
-
                             entry.target.style.transform =
                                 "translateY(0)";
-
 
                             observerInstance.unobserve(
                                 entry.target
                             );
                         }
                     );
-
                 },
                 {
                     threshold:
                         0.12
                 }
             );
-
 
         animatedElements.forEach(
             (
@@ -2264,15 +2005,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 element.style.opacity =
                     "0";
 
-
                 element.style.transform =
                     "translateY(25px)";
-
 
                 element.style.transition =
                     `opacity 0.7s ease ${index * 0.06}s, ` +
                     `transform 0.7s ease ${index * 0.06}s`;
-
 
                 observer.observe(
                     element
@@ -2280,7 +2018,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
-
 
     /* =====================================================
        ANCLAJES SUAVES
@@ -2302,42 +2039,33 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "href"
                             );
 
-
                         if (
                             !targetId ||
                             targetId === "#"
                         ) {
-
                             return;
                         }
-
 
                         const target =
                             document.querySelector(
                                 targetId
                             );
 
-
                         if (!target) {
-
                             return;
                         }
 
-
                         event.preventDefault();
-
 
                         const header =
                             document.querySelector(
                                 ".module-header"
                             );
 
-
                         const headerHeight =
                             header
                                 ? header.offsetHeight
                                 : 0;
-
 
                         const targetPosition =
                             target
@@ -2347,21 +2075,17 @@ document.addEventListener("DOMContentLoaded", () => {
                             headerHeight -
                             20;
 
-
                         window.scrollTo({
-
                             top:
                                 targetPosition,
 
                             behavior:
                                 "smooth"
-
                         });
                     }
                 );
             }
         );
-
 
     /* =====================================================
        SCROLL
@@ -2369,11 +2093,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ====================================================== */
 
     function updateScrollProgress() {
-
         /* Intencionalmente vacío. */
-
     }
-
 
     window.addEventListener(
         "scroll",
@@ -2383,6 +2104,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
+    /* =====================================================
+       LIMPIAR MODALES AL SALIR
+    ====================================================== */
+
+    window.addEventListener(
+        "beforeunload",
+        () => {
+            closeAllModals();
+        }
+    );
 
     /* =====================================================
        ESTADO INICIAL
@@ -2393,7 +2124,6 @@ document.addEventListener("DOMContentLoaded", () => {
             STORAGE_MODULE
         );
 
-
     if (
         savedModule ===
         "completado"
@@ -2403,13 +2133,11 @@ document.addEventListener("DOMContentLoaded", () => {
             true;
     }
 
-
     /* =====================================================
        PROTEGER ACCESO AL MÓDULO 02
     ====================================================== */
 
     protectModuleTwo();
-
 
     /* =====================================================
        COMPROBAR ESTADO
@@ -2417,9 +2145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     checkModuleCompletion();
 
-
     updateCharacterCounter();
-
 
     /* =====================================================
        MEZCLAR OPCIONES
@@ -2428,22 +2154,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     shuffleChallengeOptions();
 
-
     /* =====================================================
        INICIO
     ====================================================== */
 
-    body.classList.add(
-        "js-ready"
-    );
+    if (body) {
 
+        body.classList.add(
+            "js-ready"
+        );
+    }
 
     /* =====================================================
        LOG
     ====================================================== */
 
     console.log(
-        "✓ El Empleado Aumentado — Módulo 02 cargado correctamente."
+        "✓ El Empleado Aumentado — Módulo 02 cargado correctamente con Google Analytics."
     );
 
 });
