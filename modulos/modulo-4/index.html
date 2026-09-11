@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -36,7 +35,11 @@
 
         <div class="header-container">
 
-            <a href="../../index.html" class="brand">
+            <a
+                href="../../index.html"
+                class="brand"
+                aria-label="Volver al inicio"
+            >
 
                 <span class="brand-mark">
                     EA
@@ -70,7 +73,10 @@
             </div>
 
 
-            <a href="../../index.html" class="back-link">
+            <a
+                href="../../index.html"
+                class="back-link"
+            >
                 ← Volver
             </a>
 
@@ -87,7 +93,10 @@
              HERO
         ================================================== -->
 
-        <section class="hero" id="inicio">
+        <section
+            class="hero"
+            id="inicio"
+        >
 
             <div class="hero-background">
 
@@ -113,6 +122,7 @@
                     <h1>
 
                         Automatizar
+
                         <span>
                             para trabajar mejor
                         </span>
@@ -136,8 +146,11 @@
                             class="button button-primary"
                         >
                             Comenzar módulo
-                            <span>→</span>
+                            <span>
+                                →
+                            </span>
                         </a>
+
 
                         <a
                             href="#ejercicio"
@@ -279,7 +292,10 @@
              INTRODUCCIÓN
         ================================================== -->
 
-        <section class="section intro" id="introduccion">
+        <section
+            class="section intro"
+            id="introduccion"
+        >
 
             <div class="container intro-grid">
 
@@ -331,7 +347,6 @@
                         que intervienen y establecer con claridad cuál
                         debe ser el resultado.
                     </p>
-
 
                 </div>
 
@@ -398,7 +413,10 @@
              CAPACIDADES
         ================================================== -->
 
-        <section class="section capabilities" id="capacidades">
+        <section
+            class="section capabilities"
+            id="capacidades"
+        >
 
             <div class="container">
 
@@ -426,8 +444,6 @@
 
                 <div class="capabilities-grid">
 
-
-                    <!-- CARD 1 -->
 
                     <article
                         class="capability-card"
@@ -467,8 +483,6 @@
 
 
 
-                    <!-- CARD 2 -->
-
                     <article
                         class="capability-card"
                         data-modal="disenar"
@@ -507,8 +521,6 @@
 
 
 
-                    <!-- CARD 3 -->
-
                     <article
                         class="capability-card"
                         data-modal="ejecutar"
@@ -546,8 +558,6 @@
                     </article>
 
 
-
-                    <!-- CARD 4 -->
 
                     <article
                         class="capability-card"
@@ -597,7 +607,10 @@
              THINKING
         ================================================== -->
 
-        <section class="section thinking" id="criterio">
+        <section
+            class="section thinking"
+            id="criterio"
+        >
 
             <div class="container">
 
@@ -742,7 +755,6 @@
 
                         </div>
 
-
                     </div>
 
                 </div>
@@ -757,7 +769,10 @@
              MÉTODO
         ================================================== -->
 
-        <section class="section method" id="metodo">
+        <section
+            class="section method"
+            id="metodo"
+        >
 
             <div class="container">
 
@@ -887,7 +902,6 @@
 
                     </article>
 
-
                 </div>
 
             </div>
@@ -900,7 +914,10 @@
              EJERCICIO
         ================================================== -->
 
-        <section class="section exercise" id="ejercicio">
+        <section
+            class="section exercise"
+            id="ejercicio"
+        >
 
             <div class="container">
 
@@ -948,7 +965,6 @@
                         </p>
 
 
-
                         <div class="exercise-examples">
 
                             <span>
@@ -989,6 +1005,7 @@
 
                         <textarea
                             id="automationInput"
+                            name="automationInput"
                             maxlength="500"
                             placeholder="Ejemplo: cada viernes consolido información de diferentes archivos de Excel, reviso los datos y envío un reporte por correo."
                         ></textarea>
@@ -996,7 +1013,7 @@
 
                         <div class="form-footer">
 
-                            <span id="indicatorCounter">
+                            <span id="characterCounter">
                                 0 / 500
                             </span>
 
@@ -1006,7 +1023,9 @@
                                 id="analyzeTask"
                             >
                                 Analizar tarea
-                                <span>→</span>
+                                <span>
+                                    →
+                                </span>
                             </button>
 
                         </div>
@@ -1015,6 +1034,7 @@
                         <div
                             class="task-feedback"
                             id="taskFeedback"
+                            aria-live="polite"
                         ></div>
 
                     </div>
@@ -1031,7 +1051,10 @@
              RESPONSIBILITY
         ================================================== -->
 
-        <section class="section responsibility" id="responsabilidad">
+        <section
+            class="section responsibility"
+            id="responsabilidad"
+        >
 
             <div class="container">
 
@@ -1120,7 +1143,6 @@
 
                     </article>
 
-
                 </div>
 
             </div>
@@ -1133,7 +1155,10 @@
              TRANSFORMACIÓN
         ================================================== -->
 
-        <section class="section transformation" id="transformacion">
+        <section
+            class="section transformation"
+            id="transformacion"
+        >
 
             <div class="container">
 
@@ -1241,7 +1266,10 @@
              CHALLENGE
         ================================================== -->
 
-        <section class="section challenge" id="reto">
+        <section
+            class="section challenge"
+            id="reto"
+        >
 
             <div class="container">
 
@@ -1369,6 +1397,7 @@
                     <div
                         class="challenge-feedback"
                         id="challengeFeedback"
+                        aria-live="polite"
                     ></div>
 
                 </div>
@@ -1397,6 +1426,10 @@
 
 
                     <div class="result-content">
+
+                        <span class="section-kicker">
+                            LO ESENCIAL
+                        </span>
 
                         <h2>
                             Automatizar es convertir un proceso claro
@@ -1472,38 +1505,153 @@
 
 
         <!-- =================================================
+             ESTADO DEL MÓDULO
+        ================================================== -->
+
+        <section
+            class="section module-status-section"
+            id="moduleStatus"
+        >
+
+            <div class="container">
+
+                <div class="module-progress-info">
+
+                    <span>
+                        MÓDULO 04
+                    </span>
+
+                    <strong id="progressPercentage">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="module-requirements">
+
+
+                    <div
+                        class="requirement-item"
+                        id="requirementActivity"
+                    >
+
+                        <span>
+                            01
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Actividad práctica
+                            </strong>
+
+                            <small>
+                                Pendiente
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="requirement-item"
+                        id="requirementChallenge"
+                    >
+
+                        <span>
+                            02
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Reto de comprensión
+                            </strong>
+
+                            <small>
+                                Pendiente
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="requirement-item"
+                        id="requirementModule"
+                    >
+
+                        <span>
+                            03
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Módulo aprobado
+                            </strong>
+
+                            <small>
+                                Bloqueado
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
              NEXT MODULE
         ================================================== -->
 
-        <section class="next-module">
+        <section
+            class="next-module blocked"
+            id="moduleComplete"
+        >
 
             <div class="container">
 
                 <div class="next-module-content">
 
-                    <span class="next-label">
-                        MÓDULO 04 COMPLETADO
+                    <span
+                        class="next-label"
+                        id="completionLabel"
+                    >
+                        MÓDULO 04 BLOQUEADO
                     </span>
 
                     <h2>
                         Del proceso a la solución.
                     </h2>
 
-                    <p>
-                        Ya comprende cómo identificar oportunidades de
-                        automatización y convertir una tarea repetitiva
-                        en un flujo más claro y controlado.
-                        El siguiente paso es integrar las herramientas
-                        y construir soluciones que conecten personas,
-                        datos, tecnología e inteligencia artificial.
+                    <p id="completionMessage">
+                        Complete la actividad práctica y el reto de comprensión
+                        para habilitar el Módulo 05.
                     </p>
 
                     <a
                         href="../modulo-5/index.html"
                         class="next-button"
+                        id="nextModuleButton"
+                        aria-disabled="true"
                     >
-                        Ir al Módulo 05
-                        <span>→</span>
+                        Módulo 05 bloqueado
+                        <span>
+                            🔒
+                        </span>
                     </a>
 
                 </div>
@@ -1517,9 +1665,9 @@
 
 
 
-    <!-- =====================================================
+    <!-- =================================================
          MODAL DETECTAR
-    ====================================================== -->
+    ================================================== -->
 
     <div
         class="modal"
@@ -1529,7 +1677,11 @@
 
         <div class="modal-overlay"></div>
 
-        <div class="modal-window">
+        <div
+            class="modal-window"
+            role="dialog"
+            aria-modal="true"
+        >
 
             <button
                 type="button"
@@ -1595,7 +1747,7 @@
 
     <!-- =================================================
          MODAL DISEÑAR
-    ====================================================== -->
+    ================================================== -->
 
     <div
         class="modal"
@@ -1605,7 +1757,11 @@
 
         <div class="modal-overlay"></div>
 
-        <div class="modal-window">
+        <div
+            class="modal-window"
+            role="dialog"
+            aria-modal="true"
+        >
 
             <button
                 type="button"
@@ -1690,7 +1846,7 @@
 
     <!-- =================================================
          MODAL EJECUTAR
-    ====================================================== -->
+    ================================================== -->
 
     <div
         class="modal"
@@ -1700,7 +1856,11 @@
 
         <div class="modal-overlay"></div>
 
-        <div class="modal-window">
+        <div
+            class="modal-window"
+            role="dialog"
+            aria-modal="true"
+        >
 
             <button
                 type="button"
@@ -1781,7 +1941,7 @@
 
     <!-- =================================================
          MODAL VALIDAR
-    ====================================================== -->
+    ================================================== -->
 
     <div
         class="modal"
@@ -1791,7 +1951,11 @@
 
         <div class="modal-overlay"></div>
 
-        <div class="modal-window">
+        <div
+            class="modal-window"
+            role="dialog"
+            aria-modal="true"
+        >
 
             <button
                 type="button"
@@ -1929,4 +2093,3 @@
 </body>
 
 </html>
-

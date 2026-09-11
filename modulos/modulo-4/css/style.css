@@ -1984,6 +1984,580 @@ img {
 }
 
 /* =========================================================
+   PROGRESO Y REQUISITOS — MÓDULO 04
+========================================================= */
+
+.module-status-section {
+    padding: 35px 0 70px;
+
+    background:
+        var(--white);
+}
+
+.module-progress-info {
+    max-width: 1000px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.module-progress-info span {
+    color:
+        var(--text-muted);
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+.module-progress-info strong {
+    color:
+        var(--purple);
+
+    font-family:
+        var(--font-display);
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   REQUISITOS
+========================================================= */
+
+.module-requirements {
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.requirement-item {
+    min-height: 76px;
+
+    padding: 15px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    background:
+        var(--bg);
+
+    transition:
+        transform var(--transition),
+        background var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.requirement-item > span {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #e9e6f0;
+
+    color:
+        var(--text-muted);
+
+    font-family:
+        var(--font-display);
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        transform var(--transition);
+}
+
+.requirement-item div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.requirement-item strong {
+    color:
+        var(--text-soft);
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+}
+
+.requirement-item small {
+    color:
+        var(--text-muted);
+
+    font-size: 0.65rem;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PENDIENTE
+========================================================= */
+
+.requirement-item.pending {
+    border-color:
+        var(--border);
+
+    background:
+        var(--bg);
+}
+
+
+/* =========================================================
+   COMPLETADO
+========================================================= */
+
+.requirement-item.completed {
+    border-color:
+        rgba(5, 150, 105, 0.28);
+
+    background:
+        rgba(5, 150, 105, 0.055);
+}
+
+.requirement-item.completed > span {
+    background:
+        var(--green);
+
+    color:
+        var(--white);
+
+    transform:
+        scale(1.05);
+}
+
+.requirement-item.completed strong {
+    color:
+        var(--green);
+}
+
+.requirement-item.completed small {
+    color:
+        var(--green);
+}
+
+
+/* =========================================================
+   BLOQUEADO
+========================================================= */
+
+.requirement-item.locked {
+    opacity:
+        0.72;
+
+    background:
+        #f0eef3;
+}
+
+.requirement-item.locked > span {
+    background:
+        #dedbe4;
+
+    color:
+        #878291;
+}
+
+.requirement-item.locked strong {
+    color:
+        #77727f;
+}
+
+
+/* =========================================================
+   SIGUIENTE MÓDULO — BLOQUEADO
+========================================================= */
+
+.next-module.blocked {
+    background:
+        linear-gradient(
+            135deg,
+            #eee9f8,
+            #ddd7eb
+        );
+
+    color:
+        var(--text-soft);
+}
+
+.next-module.blocked .next-label {
+    color:
+        var(--purple-dark);
+}
+
+.next-module.blocked h2 {
+    color:
+        var(--text);
+}
+
+.next-module.blocked p {
+    color:
+        var(--text-muted);
+}
+
+.next-button[aria-disabled="true"] {
+    cursor:
+        not-allowed;
+
+    pointer-events:
+        auto;
+
+    opacity:
+        0.62;
+
+    background:
+        #b7afc7;
+
+    color:
+        white;
+
+    box-shadow:
+        none;
+}
+
+.next-button[aria-disabled="true"]:hover {
+    transform:
+        none;
+
+    box-shadow:
+        none;
+
+    background:
+        #b7afc7;
+}
+
+.next-button.unlocked {
+    cursor:
+        pointer;
+
+    opacity:
+        1;
+
+    background:
+        var(--purple);
+
+    color:
+        var(--white);
+
+    box-shadow:
+        var(--shadow-purple);
+}
+
+.next-button.unlocked:hover {
+    transform:
+        translateY(-3px);
+
+    background:
+        var(--purple-dark);
+
+    box-shadow:
+        var(--shadow-purple-hover);
+}
+
+.next-module.completed {
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple-dark),
+            var(--purple)
+        );
+
+    color:
+        var(--white);
+}
+
+.next-module.completed .next-label {
+    color:
+        #d8c7ff;
+}
+
+.next-module.completed h2 {
+    color:
+        var(--white);
+}
+
+.next-module.completed p {
+    color:
+        rgba(255, 255, 255, 0.78);
+}
+
+
+/* =========================================================
+   ACCESO BLOQUEADO AL MÓDULO 04
+========================================================= */
+
+.module-access-message {
+    position: fixed;
+
+    top: 78px;
+    left: 50%;
+
+    z-index: 1500;
+
+    width:
+        min(
+            720px,
+            calc(100% - 30px)
+        );
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px 17px;
+
+    border:
+        1px solid var(--purple-border);
+
+    border-radius:
+        0 0 14px 14px;
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    color:
+        var(--text-soft);
+
+    box-shadow:
+        0 15px 35px rgba(31, 24, 56, 0.12);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    font-size:
+        0.72rem;
+}
+
+.module-access-message strong {
+    color:
+        var(--purple-dark);
+
+    white-space:
+        nowrap;
+}
+
+.module-access-message span {
+    flex:
+        1;
+
+    color:
+        var(--text-muted);
+}
+
+.module-access-message a {
+    flex-shrink:
+        0;
+
+    padding:
+        7px 12px;
+
+    border-radius:
+        8px;
+
+    background:
+        var(--purple);
+
+    color:
+        var(--white);
+
+    font-size:
+        0.65rem;
+
+    font-weight:
+        700;
+
+    transition:
+        transform var(--transition),
+        background var(--transition);
+}
+
+.module-access-message a:hover {
+    background:
+        var(--purple-dark);
+
+    transform:
+        translateY(-1px);
+}
+
+body.module-access-blocked main {
+    pointer-events:
+        none;
+
+    user-select:
+        none;
+}
+
+body.module-access-blocked .module-header {
+    pointer-events:
+        auto;
+}
+
+
+/* =========================================================
+   ACTIVIDAD GUARDADA
+========================================================= */
+
+#analyzeTask.saved {
+    background:
+        var(--green);
+
+    border-color:
+        var(--green);
+}
+
+#analyzeTask.saved:hover {
+    background:
+        #047857;
+}
+
+
+/* =========================================================
+   TEXTAREA DESHABILITADO
+========================================================= */
+
+.exercise-form textarea:disabled {
+    opacity:
+        0.65;
+
+    cursor:
+        not-allowed;
+
+    background:
+        #eceaf0;
+}
+
+
+/* =========================================================
+   RESPONSIVE — 700px
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .module-status-section {
+        padding:
+            25px 0 55px;
+    }
+
+    .module-requirements {
+        grid-template-columns:
+            1fr;
+    }
+
+    .requirement-item {
+        min-height:
+            68px;
+    }
+
+    .module-access-message {
+        top:
+            70px;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        gap:
+            8px;
+
+        padding:
+            12px 15px;
+    }
+
+    .module-access-message strong {
+        white-space:
+            normal;
+    }
+
+    .module-access-message a {
+        text-align:
+            center;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — 420px
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .module-progress-info span {
+        font-size:
+            0.6rem;
+    }
+
+    .module-progress-info strong {
+        font-size:
+            0.85rem;
+    }
+
+    .requirement-item {
+        padding:
+            13px;
+    }
+
+    .requirement-item > span {
+        width:
+            36px;
+
+        height:
+            36px;
+    }
+}
+
+/* =========================================================
    RESPONSIVE
 ========================================================= */
 

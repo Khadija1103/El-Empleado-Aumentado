@@ -1,1067 +1,896 @@
 <!DOCTYPE html>
-
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta
+        name="description"
+        content="El Empleado Aumentado — Módulo 02: IA como asistente de trabajo."
+    >
 
-<meta
-    name="description"
-    content="El Empleado Aumentado — Módulo 02: IA como asistente de trabajo."
->
+    <title>El Empleado Aumentado | Módulo 02</title>
 
-<title>El Empleado Aumentado | Módulo 02</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- Tipografías -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
-<link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
->
-
-<!-- CSS DEL MÓDULO 2 -->
-<link rel="stylesheet" href="./css/style.css">
-
-
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-====================================================== -->
 <header class="module-header">
+
     <div class="header-container">
 
         <a href="../../index.html" class="brand">
-            <span class="brand-mark">EA</span>
+
+            <span class="brand-mark">
+                EA
+            </span>
 
             <span class="brand-text">
                 <strong>El Empleado</strong>
                 <span>Aumentado</span>
             </span>
+
         </a>
 
         <div class="module-progress">
-            <span>MÓDULO 02</span>
+
+            <span>
+                MÓDULO 02
+            </span>
 
             <div class="progress-line">
                 <span id="progressBar"></span>
             </div>
+
         </div>
 
-        <a href="../../index.html" class="back-link">
+        <a
+            href="../../index.html"
+            class="back-link"
+        >
             ← Volver
         </a>
 
     </div>
+
 </header>
+
 
 <main>
 
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
-    <section class="hero" id="inicio">
+<!-- =====================================================
+     HERO
+====================================================== -->
 
-        <div class="hero-background">
-            <div class="hero-grid"></div>
-            <div class="hero-glow hero-glow-one"></div>
-            <div class="hero-glow hero-glow-two"></div>
+<section class="hero" id="inicio">
+
+    <div class="hero-background">
+
+        <div class="hero-grid"></div>
+
+        <div class="hero-glow hero-glow-one"></div>
+
+        <div class="hero-glow hero-glow-two"></div>
+
+    </div>
+
+    <div class="container hero-container">
+
+        <div class="hero-intro">
+
+            <span class="eyebrow">
+                MÓDULO 02 · INTELIGENCIA ARTIFICIAL
+            </span>
+
+            <h1>
+                IA como
+                <span>asistente de trabajo</span>
+            </h1>
+
+            <p class="hero-text">
+                Aprenda a utilizar la Inteligencia Artificial
+                para pensar, analizar, redactar, organizar
+                información y resolver tareas reales de trabajo.
+            </p>
+
+            <div class="hero-actions">
+
+                <a
+                    href="#capacidades"
+                    class="button button-primary"
+                >
+                    Comenzar
+                    <span>→</span>
+                </a>
+
+                <a
+                    href="#metodo"
+                    class="button button-secondary"
+                >
+                    Explorar módulo
+                </a>
+
+            </div>
+
         </div>
 
-        <div class="container hero-container">
 
-            <div class="hero-intro">
+        <div class="hero-visual">
 
-                <span class="eyebrow">
-                    MÓDULO 02 · INTELIGENCIA ARTIFICIAL
+            <div class="ai-card">
+
+                <div class="ai-card-top">
+
+                    <div>
+
+                        <span>
+                            ASISTENTE DE TRABAJO
+                        </span>
+
+                        <strong>
+                            IA + PERSONA
+                        </strong>
+
+                    </div>
+
+                    <div class="ai-status">
+                        ACTIVO
+                    </div>
+
+                </div>
+
+
+                <div class="ai-conversation">
+
+                    <div class="message message-user">
+
+                        <span class="message-label">
+                            USTED
+                        </span>
+
+                        <p>
+                            Necesito preparar un informe
+                            con los resultados de este mes.
+                        </p>
+
+                    </div>
+
+
+                    <div class="message message-ai">
+
+                        <span class="message-label">
+                            IA
+                        </span>
+
+                        <p>
+                            Puedo ayudarle a organizar los datos,
+                            identificar tendencias y preparar
+                            una estructura para el informe.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-footer">
+
+                    <span>
+                        Usted define el objetivo.
+                    </span>
+
+                    <span>
+                        La IA apoya el proceso.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-label floating-label-one">
+                ANALIZAR
+            </div>
+
+            <div class="floating-label floating-label-two">
+                ORGANIZAR
+            </div>
+
+            <div class="floating-label floating-label-three">
+                CREAR
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INTRODUCCIÓN
+====================================================== -->
+
+<section
+    class="section intro"
+    id="introduccion"
+>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                01
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    PUNTO DE PARTIDA
                 </span>
 
-                <h1>
-                    IA como
-                    <span>asistente de trabajo</span>
-                </h1>
-
-                <p class="hero-text">
-                    Aprenda a utilizar la Inteligencia Artificial
-                    para pensar, analizar, redactar, organizar
-                    información y resolver tareas reales de trabajo.
-                </p>
-
-                <div class="hero-actions">
-
-                    <a
-                        href="#capacidades"
-                        class="button button-primary"
-                    >
-                        Comenzar
-                        <span>→</span>
-                    </a>
-
-                    <a
-                        href="#metodo"
-                        class="button button-secondary"
-                    >
-                        Explorar módulo
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="hero-visual">
-
-                <div class="ai-card">
-
-                    <div class="ai-card-top">
-
-                        <div>
-                            <span>
-                                ASISTENTE DE TRABAJO
-                            </span>
-
-                            <strong>
-                                IA + PERSONA
-                            </strong>
-                        </div>
-
-                        <div class="ai-status">
-                            ACTIVO
-                        </div>
-
-                    </div>
-
-                    <div class="ai-conversation">
-
-                        <div class="message message-user">
-
-                            <span class="message-label">
-                                USTED
-                            </span>
-
-                            <p>
-                                Necesito preparar un informe
-                                con los resultados de este mes.
-                            </p>
-
-                        </div>
-
-                        <div class="message message-ai">
-
-                            <span class="message-label">
-                                IA
-                            </span>
-
-                            <p>
-                                Puedo ayudarle a organizar los datos,
-                                identificar tendencias y preparar
-                                una estructura para el informe.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="ai-footer">
-
-                        <span>
-                            Usted define el objetivo.
-                        </span>
-
-                        <span>
-                            La IA apoya el proceso.
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="floating-label floating-label-one">
-                    ANALIZAR
-                </div>
-
-                <div class="floating-label floating-label-two">
-                    ORGANIZAR
-                </div>
-
-                <div class="floating-label floating-label-three">
-                    CREAR
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         INTRODUCCIÓN
-    ====================================================== -->
-    <section class="section intro" id="introduccion">
-
-        <div class="container">
-
-            <div class="section-header">
-
-                <span class="section-number">01</span>
-
-                <div>
-
-                    <span class="section-kicker">
-                        PUNTO DE PARTIDA
-                    </span>
-
-                    <h2>
-                        La IA no es el objetivo.
-                        Es una herramienta.
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="intro-grid">
-
-                <div class="intro-content">
-
-                    <p class="lead">
-                        El verdadero cambio ocurre cuando usted
-                        aprende a incorporar la IA en las tareas
-                        que ya realiza todos los días.
-                    </p>
-
-                    <p>
-                        Preparar documentos, organizar información,
-                        analizar resultados, responder mensajes,
-                        comparar alternativas o generar ideas son
-                        actividades donde la Inteligencia Artificial
-                        puede convertirse en un apoyo.
-                    </p>
-
-                    <p>
-                        La meta de este módulo no es convertirlo
-                        en programador ni enseñarle únicamente
-                        a escribir instrucciones para una IA.
-                    </p>
-
-                    <p>
-                        La meta es aprender a
-                        <strong>trabajar mejor con la tecnología.</strong>
-                    </p>
-
-                </div>
-
-                <aside class="statement-card">
-
-                    <span class="statement-mark">“</span>
-
-                    <p>
-                        Una buena herramienta no reemplaza
-                        el criterio de quien la utiliza.
-                    </p>
-
-                    <span class="statement-author">
-                        EL EMPLEADO AUMENTADO
-                    </span>
-
-                </aside>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         IDEA CENTRAL
-    ====================================================== -->
-    <section class="section central-idea">
-
-        <div class="container">
-
-            <div class="central-card">
-
-                <div class="central-card-label">
-                    LA IDEA CENTRAL
-                </div>
-
                 <h2>
-                    No se trata de preguntarle más cosas a la IA.
-                    Se trata de trabajar mejor con ella.
+                    La IA no es el objetivo.
+                    Es una herramienta.
                 </h2>
 
+            </div>
+
+        </div>
+
+
+        <div class="intro-grid">
+
+            <div class="intro-content">
+
+                <p class="lead">
+                    El verdadero cambio ocurre cuando usted
+                    aprende a incorporar la IA en las tareas
+                    que ya realiza todos los días.
+                </p>
+
                 <p>
-                    Para conseguir buenos resultados debemos aprender
-                    a explicar qué necesitamos, proporcionar contexto,
-                    definir el resultado esperado y revisar la respuesta.
+                    Preparar documentos, organizar información,
+                    analizar resultados, responder mensajes,
+                    comparar alternativas o generar ideas son
+                    actividades donde la Inteligencia Artificial
+                    puede convertirse en un apoyo.
+                </p>
+
+                <p>
+                    La meta de este módulo no es convertirlo
+                    en programador ni enseñarle únicamente
+                    a escribir instrucciones para una IA.
+                </p>
+
+                <p>
+                    La meta es aprender a
+                    <strong>trabajar mejor con la tecnología.</strong>
+                </p>
+
+            </div>
+
+
+            <aside class="statement-card">
+
+                <span class="statement-mark">
+                    “
+                </span>
+
+                <p>
+                    Una buena herramienta no reemplaza
+                    el criterio de quien la utiliza.
+                </p>
+
+                <span class="statement-author">
+                    EL EMPLEADO AUMENTADO
+                </span>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     IDEA CENTRAL
+====================================================== -->
+
+<section class="section central-idea">
+
+    <div class="container">
+
+        <div class="central-card">
+
+            <div class="central-card-label">
+                LA IDEA CENTRAL
+            </div>
+
+            <h2>
+                No se trata de preguntarle más cosas a la IA.
+                Se trata de trabajar mejor con ella.
+            </h2>
+
+            <p>
+                Para conseguir buenos resultados debemos aprender
+                a explicar qué necesitamos, proporcionar contexto,
+                definir el resultado esperado y revisar la respuesta.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CAPACIDADES
+====================================================== -->
+
+<section
+    class="section capabilities"
+    id="capacidades"
+>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                02
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    CAPACIDADES
+                </span>
+
+                <h2>
+                    ¿Qué puede hacer la IA por usted?
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="capabilities-grid">
+
+            <article class="capability-card">
+
+                <span class="capability-number">
+                    01
+                </span>
+
+                <div class="capability-icon">
+                    ✦
+                </div>
+
+                <span class="capability-tag">
+                    INFORMACIÓN
+                </span>
+
+                <h3>
+                    Analizar
+                </h3>
+
+                <p>
+                    Encontrar patrones, diferencias,
+                    problemas y oportunidades.
+                </p>
+
+                <button
+                    type="button"
+                    class="text-button"
+                    data-modal="analizar"
+                >
+                    Ver más →
+                </button>
+
+            </article>
+
+
+            <article class="capability-card">
+
+                <span class="capability-number">
+                    02
+                </span>
+
+                <div class="capability-icon">
+                    ≡
+                </div>
+
+                <span class="capability-tag">
+                    INFORMACIÓN
+                </span>
+
+                <h3>
+                    Resumir
+                </h3>
+
+                <p>
+                    Convertir documentos extensos
+                    en información clara y útil.
+                </p>
+
+                <button
+                    type="button"
+                    class="text-button"
+                    data-modal="resumir"
+                >
+                    Ver más →
+                </button>
+
+            </article>
+
+
+            <article class="capability-card">
+
+                <span class="capability-number">
+                    03
+                </span>
+
+                <div class="capability-icon">
+                    Aa
+                </div>
+
+                <span class="capability-tag">
+                    COMUNICACIÓN
+                </span>
+
+                <h3>
+                    Redactar
+                </h3>
+
+                <p>
+                    Crear y mejorar correos, informes
+                    y diferentes tipos de documentos.
+                </p>
+
+                <button
+                    type="button"
+                    class="text-button"
+                    data-modal="redactar"
+                >
+                    Ver más →
+                </button>
+
+            </article>
+
+
+            <article class="capability-card">
+
+                <span class="capability-number">
+                    04
+                </span>
+
+                <div class="capability-icon">
+                    ⇄
+                </div>
+
+                <span class="capability-tag">
+                    DECISIÓN
+                </span>
+
+                <h3>
+                    Comparar
+                </h3>
+
+                <p>
+                    Identificar diferencias,
+                    ventajas, riesgos y alternativas.
+                </p>
+
+                <button
+                    type="button"
+                    class="text-button"
+                    data-modal="comparar"
+                >
+                    Ver más →
+                </button>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PENSAR ANTES DE USAR IA
+====================================================== -->
+
+<section class="section thinking">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                03
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    ANTES DE PREGUNTAR
+                </span>
+
+                <h2>
+                    Piense primero en la tarea.
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="thinking-layout">
+
+            <div class="thinking-main">
+
+                <p class="lead">
+                    Una IA no puede adivinar qué resultado
+                    necesita usted.
+                </p>
+
+                <p>
+                    Antes de abrir una herramienta de IA,
+                    deténgase unos segundos y defina el trabajo
+                    que quiere resolver.
+                </p>
+
+            </div>
+
+
+            <div class="thinking-steps">
+
+                <div class="thinking-step">
+
+                    <span>
+                        01
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            ¿Qué necesito?
+                        </strong>
+
+                        <p>
+                            Defina la tarea.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="thinking-step">
+
+                    <span>
+                        02
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            ¿Qué información tiene?
+                        </strong>
+
+                        <p>
+                            Entregue contexto.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="thinking-step">
+
+                    <span>
+                        03
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            ¿Qué resultado espero?
+                        </strong>
+
+                        <p>
+                            Defina el formato.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="thinking-step">
+
+                    <span>
+                        04
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            ¿Cómo lo verificaré?
+                        </strong>
+
+                        <p>
+                            Revise la respuesta.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MÉTODO
+====================================================== -->
+
+<section
+    class="section method"
+    id="metodo"
+>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                04
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    MÉTODO DE TRABAJO
+                </span>
+
+                <h2>
+                    Una interacción útil tiene cuatro partes.
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="method-flow">
+
+            <div class="method-step">
+
+                <span class="method-number">
+                    01
+                </span>
+
+                <span class="method-label">
+                    TAREA
+                </span>
+
+                <h3>
+                    Qué necesito
+                </h3>
+
+                <p>
+                    Defina claramente el trabajo que desea resolver.
+                </p>
+
+            </div>
+
+
+            <div class="method-line"></div>
+
+
+            <div class="method-step">
+
+                <span class="method-number">
+                    02
+                </span>
+
+                <span class="method-label">
+                    CONTEXTO
+                </span>
+
+                <h3>
+                    Qué debe saber
+                </h3>
+
+                <p>
+                    Explique la situación y proporcione información útil.
+                </p>
+
+            </div>
+
+
+            <div class="method-line"></div>
+
+
+            <div class="method-step">
+
+                <span class="method-number">
+                    03
+                </span>
+
+                <span class="method-label">
+                    INSTRUCCIÓN
+                </span>
+
+                <h3>
+                    Qué debe hacer
+                </h3>
+
+                <p>
+                    Indique qué resultado espera obtener.
+                </p>
+
+            </div>
+
+
+            <div class="method-line"></div>
+
+
+            <div class="method-step">
+
+                <span class="method-number">
+                    04
+                </span>
+
+                <span class="method-label">
+                    REVISIÓN
+                </span>
+
+                <h3>
+                    Qué debo comprobar
+                </h3>
+
+                <p>
+                    Revise la respuesta antes de utilizarla.
                 </p>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
 
-    <!-- =====================================================
-         CAPACIDADES
-    ====================================================== -->
-    <section class="section capabilities" id="capacidades">
+</section>
 
-        <div class="container">
 
-            <div class="section-header">
+<!-- =====================================================
+     ACTIVIDAD
+====================================================== -->
 
-                <span class="section-number">02</span>
+<section class="section exercise">
 
-                <div>
+    <div class="container">
 
-                    <span class="section-kicker">
-                        CAPACIDADES
-                    </span>
+        <div class="section-header">
 
-                    <h2>
-                        ¿Qué puede hacer la IA por usted?
-                    </h2>
+            <span class="section-number">
+                05
+            </span>
 
-                </div>
+            <div>
 
-            </div>
+                <span class="section-kicker">
+                    ACTIVIDAD
+                </span>
 
-            <div class="capabilities-grid">
-
-                <article class="capability-card">
-
-                    <span class="capability-number">
-                        01
-                    </span>
-
-                    <div class="capability-icon">
-                        ✦
-                    </div>
-
-                    <span class="capability-tag">
-                        INFORMACIÓN
-                    </span>
-
-                    <h3>
-                        Analizar
-                    </h3>
-
-                    <p>
-                        Encontrar patrones, diferencias,
-                        problemas y oportunidades.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="text-button"
-                        data-modal="analizar"
-                    >
-                        Ver más →
-                    </button>
-
-                </article>
-
-                <article class="capability-card">
-
-                    <span class="capability-number">
-                        02
-                    </span>
-
-                    <div class="capability-icon">
-                        ≡
-                    </div>
-
-                    <span class="capability-tag">
-                        INFORMACIÓN
-                    </span>
-
-                    <h3>
-                        Resumir
-                    </h3>
-
-                    <p>
-                        Convertir documentos extensos
-                        en información clara y útil.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="text-button"
-                        data-modal="resumir"
-                    >
-                        Ver más →
-                    </button>
-
-                </article>
-
-                <article class="capability-card">
-
-                    <span class="capability-number">
-                        03
-                    </span>
-
-                    <div class="capability-icon">
-                        Aa
-                    </div>
-
-                    <span class="capability-tag">
-                        COMUNICACIÓN
-                    </span>
-
-                    <h3>
-                        Redactar
-                    </h3>
-
-                    <p>
-                        Crear y mejorar correos, informes
-                        y diferentes tipos de documentos.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="text-button"
-                        data-modal="redactar"
-                    >
-                        Ver más →
-                    </button>
-
-                </article>
-
-                <article class="capability-card">
-
-                    <span class="capability-number">
-                        04
-                    </span>
-
-                    <div class="capability-icon">
-                        ⇄
-                    </div>
-
-                    <span class="capability-tag">
-                        DECISIÓN
-                    </span>
-
-                    <h3>
-                        Comparar
-                    </h3>
-
-                    <p>
-                        Identificar diferencias,
-                        ventajas, riesgos y alternativas.
-                    </p>
-
-                    <button
-                        type="button"
-                        class="text-button"
-                        data-modal="comparar"
-                    >
-                        Ver más →
-                    </button>
-
-                </article>
+                <h2>
+                    Lleve una tarea real a la IA.
+                </h2>
 
             </div>
 
         </div>
 
-    </section>
 
-    <!-- =====================================================
-         PENSAR ANTES DE USAR IA
-    ====================================================== -->
-    <section class="section thinking">
+        <div class="exercise-card">
 
-        <div class="container">
+            <div class="exercise-info">
 
-            <div class="section-header">
+                <span class="exercise-label">
+                    EJERCICIO PRÁCTICO
+                </span>
 
-                <span class="section-number">03</span>
+                <h3>
+                    Identifique una tarea que le quite tiempo
+                </h3>
 
-                <div>
-
-                    <span class="section-kicker">
-                        ANTES DE PREGUNTAR
-                    </span>
-
-                    <h2>
-                        Piense primero en la tarea.
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="thinking-layout">
-
-                <div class="thinking-main">
-
-                    <p class="lead">
-                        Una IA no puede adivinar qué resultado
-                        necesita usted.
-                    </p>
-
-                    <p>
-                        Antes de abrir una herramienta de IA,
-                        deténgase unos segundos y defina el trabajo
-                        que quiere resolver.
-                    </p>
-
-                </div>
-
-                <div class="thinking-steps">
-
-                    <div class="thinking-step">
-                        <span>01</span>
-
-                        <div>
-                            <strong>
-                                ¿Qué necesito?
-                            </strong>
-
-                            <p>
-                                Defina la tarea.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="thinking-step">
-                        <span>02</span>
-
-                        <div>
-                            <strong>
-                                ¿Qué información tiene?
-                            </strong>
-
-                            <p>
-                                Entregue contexto.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="thinking-step">
-                        <span>03</span>
-
-                        <div>
-                            <strong>
-                                ¿Qué resultado espero?
-                            </strong>
-
-                            <p>
-                                Defina el formato.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="thinking-step">
-                        <span>04</span>
-
-                        <div>
-                            <strong>
-                                ¿Cómo lo verificaré?
-                            </strong>
-
-                            <p>
-                                Revise la respuesta.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         MÉTODO
-    ====================================================== -->
-    <section class="section method" id="metodo">
-
-        <div class="container">
-
-            <div class="section-header">
-
-                <span class="section-number">04</span>
-
-                <div>
-
-                    <span class="section-kicker">
-                        MÉTODO DE TRABAJO
-                    </span>
-
-                    <h2>
-                        Una interacción útil tiene cuatro partes.
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="method-flow">
-
-                <div class="method-step">
-
-                    <span class="method-number">
-                        01
-                    </span>
-
-                    <span class="method-label">
-                        TAREA
-                    </span>
-
-                    <h3>
-                        Qué necesito
-                    </h3>
-
-                    <p>
-                        Defina claramente el trabajo que desea resolver.
-                    </p>
-
-                </div>
-
-                <div class="method-line"></div>
-
-                <div class="method-step">
-
-                    <span class="method-number">
-                        02
-                    </span>
-
-                    <span class="method-label">
-                        CONTEXTO
-                    </span>
-
-                    <h3>
-                        Qué debe saber
-                    </h3>
-
-                    <p>
-                        Explique la situación y proporcione información útil.
-                    </p>
-
-                </div>
-
-                <div class="method-line"></div>
-
-                <div class="method-step">
-
-                    <span class="method-number">
-                        03
-                    </span>
-
-                    <span class="method-label">
-                        INSTRUCCIÓN
-                    </span>
-
-                    <h3>
-                        Qué debe hacer
-                    </h3>
-
-                    <p>
-                        Indique qué resultado espera obtener.
-                    </p>
-
-                </div>
-
-                <div class="method-line"></div>
-
-                <div class="method-step">
-
-                    <span class="method-number">
-                        04
-                    </span>
-
-                    <span class="method-label">
-                        REVISIÓN
-                    </span>
-
-                    <h3>
-                        Qué debo comprobar
-                    </h3>
-
-                    <p>
-                        Revise la respuesta antes de utilizarla.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         ACTIVIDAD
-    ====================================================== -->
-    <section class="section exercise">
-
-        <div class="container">
-
-            <div class="section-header">
-
-                <span class="section-number">05</span>
-
-                <div>
-
-                    <span class="section-kicker">
-                        ACTIVIDAD
-                    </span>
-
-                    <h2>
-                        Lleve una tarea real a la IA.
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="exercise-card">
-
-                <div class="exercise-info">
-
-                    <span class="exercise-label">
-                        EJERCICIO PRÁCTICO
-                    </span>
-
-                    <h3>
-                        Identifique una tarea que le quite tiempo
-                    </h3>
-
-                    <p>
-                        Piense en una actividad que realiza
-                        frecuentemente y que podría recibir apoyo
-                        de una herramienta de IA.
-                    </p>
-
-                    <div class="exercise-examples">
-
-                        <span>Correos</span>
-                        <span>Informes</span>
-                        <span>Resúmenes</span>
-                        <span>Análisis</span>
-
-                    </div>
-
-                </div>
-
-                <div class="exercise-form">
-
-                    <label for="taskInput">
-                        Escriba aquí su tarea
-                    </label>
-
-                    <textarea
-                        id="taskInput"
-                        name="taskInput"
-                        maxlength="500"
-                        placeholder="Ejemplo: preparar el informe mensual de resultados..."
-                    ></textarea>
-
-                    <div class="form-footer">
-
-                        <span id="characterCounter">
-                            0 / 500
-                        </span>
-
-                        <button
-                            type="button"
-                            id="saveTask"
-                            class="button button-primary"
-                        >
-                            Guardar tarea
-                            <span>→</span>
-                        </button>
-
-                    </div>
-
-                    <div
-                        id="taskFeedback"
-                        class="task-feedback"
-                        aria-live="polite"
-                    ></div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         RESPONSABILIDAD
-    ====================================================== -->
-    <section class="section responsibility">
-
-        <div class="container">
-
-            <div class="section-header">
-
-                <span class="section-number">06</span>
-
-                <div>
-
-                    <span class="section-kicker">
-                        CRITERIO
-                    </span>
-
-                    <h2>
-                        Trabajar con IA también significa saber cuándo revisar.
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="responsibility-grid">
-
-                <article class="responsibility-card">
-
-                    <span class="responsibility-number">
-                        01
-                    </span>
-
-                    <h3>
-                        Verifique
-                    </h3>
-
-                    <p>
-                        No dé por correcta una respuesta
-                        simplemente porque parece convincente.
-                    </p>
-
-                </article>
-
-                <article class="responsibility-card">
-
-                    <span class="responsibility-number">
-                        02
-                    </span>
-
-                    <h3>
-                        Proteja
-                    </h3>
-
-                    <p>
-                        Cuide la información confidencial
-                        y los datos de la organización.
-                    </p>
-
-                </article>
-
-                <article class="responsibility-card">
-
-                    <span class="responsibility-number">
-                        03
-                    </span>
-
-                    <h3>
-                        Decida
-                    </h3>
-
-                    <p>
-                        La herramienta puede apoyar,
-                        pero la decisión profesional es suya.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         TRANSFORMACIÓN
-    ====================================================== -->
-    <section class="section transformation">
-
-        <div class="container">
-
-            <div class="section-header">
-
-                <span class="section-number">07</span>
-
-                <div>
-
-                    <span class="section-kicker">
-                        TRANSFORMACIÓN
-                    </span>
-
-                    <h2>
-                        De trabajar más a trabajar mejor.
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="transformation-grid">
-
-                <div class="transformation-column before">
-
-                    <span class="transformation-label">
-                        ANTES
-                    </span>
-
-                    <div class="transformation-item">
-                        Buscar información manualmente
-                    </div>
-
-                    <div class="transformation-item">
-                        Redactar desde cero
-                    </div>
-
-                    <div class="transformation-item">
-                        Revisar documentos extensos
-                    </div>
-
-                    <div class="transformation-item">
-                        Comparar varias alternativas
-                    </div>
-
-                </div>
-
-                <div class="transformation-arrow">
-                    →
-                </div>
-
-                <div class="transformation-column after">
-
-                    <span class="transformation-label">
-                        CON IA
-                    </span>
-
-                    <div class="transformation-item">
-                        Organizar información rápidamente
-                    </div>
-
-                    <div class="transformation-item">
-                        Crear un primer borrador
-                    </div>
-
-                    <div class="transformation-item">
-                        Extraer ideas principales
-                    </div>
-
-                    <div class="transformation-item">
-                        Identificar diferencias
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- =====================================================
-         RETO FINAL
-    ====================================================== -->
-    <section class="section challenge">
-
-        <div class="container">
-
-            <div class="section-header">
-
-                <span class="section-number">08</span>
-
-                <div>
-
-                    <span class="section-kicker">
-                        RETO FINAL
-                    </span>
-
-                    <h2>
-                        ¿Cuál representa mejor el uso de la IA?
-                    </h2>
-
-                </div>
-
-            </div>
-
-            <div class="challenge-card">
-
-                <p class="challenge-question">
-                    Usted debe preparar un informe semanal.
-                    ¿Cuál sería la mejor forma de utilizar la IA?
+                <p>
+                    Piense en una actividad que realiza
+                    frecuentemente y que podría recibir apoyo
+                    de una herramienta de IA.
                 </p>
 
-                <div class="challenge-options">
+                <div class="exercise-examples">
+
+                    <span>
+                        Correos
+                    </span>
+
+                    <span>
+                        Informes
+                    </span>
+
+                    <span>
+                        Resúmenes
+                    </span>
+
+                    <span>
+                        Análisis
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="exercise-form">
+
+                <label for="taskInput">
+                    Escriba aquí su tarea
+                </label>
+
+                <textarea
+                    id="taskInput"
+                    name="taskInput"
+                    maxlength="500"
+                    placeholder="Ejemplo: preparar el informe mensual de resultados..."
+                ></textarea>
+
+                <div class="form-footer">
+
+                    <span id="characterCounter">
+                        0 / 500
+                    </span>
 
                     <button
                         type="button"
-                        class="challenge-option"
-                        data-answer="A"
+                        id="saveTask"
+                        class="button button-primary"
                     >
-                        <span>A</span>
-
-                        <strong>
-                            Pedirle a la IA que haga todo el informe
-                            y enviarlo sin revisarlo.
-                        </strong>
-
-                    </button>
-
-                    <button
-                        type="button"
-                        class="challenge-option"
-                        data-answer="B"
-                        data-correct="true"
-                    >
-                        <span>B</span>
-
-                        <strong>
-                            Proporcionar información y contexto,
-                            pedir apoyo en el análisis y revisar
-                            el resultado.
-                        </strong>
-
-                    </button>
-
-                    <button
-                        type="button"
-                        class="challenge-option"
-                        data-answer="C"
-                    >
-                        <span>C</span>
-
-                        <strong>
-                            Copiar cualquier respuesta porque
-                            la IA procesa información más rápido.
-                        </strong>
-
-                    </button>
-
-                    <button
-                        type="button"
-                        class="challenge-option"
-                        data-answer="D"
-                    >
-                        <span>D</span>
-
-                        <strong>
-                            Utilizar la IA solamente para preguntas generales.
-                        </strong>
-
+                        Guardar tarea
+                        <span>→</span>
                     </button>
 
                 </div>
 
                 <div
-                    id="challengeFeedback"
-                    class="challenge-feedback"
+                    id="taskFeedback"
+                    class="task-feedback"
                     aria-live="polite"
                 ></div>
 
@@ -1069,53 +898,400 @@
 
         </div>
 
-    </section>
+    </div>
 
-    <!-- =====================================================
-         RESULTADO
-    ====================================================== -->
-    <section class="section result">
+</section>
 
-        <div class="container">
 
-            <div class="result-card">
+<!-- =====================================================
+     RESPONSABILIDAD
+====================================================== -->
 
-                <div class="result-icon">
-                    ✓
+<section class="section responsibility">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                06
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    CRITERIO
+                </span>
+
+                <h2>
+                    Trabajar con IA también significa saber cuándo revisar.
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="responsibility-grid">
+
+            <article class="responsibility-card">
+
+                <span class="responsibility-number">
+                    01
+                </span>
+
+                <h3>
+                    Verifique
+                </h3>
+
+                <p>
+                    No dé por correcta una respuesta
+                    simplemente porque parece convincente.
+                </p>
+
+            </article>
+
+
+            <article class="responsibility-card">
+
+                <span class="responsibility-number">
+                    02
+                </span>
+
+                <h3>
+                    Proteja
+                </h3>
+
+                <p>
+                    Cuide la información confidencial
+                    y los datos de la organización.
+                </p>
+
+            </article>
+
+
+            <article class="responsibility-card">
+
+                <span class="responsibility-number">
+                    03
+                </span>
+
+                <h3>
+                    Decida
+                </h3>
+
+                <p>
+                    La herramienta puede apoyar,
+                    pero la decisión profesional es suya.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TRANSFORMACIÓN
+====================================================== -->
+
+<section class="section transformation">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                07
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    TRANSFORMACIÓN
+                </span>
+
+                <h2>
+                    De trabajar más a trabajar mejor.
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="transformation-grid">
+
+            <div class="transformation-column before">
+
+                <span class="transformation-label">
+                    ANTES
+                </span>
+
+                <div class="transformation-item">
+                    Buscar información manualmente
                 </div>
 
-                <div class="result-content">
+                <div class="transformation-item">
+                    Redactar desde cero
+                </div>
 
-                    <span class="section-kicker">
-                        LO ESENCIAL
+                <div class="transformation-item">
+                    Revisar documentos extensos
+                </div>
+
+                <div class="transformation-item">
+                    Comparar varias alternativas
+                </div>
+
+            </div>
+
+
+            <div class="transformation-arrow">
+                →
+            </div>
+
+
+            <div class="transformation-column after">
+
+                <span class="transformation-label">
+                    CON IA
+                </span>
+
+                <div class="transformation-item">
+                    Organizar información rápidamente
+                </div>
+
+                <div class="transformation-item">
+                    Crear un primer borrador
+                </div>
+
+                <div class="transformation-item">
+                    Extraer ideas principales
+                </div>
+
+                <div class="transformation-item">
+                    Identificar diferencias
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RETO FINAL
+====================================================== -->
+
+<section class="section challenge">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                08
+            </span>
+
+            <div>
+
+                <span class="section-kicker">
+                    RETO FINAL
+                </span>
+
+                <h2>
+                    ¿Cuál representa mejor el uso de la IA?
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="challenge-card">
+
+            <p class="challenge-question">
+                Usted debe preparar un informe semanal.
+                ¿Cuál sería la mejor forma de utilizar la IA?
+            </p>
+
+
+            <div class="challenge-options">
+
+                <button
+                    type="button"
+                    class="challenge-option"
+                    data-answer="A"
+                    data-correct="false"
+                >
+
+                    <span>
+                        A
                     </span>
 
-                    <h2>
-                        La IA funciona mejor cuando usted
-                        mantiene el control del trabajo.
-                    </h2>
+                    <strong>
+                        Pedirle a la IA que haga todo el informe
+                        y enviarlo sin revisarlo.
+                    </strong>
 
-                    <div class="result-list">
+                </button>
 
-                        <div>
-                            <span>01</span>
-                            <p>Defina la tarea.</p>
-                        </div>
 
-                        <div>
-                            <span>02</span>
-                            <p>Proporcione contexto.</p>
-                        </div>
+                <button
+                    type="button"
+                    class="challenge-option"
+                    data-answer="B"
+                    data-correct="true"
+                >
 
-                        <div>
-                            <span>03</span>
-                            <p>Explique el resultado esperado.</p>
-                        </div>
+                    <span>
+                        B
+                    </span>
 
-                        <div>
-                            <span>04</span>
-                            <p>Revise antes de decidir.</p>
-                        </div>
+                    <strong>
+                        Proporcionar información y contexto,
+                        pedir apoyo en el análisis y revisar
+                        el resultado.
+                    </strong>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="challenge-option"
+                    data-answer="C"
+                    data-correct="false"
+                >
+
+                    <span>
+                        C
+                    </span>
+
+                    <strong>
+                        Copiar cualquier respuesta porque
+                        la IA procesa información más rápido.
+                    </strong>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="challenge-option"
+                    data-answer="D"
+                    data-correct="false"
+                >
+
+                    <span>
+                        D
+                    </span>
+
+                    <strong>
+                        Utilizar la IA solamente para preguntas generales.
+                    </strong>
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="challengeFeedback"
+                class="challenge-feedback"
+                aria-live="polite"
+            ></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULTADO
+====================================================== -->
+
+<section class="section result">
+
+    <div class="container">
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                ✓
+            </div>
+
+            <div class="result-content">
+
+                <span class="section-kicker">
+                    LO ESENCIAL
+                </span>
+
+                <h2>
+                    La IA funciona mejor cuando usted
+                    mantiene el control del trabajo.
+                </h2>
+
+
+                <div class="result-list">
+
+                    <div>
+
+                        <span>
+                            01
+                        </span>
+
+                        <p>
+                            Defina la tarea.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            02
+                        </span>
+
+                        <p>
+                            Proporcione contexto.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            03
+                        </span>
+
+                        <p>
+                            Explique el resultado esperado.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            04
+                        </span>
+
+                        <p>
+                            Revise antes de decidir.
+                        </p>
 
                     </div>
 
@@ -1125,694 +1301,809 @@
 
         </div>
 
-    </section>
+    </div>
 
-    <!-- =====================================================
-         SIGUIENTE MÓDULO
-    ====================================================== -->
-    <section class="next-module">
+</section>
 
-        <div class="container">
 
-            <div class="next-module-content">
+<!-- =====================================================
+     CONTROL DE PROGRESO
+====================================================== -->
 
-                <span class="next-label">
-                    MÓDULO 02 COMPLETADO
+<section
+    class="section module-status-section"
+    id="moduleStatus"
+>
+
+    <div class="container">
+
+        <div class="module-progress-info">
+
+            <span>
+                MÓDULO 02
+            </span>
+
+            <strong id="progressPercentage">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="module-requirements">
+
+            <div
+                class="requirement-item"
+                id="requirementActivity"
+            >
+
+                <span>
+                    01
                 </span>
 
-                <h2>
-                    Ya sabe cómo utilizar la IA
-                    como asistente de trabajo.
-                </h2>
+                <div>
 
-                <p>
-                    Ahora aprenderá a trabajar con datos para
-                    transformar información en decisiones.
-                </p>
+                    <strong>
+                        Actividad práctica
+                    </strong>
 
-                <a
-                    href="../modulo-3/index.html"
-                    class="next-button"
-                >
-                    Ir al Módulo 03
-                    <span>→</span>
-                </a>
+                    <small>
+                        Pendiente
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="requirement-item"
+                id="requirementChallenge"
+            >
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <strong>
+                        Reto de comprensión
+                    </strong>
+
+                    <small>
+                        Pendiente
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="requirement-item"
+                id="requirementModule"
+            >
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <strong>
+                        Módulo aprobado
+                    </strong>
+
+                    <small>
+                        Bloqueado
+                    </small>
+
+                </div>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SIGUIENTE MÓDULO
+====================================================== -->
+
+<section
+    class="next-module blocked"
+    id="moduleComplete"
+>
+
+    <div class="container">
+
+        <div class="next-module-content">
+
+            <span
+                class="next-label"
+                id="completionLabel"
+            >
+                MÓDULO 02 BLOQUEADO
+            </span>
+
+
+            <h2>
+                Ya sabe cómo utilizar la IA
+                como asistente de trabajo.
+            </h2>
+
+
+            <p id="completionMessage">
+                Complete la actividad práctica y el reto de comprensión
+                para habilitar el siguiente módulo.
+            </p>
+
+
+            <a
+                href="../modulo-3/index.html"
+                class="next-button"
+                id="nextModuleButton"
+                aria-disabled="true"
+            >
+                Módulo 3 bloqueado
+                <span>🔒</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
 
 </main>
+
 
 <!-- =====================================================
      MODAL ANALIZAR
 ====================================================== -->
 
-<div 
-    class="modal" 
-    id="modal-analizar" 
-    aria-hidden="true" 
-> 
+<div
+    class="modal"
+    id="modal-analizar"
+    aria-hidden="true"
+>
 
+    <div class="modal-overlay"></div>
 
-<div class="modal-overlay"></div> 
+    <div
+        class="modal-window"
+        role="dialog"
+        aria-modal="true"
+    >
 
-<div 
-    class="modal-window" 
-    role="dialog" 
-    aria-modal="true" 
-> 
+        <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
 
-    <button 
-        type="button" 
-        class="modal-close" 
-        aria-label="Cerrar" 
-    > 
-        × 
-    </button> 
+        <span class="modal-number">
+            01
+        </span>
 
-    <span class="modal-number"> 
-        01 
-    </span> 
+        <span class="modal-kicker">
+            CAPACIDAD · ANÁLISIS DE INFORMACIÓN
+        </span>
 
-    <span class="modal-kicker"> 
-        CAPACIDAD · ANÁLISIS DE INFORMACIÓN
-    </span> 
+        <h2>
+            Analizar con IA
+        </h2>
 
-    <h2> 
-        Analizar con IA
-    </h2> 
+        <p>
+            Analizar con Inteligencia Artificial no significa simplemente
+            pedirle a una herramienta que encuentre información. Significa
+            incorporarla como apoyo dentro de un proceso de análisis en el
+            que una persona plantea una pregunta, proporciona información
+            relevante, identifica relaciones, contrasta resultados y utiliza
+            el conocimiento obtenido para comprender mejor una situación.
+            La IA puede acelerar determinadas etapas del análisis, especialmente
+            cuando existe un volumen importante de información que sería
+            lento revisar manualmente.
+        </p>
 
-    <p> 
-        Analizar con Inteligencia Artificial no significa simplemente
-        pedirle a una herramienta que encuentre información. Significa
-        incorporarla como apoyo dentro de un proceso de análisis en el
-        que una persona plantea una pregunta, proporciona información
-        relevante, identifica relaciones, contrasta resultados y utiliza
-        el conocimiento obtenido para comprender mejor una situación.
-        La IA puede acelerar determinadas etapas del análisis, especialmente
-        cuando existe un volumen importante de información que sería
-        lento revisar manualmente.
-    </p> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿QUÉ SIGNIFICA ANALIZAR?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿QUÉ SIGNIFICA ANALIZAR?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Identificar patrones, tendencias, comportamientos
+                    repetitivos y variaciones relevantes dentro de un conjunto
+                    de información.
+                </li>
 
-            <li> 
-                Identificar patrones, tendencias, comportamientos
-                repetitivos y variaciones relevantes dentro de un conjunto
-                de información.
-            </li> 
+                <li>
+                    Detectar diferencias entre períodos, grupos, áreas,
+                    indicadores, resultados o escenarios.
+                </li>
 
-            <li> 
-                Detectar diferencias entre períodos, grupos, áreas,
-                indicadores, resultados o escenarios.
-            </li> 
+                <li>
+                    Encontrar anomalías, datos que se apartan del comportamiento
+                    esperado y situaciones que requieren una revisión adicional.
+                </li>
 
-            <li> 
-                Encontrar anomalías, datos que se apartan del comportamiento
-                esperado y situaciones que requieren una revisión adicional.
-            </li> 
+                <li>
+                    Formular posibles hipótesis o explicaciones que posteriormente
+                    deben ser verificadas mediante datos, evidencia y conocimiento
+                    del contexto.
+                </li>
 
-            <li> 
-                Formular posibles hipótesis o explicaciones que posteriormente
-                deben ser verificadas mediante datos, evidencia y conocimiento
-                del contexto.
-            </li> 
+                <li>
+                    Organizar información para facilitar la interpretación
+                    de indicadores y apoyar procesos de toma de decisiones.
+                </li>
 
-            <li> 
-                Organizar información para facilitar la interpretación
-                de indicadores y apoyar procesos de toma de decisiones.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿CÓMO PUEDE APOYAR LA IA?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿CÓMO PUEDE APOYAR LA IA?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Puede clasificar información y agrupar elementos según
+                    características previamente definidas.
+                </li>
 
-            <li> 
-                Puede clasificar información y agrupar elementos según
-                características previamente definidas.
-            </li> 
+                <li>
+                    Puede detectar relaciones o comportamientos que merecen
+                    ser investigados con mayor profundidad.
+                </li>
 
-            <li> 
-                Puede detectar relaciones o comportamientos que merecen
-                ser investigados con mayor profundidad.
-            </li> 
+                <li>
+                    Puede ayudar a convertir información extensa en tablas,
+                    categorías, indicadores o estructuras más fáciles de revisar.
+                </li>
 
-            <li> 
-                Puede ayudar a convertir información extensa en tablas,
-                categorías, indicadores o estructuras más fáciles de revisar.
-            </li> 
+                <li>
+                    Puede plantear preguntas adicionales que ayuden a ampliar
+                    el análisis o a considerar perspectivas que no se habían
+                    contemplado inicialmente.
+                </li>
 
-            <li> 
-                Puede plantear preguntas adicionales que ayuden a ampliar
-                el análisis o a considerar perspectivas que no se habían
-                contemplado inicialmente.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-example">
 
-    <div class="modal-example"> 
+            <span class="modal-example-label">
+                EJEMPLO EN EL TRABAJO
+            </span>
 
-        <span class="modal-example-label"> 
-            EJEMPLO EN EL TRABAJO
-        </span> 
+            <p>
+                Suponga que una organización dispone de información mensual
+                sobre ventas, devoluciones, tiempos de atención y niveles
+                de satisfacción de sus clientes. En lugar de revisar cada
+                registro de manera aislada, usted puede utilizar IA para
+                estructurar la información, identificar variaciones importantes,
+                segmentar comportamientos y señalar posibles relaciones entre
+                los indicadores. El análisis profesional comienza después:
+                usted debe determinar si esos patrones son reales, qué factores
+                pueden explicarlos y qué acciones tendría sentido evaluar.
+            </p>
 
-        <p> 
-            Suponga que una organización dispone de información mensual
-            sobre ventas, devoluciones, tiempos de atención y niveles
-            de satisfacción de sus clientes. En lugar de revisar cada
-            registro de manera aislada, usted puede utilizar IA para
-            estructurar la información, identificar variaciones importantes,
-            segmentar comportamientos y señalar posibles relaciones entre
-            los indicadores. El análisis profesional comienza después:
-            usted debe determinar si esos patrones son reales, qué factores
-            pueden explicarlos y qué acciones tendría sentido evaluar.
-        </p> 
+        </div>
 
-    </div> 
+        <div class="modal-highlight">
 
-    <div class="modal-highlight"> 
+            <strong>
+                Criterio profesional
+            </strong>
 
-        <strong> 
-            Criterio profesional
-        </strong> 
+            <span>
+                Una respuesta generada por IA no constituye por sí misma una
+                conclusión válida. El análisis profesional exige verificar la
+                calidad de los datos, revisar los supuestos utilizados, contrastar
+                los resultados con el contexto y diferenciar claramente entre
+                una relación observada, una hipótesis y una conclusión sustentada.
+                La IA puede acelerar el análisis; la responsabilidad de interpretar
+                correctamente la información continúa siendo de la persona.
+            </span>
 
-        <span> 
-            Una respuesta generada por IA no constituye por sí misma una
-            conclusión válida. El análisis profesional exige verificar la
-            calidad de los datos, revisar los supuestos utilizados, contrastar
-            los resultados con el contexto y diferenciar claramente entre
-            una relación observada, una hipótesis y una conclusión sustentada.
-            La IA puede acelerar el análisis; la responsabilidad de interpretar
-            correctamente la información continúa siendo de la persona.
-        </span> 
+        </div>
 
-    </div> 
+    </div>
 
-</div> 
+</div>
 
-
-</div> 
 
 <!-- =====================================================
      MODAL RESUMIR
 ====================================================== -->
 
-<div 
-    class="modal" 
-    id="modal-resumir" 
-    aria-hidden="true" 
-> 
+<div
+    class="modal"
+    id="modal-resumir"
+    aria-hidden="true"
+>
 
+    <div class="modal-overlay"></div>
 
-<div class="modal-overlay"></div> 
+    <div
+        class="modal-window"
+        role="dialog"
+        aria-modal="true"
+    >
 
-<div 
-    class="modal-window" 
-    role="dialog" 
-    aria-modal="true" 
-> 
+        <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
 
-    <button 
-        type="button" 
-        class="modal-close" 
-        aria-label="Cerrar" 
-    > 
-        × 
-    </button> 
+        <span class="modal-number">
+            02
+        </span>
 
-    <span class="modal-number"> 
-        02 
-    </span> 
+        <span class="modal-kicker">
+            CAPACIDAD · GESTIÓN Y SÍNTESIS DE INFORMACIÓN
+        </span>
 
-    <span class="modal-kicker"> 
-        CAPACIDAD · GESTIÓN Y SÍNTESIS DE INFORMACIÓN
-    </span> 
+        <h2>
+            Resumir con IA
+        </h2>
 
-    <h2> 
-        Resumir con IA
-    </h2> 
+        <p>
+            Resumir con Inteligencia Artificial no consiste únicamente
+            en reducir un texto. El propósito profesional de un resumen
+            es conservar la información relevante y reorganizarla de
+            acuerdo con una necesidad concreta. Un mismo documento puede
+            requerir un resumen ejecutivo, una síntesis técnica, un listado
+            de decisiones, una identificación de riesgos o una relación
+            de tareas pendientes. Por eso, la calidad del resultado depende
+            tanto de la herramienta como del propósito definido por quien
+            solicita el resumen.
+        </p>
 
-    <p> 
-        Resumir con Inteligencia Artificial no consiste únicamente
-        en reducir un texto. El propósito profesional de un resumen
-        es conservar la información relevante y reorganizarla de
-        acuerdo con una necesidad concreta. Un mismo documento puede
-        requerir un resumen ejecutivo, una síntesis técnica, un listado
-        de decisiones, una identificación de riesgos o una relación
-        de tareas pendientes. Por eso, la calidad del resultado depende
-        tanto de la herramienta como del propósito definido por quien
-        solicita el resumen.
-    </p> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿QUÉ PUEDE HACER?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿QUÉ PUEDE HACER?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Extraer las ideas principales y separar información
+                    central de información secundaria.
+                </li>
 
-            <li> 
-                Extraer las ideas principales y separar información
-                central de información secundaria.
-            </li> 
+                <li>
+                    Identificar decisiones tomadas, compromisos, responsables,
+                    fechas, tareas pendientes y asuntos que requieren seguimiento.
+                </li>
 
-            <li> 
-                Identificar decisiones tomadas, compromisos, responsables,
-                fechas, tareas pendientes y asuntos que requieren seguimiento.
-            </li> 
+                <li>
+                    Organizar contenidos extensos por temas, categorías,
+                    prioridades o niveles de relevancia.
+                </li>
 
-            <li> 
-                Organizar contenidos extensos por temas, categorías,
-                prioridades o niveles de relevancia.
-            </li> 
+                <li>
+                    Adaptar el nivel de detalle del resumen al público objetivo,
+                    desde una síntesis ejecutiva hasta una explicación más técnica.
+                </li>
 
-            <li> 
-                Adaptar el nivel de detalle del resumen al público objetivo,
-                desde una síntesis ejecutiva hasta una explicación más técnica.
-            </li> 
+                <li>
+                    Convertir información procedente de reuniones, informes,
+                    actas o documentos extensos en estructuras más fáciles de consultar.
+                </li>
 
-            <li> 
-                Convertir información procedente de reuniones, informes,
-                actas o documentos extensos en estructuras más fáciles de consultar.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿QUÉ DEBE DEFINIR ANTES DE RESUMIR?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿QUÉ DEBE DEFINIR ANTES DE RESUMIR?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    El propósito del resumen y para qué se utilizará.
+                </li>
 
-            <li> 
-                El propósito del resumen y para qué se utilizará.
-            </li> 
+                <li>
+                    La información que necesariamente debe conservarse.
+                </li>
 
-            <li> 
-                La información que necesariamente debe conservarse.
-            </li> 
+                <li>
+                    El nivel de profundidad que necesita el destinatario.
+                </li>
 
-            <li> 
-                El nivel de profundidad que necesita el destinatario.
-            </li> 
+                <li>
+                    El formato más útil: párrafos, puntos clave, tabla,
+                    cronología, decisiones, riesgos o tareas.
+                </li>
 
-            <li> 
-                El formato más útil: párrafos, puntos clave, tabla,
-                cronología, decisiones, riesgos o tareas.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-example">
 
-    <div class="modal-example"> 
+            <span class="modal-example-label">
+                EJEMPLO EN EL TRABAJO
+            </span>
 
-        <span class="modal-example-label"> 
-            EJEMPLO EN EL TRABAJO
-        </span> 
+            <p>
+                Después de una reunión de dos horas, una organización puede
+                disponer de una transcripción extensa en la que aparecen
+                intervenciones, preguntas, decisiones y temas secundarios.
+                En lugar de solicitar simplemente "un resumen", usted puede
+                pedir una síntesis estructurada que identifique decisiones,
+                responsables, fechas comprometidas, riesgos mencionados,
+                asuntos pendientes y próximos pasos. El resultado será mucho
+                más útil porque responde a una necesidad concreta de gestión.
+            </p>
 
-        <p> 
-            Después de una reunión de dos horas, una organización puede
-            disponer de una transcripción extensa en la que aparecen
-            intervenciones, preguntas, decisiones y temas secundarios.
-            En lugar de solicitar simplemente "un resumen", usted puede
-            pedir una síntesis estructurada que identifique decisiones,
-            responsables, fechas comprometidas, riesgos mencionados,
-            asuntos pendientes y próximos pasos. El resultado será mucho
-            más útil porque responde a una necesidad concreta de gestión.
-        </p> 
+        </div>
 
-    </div> 
+        <div class="modal-highlight">
 
-    <div class="modal-highlight"> 
+            <strong>
+                Criterio profesional
+            </strong>
 
-        <strong> 
-            Criterio profesional
-        </strong> 
+            <span>
+                Un buen resumen no es necesariamente el más corto, sino el
+                que conserva la información necesaria para cumplir el propósito
+                para el cual fue creado. Antes de utilizarlo, revise especialmente
+                cifras, nombres, fechas, decisiones, condiciones y elementos
+                que puedan cambiar el significado del documento original.
+                La síntesis mejora la velocidad de lectura, pero no debe provocar
+                la pérdida de información crítica.
+            </span>
 
-        <span> 
-            Un buen resumen no es necesariamente el más corto, sino el
-            que conserva la información necesaria para cumplir el propósito
-            para el cual fue creado. Antes de utilizarlo, revise especialmente
-            cifras, nombres, fechas, decisiones, condiciones y elementos
-            que puedan cambiar el significado del documento original.
-            La síntesis mejora la velocidad de lectura, pero no debe provocar
-            la pérdida de información crítica.
-        </span> 
+        </div>
 
-    </div> 
+    </div>
 
-</div> 
+</div>
 
-
-</div> 
 
 <!-- =====================================================
      MODAL REDACTAR
 ====================================================== -->
 
-<div 
-    class="modal" 
-    id="modal-redactar" 
-    aria-hidden="true" 
-> 
+<div
+    class="modal"
+    id="modal-redactar"
+    aria-hidden="true"
+>
 
+    <div class="modal-overlay"></div>
 
-<div class="modal-overlay"></div> 
+    <div
+        class="modal-window"
+        role="dialog"
+        aria-modal="true"
+    >
 
-<div 
-    class="modal-window" 
-    role="dialog" 
-    aria-modal="true" 
-> 
+        <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
 
-    <button 
-        type="button" 
-        class="modal-close" 
-        aria-label="Cerrar" 
-    > 
-        × 
-    </button> 
+        <span class="modal-number">
+            03
+        </span>
 
-    <span class="modal-number"> 
-        03 
-    </span> 
+        <span class="modal-kicker">
+            CAPACIDAD · COMUNICACIÓN Y PRODUCCIÓN DE CONTENIDO
+        </span>
 
-    <span class="modal-kicker"> 
-        CAPACIDAD · COMUNICACIÓN Y PRODUCCIÓN DE CONTENIDO
-    </span> 
+        <h2>
+            Redactar con IA
+        </h2>
 
-    <h2> 
-        Redactar con IA
-    </h2> 
+        <p>
+            Utilizar IA para redactar significa emplearla como apoyo en
+            la construcción, estructuración y revisión de contenidos.
+            Su mayor utilidad no consiste en generar un texto genérico
+            a partir de una instrucción breve, sino en ayudar a transformar
+            información, ideas y objetivos concretos en una comunicación
+            clara, coherente y adecuada para un destinatario específico.
+            El profesional continúa definiendo qué debe comunicarse,
+            con qué propósito y bajo qué condiciones.
+        </p>
 
-    <p> 
-        Utilizar IA para redactar significa emplearla como apoyo en
-        la construcción, estructuración y revisión de contenidos.
-        Su mayor utilidad no consiste en generar un texto genérico
-        a partir de una instrucción breve, sino en ayudar a transformar
-        información, ideas y objetivos concretos en una comunicación
-        clara, coherente y adecuada para un destinatario específico.
-        El profesional continúa definiendo qué debe comunicarse,
-        con qué propósito y bajo qué condiciones.
-    </p> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿EN QUÉ PUEDE APOYARLO?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿EN QUÉ PUEDE APOYARLO?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Transformar ideas dispersas, notas o información técnica
+                    en una estructura organizada.
+                </li>
 
-            <li> 
-                Transformar ideas dispersas, notas o información técnica
-                en una estructura organizada.
-            </li> 
+                <li>
+                    Elaborar primeros borradores de correos, informes,
+                    propuestas, procedimientos, comunicados y documentos.
+                </li>
 
-            <li> 
-                Elaborar primeros borradores de correos, informes,
-                propuestas, procedimientos, comunicados y documentos.
-            </li> 
+                <li>
+                    Mejorar claridad, coherencia, ortografía, sintaxis
+                    y estructura de un texto existente.
+                </li>
 
-            <li> 
-                Mejorar claridad, coherencia, ortografía, sintaxis
-                y estructura de un texto existente.
-            </li> 
+                <li>
+                    Adaptar un mismo contenido para diferentes públicos,
+                    niveles de conocimiento, canales o propósitos.
+                </li>
 
-            <li> 
-                Adaptar un mismo contenido para diferentes públicos,
-                niveles de conocimiento, canales o propósitos.
-            </li> 
+                <li>
+                    Proponer diferentes formas de presentar una información:
+                    ejecutiva, técnica, informativa, persuasiva o instructiva.
+                </li>
 
-            <li> 
-                Proponer diferentes formas de presentar una información:
-                ejecutiva, técnica, informativa, persuasiva o instructiva.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                LA VARIABLE MÁS IMPORTANTE
+            </span>
 
-        <span class="modal-section-label"> 
-            LA VARIABLE MÁS IMPORTANTE
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Defina quién recibirá el contenido.
+                </li>
 
-            <li> 
-                Defina quién recibirá el contenido.
-            </li> 
+                <li>
+                    Establezca qué acción o comprensión espera generar.
+                </li>
 
-            <li> 
-                Establezca qué acción o comprensión espera generar.
-            </li> 
+                <li>
+                    Proporcione la información que la IA debe utilizar.
+                </li>
 
-            <li> 
-                Proporcione la información que la IA debe utilizar.
-            </li> 
+                <li>
+                    Especifique el tono, nivel técnico, extensión y formato
+                    que necesita.
+                </li>
 
-            <li> 
-                Especifique el tono, nivel técnico, extensión y formato
-                que necesita.
-            </li> 
+                <li>
+                    Revise siempre la versión final antes de enviarla o publicarla.
+                </li>
 
-            <li> 
-                Revise siempre la versión final antes de enviarla o publicarla.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-example">
 
-    <div class="modal-example"> 
+            <span class="modal-example-label">
+                EJEMPLO EN EL TRABAJO
+            </span>
 
-        <span class="modal-example-label"> 
-            EJEMPLO EN EL TRABAJO
-        </span> 
+            <p>
+                Usted necesita comunicar a un equipo los resultados de una
+                actividad y explicar las acciones que deben ejecutarse durante
+                la siguiente semana. Puede entregar a la IA los datos, el
+                contexto y los puntos que deben comunicarse y solicitar un
+                borrador estructurado. Posteriormente puede ajustar prioridades,
+                lenguaje, responsabilidades y fechas para que el documento
+                refleje exactamente la situación real de la organización.
+            </p>
 
-        <p> 
-            Usted necesita comunicar a un equipo los resultados de una
-            actividad y explicar las acciones que deben ejecutarse durante
-            la siguiente semana. Puede entregar a la IA los datos, el
-            contexto y los puntos que deben comunicarse y solicitar un
-            borrador estructurado. Posteriormente puede ajustar prioridades,
-            lenguaje, responsabilidades y fechas para que el documento
-            refleje exactamente la situación real de la organización.
-        </p> 
+        </div>
 
-    </div> 
+        <div class="modal-highlight">
 
-    <div class="modal-highlight"> 
+            <strong>
+                Criterio profesional
+            </strong>
 
-        <strong> 
-            Criterio profesional
-        </strong> 
+            <span>
+                La calidad de un texto generado con IA depende en gran medida
+                de la calidad de la información y de las instrucciones proporcionadas.
+                Sin embargo, una redacción técnicamente correcta puede seguir siendo
+                inadecuada para una situación concreta. Antes de utilizar un texto,
+                usted debe comprobar exactitud, contexto, tono, cifras, nombres,
+                compromisos, confidencialidad y posibles interpretaciones del mensaje.
+                La IA puede ayudar a escribir; la responsabilidad sobre lo comunicado
+                pertenece a quien lo aprueba.
+            </span>
 
-        <span> 
-            La calidad de un texto generado con IA depende en gran medida
-            de la calidad de la información y de las instrucciones proporcionadas.
-            Sin embargo, una redacción técnicamente correcta puede seguir siendo
-            inadecuada para una situación concreta. Antes de utilizar un texto,
-            usted debe comprobar exactitud, contexto, tono, cifras, nombres,
-            compromisos, confidencialidad y posibles interpretaciones del mensaje.
-            La IA puede ayudar a escribir; la responsabilidad sobre lo comunicado
-            pertenece a quien lo aprueba.
-        </span> 
+        </div>
 
-    </div> 
+    </div>
 
-</div> 
+</div>
 
-
-</div> 
 
 <!-- =====================================================
      MODAL COMPARAR
 ====================================================== -->
 
-<div 
-    class="modal" 
-    id="modal-comparar" 
-    aria-hidden="true" 
-> 
+<div
+    class="modal"
+    id="modal-comparar"
+    aria-hidden="true"
+>
 
+    <div class="modal-overlay"></div>
 
-<div class="modal-overlay"></div> 
+    <div
+        class="modal-window"
+        role="dialog"
+        aria-modal="true"
+    >
 
-<div 
-    class="modal-window" 
-    role="dialog" 
-    aria-modal="true" 
-> 
+        <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar"
+        >
+            ×
+        </button>
 
-    <button 
-        type="button" 
-        class="modal-close" 
-        aria-label="Cerrar" 
-    > 
-        × 
-    </button> 
+        <span class="modal-number">
+            04
+        </span>
 
-    <span class="modal-number"> 
-        04 
-    </span> 
+        <span class="modal-kicker">
+            CAPACIDAD · EVALUACIÓN DE ALTERNATIVAS
+        </span>
 
-    <span class="modal-kicker"> 
-        CAPACIDAD · EVALUACIÓN DE ALTERNATIVAS
-    </span> 
+        <h2>
+            Comparar con IA
+        </h2>
 
-    <h2> 
-        Comparar con IA
-    </h2> 
+        <p>
+            Comparar con Inteligencia Artificial consiste en establecer
+            criterios claros para observar de manera estructurada las
+            semejanzas, diferencias, ventajas, limitaciones, riesgos y
+            condiciones de varias alternativas. Esta capacidad resulta
+            especialmente útil cuando existen múltiples propuestas,
+            documentos, escenarios o posibilidades y la revisión manual
+            dificulta identificar rápidamente los elementos relevantes.
+            La comparación profesional comienza antes de utilizar la IA:
+            primero se debe definir qué se quiere evaluar y por qué.
+        </p>
 
-    <p> 
-        Comparar con Inteligencia Artificial consiste en establecer
-        criterios claros para observar de manera estructurada las
-        semejanzas, diferencias, ventajas, limitaciones, riesgos y
-        condiciones de varias alternativas. Esta capacidad resulta
-        especialmente útil cuando existen múltiples propuestas,
-        documentos, escenarios o posibilidades y la revisión manual
-        dificulta identificar rápidamente los elementos relevantes.
-        La comparación profesional comienza antes de utilizar la IA:
-        primero se debe definir qué se quiere evaluar y por qué.
-    </p> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿QUÉ PUEDE COMPARAR?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿QUÉ PUEDE COMPARAR?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Propuestas comerciales y alternativas de proveedores.
+                </li>
 
-            <li> 
-                Propuestas comerciales y alternativas de proveedores.
-            </li> 
+                <li>
+                    Versiones de documentos, políticas, procedimientos
+                    o contratos para identificar modificaciones relevantes.
+                </li>
 
-            <li> 
-                Versiones de documentos, políticas, procedimientos
-                o contratos para identificar modificaciones relevantes.
-            </li> 
+                <li>
+                    Escenarios de operación, presupuestos, cronogramas
+                    o diferentes opciones de ejecución.
+                </li>
 
-            <li> 
-                Escenarios de operación, presupuestos, cronogramas
-                o diferentes opciones de ejecución.
-            </li> 
+                <li>
+                    Ventajas, restricciones, riesgos y condiciones asociadas
+                    con distintas alternativas.
+                </li>
 
-            <li> 
-                Ventajas, restricciones, riesgos y condiciones asociadas
-                con distintas alternativas.
-            </li> 
+                <li>
+                    Información cualitativa y cuantitativa cuando los criterios
+                    de comparación estén definidos de manera explícita.
+                </li>
 
-            <li> 
-                Información cualitativa y cuantitativa cuando los criterios
-                de comparación estén definidos de manera explícita.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-section">
 
-    <div class="modal-section"> 
+            <span class="modal-section-label">
+                ¿CÓMO HACER UNA COMPARACIÓN PROFESIONAL?
+            </span>
 
-        <span class="modal-section-label"> 
-            ¿CÓMO HACER UNA COMPARACIÓN PROFESIONAL?
-        </span> 
+            <ul class="modal-list">
 
-        <ul class="modal-list"> 
+                <li>
+                    Defina las alternativas que serán evaluadas.
+                </li>
 
-            <li> 
-                Defina las alternativas que serán evaluadas.
-            </li> 
+                <li>
+                    Establezca criterios de comparación antes de revisar los resultados.
+                </li>
 
-            <li> 
-                Establezca criterios de comparación antes de revisar los resultados.
-            </li> 
+                <li>
+                    Determine qué criterios son obligatorios y cuáles son deseables.
+                </li>
 
-            <li> 
-                Determine qué criterios son obligatorios y cuáles son deseables.
-            </li> 
+                <li>
+                    Identifique ventajas y desventajas sin confundirlas con
+                    conclusiones definitivas.
+                </li>
 
-            <li> 
-                Identifique ventajas y desventajas sin confundirlas con
-                conclusiones definitivas.
-            </li> 
+                <li>
+                    Revise las diferencias que puedan tener impacto sobre
+                    costos, tiempos, calidad, riesgo o cumplimiento.
+                </li>
 
-            <li> 
-                Revise las diferencias que puedan tener impacto sobre
-                costos, tiempos, calidad, riesgo o cumplimiento.
-            </li> 
+            </ul>
 
-        </ul> 
+        </div>
 
-    </div> 
+        <div class="modal-example">
 
-    <div class="modal-example"> 
+            <span class="modal-example-label">
+                EJEMPLO EN EL TRABAJO
+            </span>
 
-        <span class="modal-example-label"> 
-            EJEMPLO EN EL TRABAJO
-        </span> 
+            <p>
+                Una organización recibe tres propuestas para contratar un servicio.
+                En lugar de solicitar únicamente cuál es la "mejor", usted puede
+                definir previamente criterios como costo, alcance, plazo de ejecución,
+                nivel de servicio, condiciones comerciales, experiencia y riesgos.
+                La IA puede ayudar a organizar la información en una matriz y señalar
+                diferencias relevantes. A partir de esa comparación, el responsable
+                del proceso debe interpretar las prioridades de la organización y
+                tomar la decisión correspondiente.
+            </p>
 
-        <p> 
-            Una organización recibe tres propuestas para contratar un servicio.
-            En lugar de solicitar únicamente cuál es la "mejor", usted puede
-            definir previamente criterios como costo, alcance, plazo de ejecución,
-            nivel de servicio, condiciones comerciales, experiencia y riesgos.
-            La IA puede ayudar a organizar la información en una matriz y señalar
-            diferencias relevantes. A partir de esa comparación, el responsable
-            del proceso debe interpretar las prioridades de la organización y
-            tomar la decisión correspondiente.
-        </p> 
+        </div>
 
-    </div> 
+        <div class="modal-highlight">
 
-    <div class="modal-highlight"> 
+            <strong>
+                Criterio profesional
+            </strong>
 
-        <strong> 
-            Criterio profesional
-        </strong> 
+            <span>
+                Comparar no significa decidir automáticamente. Una alternativa puede
+                ser más económica y, al mismo tiempo, presentar mayor riesgo, menor
+                capacidad o condiciones menos favorables. Por ello, la IA debe utilizarse
+                para hacer visible la estructura del problema y facilitar el análisis,
+                no para sustituir el juicio profesional. Una decisión sólida debe poder
+                explicar qué criterios fueron utilizados, qué información fue considerada
+                y por qué una alternativa resulta más conveniente dentro del contexto real.
+            </span>
 
-        <span> 
-            Comparar no significa decidir automáticamente. Una alternativa puede
-            ser más económica y, al mismo tiempo, presentar mayor riesgo, menor
-            capacidad o condiciones menos favorables. Por ello, la IA debe utilizarse
-            para hacer visible la estructura del problema y facilitar el análisis,
-            no para sustituir el juicio profesional. Una decisión sólida debe poder
-            explicar qué criterios fueron utilizados, qué información fue considerada
-            y por qué una alternativa resulta más conveniente dentro del contexto real.
-        </span> 
+        </div>
 
-    </div> 
-
-</div> 
-
+    </div>
 
 </div>
 
@@ -1820,6 +2111,7 @@
 <!-- =====================================================
      FOOTER
 ====================================================== -->
+
 <footer class="footer">
 
     <div class="container footer-content">
@@ -1844,11 +2136,13 @@
 
         </div>
 
+
         <div class="footer-module">
             MÓDULO 02 · IA COMO ASISTENTE DE TRABAJO
         </div>
 
     </div>
+
 
     <div class="footer-bottom">
 
@@ -1860,11 +2154,8 @@
 
 </footer>
 
-<!-- =====================================================
-     JAVASCRIPT
-====================================================== -->
-<script src="./js/script.js"></script>
 
+<script src="./js/script.js"></script>
 
 </body>
 </html>

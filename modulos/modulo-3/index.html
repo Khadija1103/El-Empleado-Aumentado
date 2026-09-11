@@ -1264,6 +1264,7 @@
                     type="button"
                     class="challenge-option"
                     data-answer="A"
+                    data-correct="false"
                 >
 
                     <span>
@@ -1304,6 +1305,7 @@
                     type="button"
                     class="challenge-option"
                     data-answer="C"
+                    data-correct="false"
                 >
 
                     <span>
@@ -1323,6 +1325,7 @@
                     type="button"
                     class="challenge-option"
                     data-answer="D"
+                    data-correct="false"
                 >
 
                     <span>
@@ -1450,10 +1453,121 @@
 
 
 <!-- =====================================================
+     ESTADO Y PROGRESO DEL MÓDULO
+====================================================== -->
+
+<section
+    class="section module-status-section"
+    id="moduleStatus"
+>
+
+    <div class="container">
+
+        <div class="module-progress-info">
+
+            <span>
+                MÓDULO 03
+            </span>
+
+            <strong id="progressPercentage">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="module-requirements">
+
+
+            <div
+                class="requirement-item"
+                id="requirementActivity"
+            >
+
+                <span>
+                    01
+                </span>
+
+                <div>
+
+                    <strong>
+                        Actividad práctica
+                    </strong>
+
+                    <small>
+                        Pendiente
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                class="requirement-item"
+                id="requirementChallenge"
+            >
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <strong>
+                        Reto de comprensión
+                    </strong>
+
+                    <small>
+                        Pendiente
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                class="requirement-item"
+                id="requirementModule"
+            >
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <strong>
+                        Módulo aprobado
+                    </strong>
+
+                    <small>
+                        Bloqueado
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
      SIGUIENTE MÓDULO
 ====================================================== -->
 
-<section class="next-module">
+<section
+    class="next-module blocked"
+    id="moduleComplete"
+>
 
     <div class="container">
 
@@ -1461,8 +1575,11 @@
         <div class="next-module-content">
 
 
-            <span class="next-label">
-                MÓDULO 03 COMPLETADO
+            <span
+                class="next-label"
+                id="completionLabel"
+            >
+                MÓDULO 03 BLOQUEADO
             </span>
 
 
@@ -1472,21 +1589,23 @@
             </h2>
 
 
-            <p>
-                Ahora aprenderá a identificar tareas repetitivas
-                y convertirlas en oportunidades de automatización.
+            <p id="completionMessage">
+                Complete la actividad práctica y el reto de comprensión
+                para habilitar el siguiente módulo.
             </p>
 
 
             <a
                 href="../modulo-4/index.html"
                 class="next-button"
+                id="nextModuleButton"
+                aria-disabled="true"
             >
 
-                Ir al Módulo 04
+                Módulo 04 bloqueado
 
                 <span>
-                    →
+                    🔒
                 </span>
 
             </a>

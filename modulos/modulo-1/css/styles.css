@@ -1,18 +1,13 @@
 /* =========================================================
    EL EMPLEADO AUMENTADO
    MÓDULO 01 — DEJE DE AUTOMATIZAR PROCESOS MALOS
-   CSS COMPLETO — CLARO + MORADO + ANIMACIONES
-========================================================= */
-
-/* =========================================================
-   VARIABLES
+   CSS COMPLETO
 ========================================================= */
 
 :root {
     --bg: #f7f7fb;
     --bg-soft: #f0eef8;
     --bg-light: #ffffff;
-
     --bg-card: #ffffff;
     --bg-card-hover: #faf8ff;
 
@@ -174,11 +169,8 @@ strong {
 
 .brand {
     display: inline-flex;
-
     align-items: center;
-
     gap: 12px;
-
     width: fit-content;
 }
 
@@ -187,7 +179,6 @@ strong {
     height: 38px;
 
     display: grid;
-
     place-items: center;
 
     border-radius: 10px;
@@ -202,11 +193,8 @@ strong {
     color: #fff;
 
     font-family: var(--font-display);
-
     font-size: 12px;
-
     font-weight: 700;
-
     letter-spacing: 0.04em;
 
     box-shadow:
@@ -218,43 +206,32 @@ strong {
 
 .brand-text {
     display: flex;
-
     flex-direction: column;
-
     line-height: 1.1;
 }
 
 .brand-text strong {
     color: var(--text);
-
     font-family: var(--font-display);
-
     font-size: 15px;
 }
 
 .brand-text span {
     color: var(--text-muted);
-
     font-size: 12px;
-
     margin-top: 4px;
 }
 
 .module-progress {
     display: flex;
-
     align-items: center;
-
     gap: 14px;
 
     color: var(--text-muted);
 
     font-family: var(--font-display);
-
     font-size: 11px;
-
     font-weight: 700;
-
     letter-spacing: 0.14em;
 
     white-space: nowrap;
@@ -278,7 +255,7 @@ strong {
 
     inset: 0 auto 0 0;
 
-    width: var(--progress, 20%);
+    width: var(--progress, 0%);
 
     border-radius: inherit;
 
@@ -299,7 +276,6 @@ strong {
     color: var(--text-muted);
 
     font-size: 14px;
-
     font-weight: 600;
 
     transition:
@@ -309,7 +285,6 @@ strong {
 
 .back-link:hover {
     color: var(--purple-dark);
-
     transform: translateX(-4px);
 }
 
@@ -326,7 +301,6 @@ strong {
     padding: 150px 0 110px;
 
     display: flex;
-
     align-items: center;
 
     overflow: hidden;
@@ -349,15 +323,12 @@ strong {
 
 .hero-background {
     position: absolute;
-
     inset: 0;
-
     pointer-events: none;
 }
 
 .hero-grid {
     position: absolute;
-
     inset: 0;
 
     opacity: 0.35;
@@ -388,11 +359,8 @@ strong {
 
 .hero-orb {
     position: absolute;
-
     border-radius: 50%;
-
     filter: blur(2px);
-
     will-change: transform;
 }
 
@@ -434,7 +402,6 @@ strong {
 
 .hero-container {
     position: relative;
-
     z-index: 2;
 
     width: min(var(--container), calc(100% - 48px));
@@ -444,9 +411,7 @@ strong {
 
 .hero-label {
     display: flex;
-
     align-items: center;
-
     gap: 9px;
 
     margin-bottom: 34px;
@@ -454,9 +419,7 @@ strong {
     color: var(--purple-dark);
 
     font-size: 12px;
-
     font-weight: 800;
-
     letter-spacing: 0.16em;
 
     animation:
@@ -500,9 +463,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 12px;
-
     font-weight: 800;
-
     letter-spacing: 0.16em;
 }
 
@@ -540,7 +501,6 @@ strong {
     color: var(--text-soft);
 
     font-size: 18px;
-
     line-height: 1.8;
 }
 
@@ -548,9 +508,7 @@ strong {
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
-
     gap: 18px;
 
     min-height: 52px;
@@ -571,7 +529,6 @@ strong {
     color: #fff;
 
     font-size: 14px;
-
     font-weight: 800;
 
     cursor: pointer;
@@ -671,7 +628,6 @@ strong {
     display: flex;
 
     justify-content: space-between;
-
     align-items: center;
 
     padding-bottom: 22px;
@@ -681,9 +637,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 11px;
-
     font-weight: 800;
-
     letter-spacing: 0.12em;
 }
 
@@ -728,7 +682,6 @@ strong {
     flex-direction: column;
 
     justify-content: center;
-
     align-items: center;
 
     gap: 7px;
@@ -745,7 +698,6 @@ strong {
     text-align: center;
 
     font-size: 12px;
-
     font-weight: 600;
 
     transition:
@@ -776,7 +728,6 @@ strong {
     font-family: var(--font-display);
 
     font-size: 11px;
-
     font-weight: 800;
 }
 
@@ -803,7 +754,6 @@ strong {
     color: #956900;
 
     font-size: 13px;
-
     font-weight: 600;
 }
 
@@ -812,7 +762,6 @@ strong {
     height: 23px;
 
     display: grid;
-
     place-items: center;
 
     border-radius: 50%;
@@ -841,9 +790,7 @@ strong {
     color: var(--purple-dark);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.12em;
 
     box-shadow:
@@ -906,9 +853,7 @@ strong {
     font-family: var(--font-display);
 
     font-size: 14px;
-
     font-weight: 800;
-
     letter-spacing: 0.12em;
 }
 
@@ -920,9 +865,7 @@ strong {
     color: var(--purple-dark);
 
     font-size: 11px;
-
     font-weight: 800;
-
     letter-spacing: 0.16em;
 }
 
@@ -958,7 +901,6 @@ strong {
     color: var(--text-muted);
 
     font-size: 16px;
-
     line-height: 1.8;
 }
 
@@ -986,7 +928,6 @@ strong {
     margin-bottom: 24px;
 
     font-size: 17px;
-
     line-height: 1.85;
 }
 
@@ -1066,9 +1007,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.15em;
 }
 
@@ -1103,7 +1042,6 @@ strong {
     padding: 30px;
 
     display: flex;
-
     flex-direction: column;
 
     border: 1px solid #ddd9e7;
@@ -1175,7 +1113,6 @@ strong {
     height: 48px;
 
     display: grid;
-
     place-items: center;
 
     margin-bottom: 40px;
@@ -1192,7 +1129,6 @@ strong {
     font-family: var(--font-display);
 
     font-size: 12px;
-
     font-weight: 800;
 
     transition:
@@ -1215,9 +1151,7 @@ strong {
     color: var(--purple-dark);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.13em;
 }
 
@@ -1237,7 +1171,6 @@ strong {
     color: var(--text-muted);
 
     font-size: 14px;
-
     line-height: 1.75;
 }
 
@@ -1309,7 +1242,6 @@ strong {
     height: 38px;
 
     display: grid;
-
     place-items: center;
 
     border-radius: 50%;
@@ -1333,9 +1265,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.14em;
 }
 
@@ -1487,7 +1417,6 @@ strong {
     height: 54px;
 
     display: grid;
-
     place-items: center;
 
     border: 1px solid var(--purple-border);
@@ -1502,7 +1431,6 @@ strong {
     font-family: var(--font-display);
 
     font-size: 13px;
-
     font-weight: 800;
 
     transition:
@@ -1525,7 +1453,6 @@ strong {
 
 .learning-card-content {
     display: flex;
-
     flex-direction: column;
 }
 
@@ -1535,9 +1462,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.14em;
 }
 
@@ -1565,7 +1490,6 @@ strong {
     color: var(--text-muted);
 
     font-size: 14px;
-
     line-height: 1.7;
 }
 
@@ -1575,9 +1499,7 @@ strong {
     color: var(--purple-dark);
 
     font-size: 11px;
-
     font-weight: 800;
-
     letter-spacing: 0.08em;
 
     transition:
@@ -1620,7 +1542,6 @@ strong {
     padding: 32px;
 
     display: flex;
-
     flex-direction: column;
 
     overflow: hidden;
@@ -1699,9 +1620,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.14em;
 }
 
@@ -1710,7 +1629,6 @@ strong {
     height: 50px;
 
     display: grid;
-
     place-items: center;
 
     margin: 30px 0 24px;
@@ -1756,7 +1674,6 @@ strong {
     color: var(--text-muted);
 
     font-size: 14px;
-
     line-height: 1.75;
 }
 
@@ -1805,7 +1722,6 @@ strong {
     color: var(--purple-dark);
 
     font-size: 11px;
-
     font-weight: 800;
 }
 
@@ -1876,9 +1792,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.13em;
 }
 
@@ -1901,7 +1815,6 @@ strong {
     padding: 22px;
 
     display: flex;
-
     flex-direction: column;
 
     border: 1px solid var(--border);
@@ -1940,7 +1853,6 @@ strong {
     font-family: var(--font-display);
 
     font-size: 11px;
-
     font-weight: 800;
 }
 
@@ -1958,7 +1870,6 @@ strong {
     color: var(--text-muted);
 
     font-size: 12px;
-
     line-height: 1.65;
 }
 
@@ -2022,7 +1933,6 @@ strong {
     color: var(--purple-dark);
 
     font-size: 10px;
-
     font-weight: 800;
 }
 
@@ -2075,7 +1985,6 @@ strong {
     margin-bottom: 22px;
 
     font-size: 17px;
-
     line-height: 1.8;
 }
 
@@ -2135,13 +2044,11 @@ strong {
     color: var(--text-muted);
 
     font-size: 11px;
-
     line-height: 1.5;
 }
 
 .rework-visual {
     display: flex;
-
     justify-content: center;
 }
 
@@ -2157,7 +2064,6 @@ strong {
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     border: 1px solid var(--purple-border);
@@ -2184,7 +2090,6 @@ strong {
     height: 45px;
 
     display: grid;
-
     place-items: center;
 
     border: 1px solid var(--purple-border);
@@ -2199,7 +2104,6 @@ strong {
     font-family: var(--font-display);
 
     font-size: 11px;
-
     font-weight: 800;
 
     transition:
@@ -2221,7 +2125,6 @@ strong {
     color: var(--text-soft);
 
     font-size: 12px;
-
     font-weight: 600;
 }
 
@@ -2281,7 +2184,6 @@ strong {
     padding: 18px 30px;
 
     display: flex;
-
     justify-content: space-between;
 
     border-bottom: 1px solid var(--border);
@@ -2295,9 +2197,7 @@ strong {
     color: var(--purple-dark);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.13em;
 }
 
@@ -2389,7 +2289,6 @@ strong {
     color: var(--text);
 
     font-size: 15px;
-
     line-height: 1.7;
 
     transition:
@@ -2421,7 +2320,6 @@ strong {
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 }
 
@@ -2650,9 +2548,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 10px;
-
     font-weight: 800;
-
     letter-spacing: 0.14em;
 }
 
@@ -2739,7 +2635,6 @@ strong {
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 }
 
@@ -2759,9 +2654,7 @@ strong {
     color: var(--text-muted);
 
     font-size: 9px;
-
     font-weight: 800;
-
     letter-spacing: 0.12em;
 }
 
@@ -2871,7 +2764,6 @@ strong {
     flex: 0 0 31px;
 
     display: grid;
-
     place-items: center;
 
     border: 1px solid var(--purple-border);
@@ -2884,7 +2776,6 @@ strong {
         #ffffff;
 
     font-size: 12px;
-
     font-weight: 800;
 
     transition:
@@ -3091,6 +2982,212 @@ strong {
 
 
 /* =========================================================
+   ESTADO Y PROGRESO DEL MÓDULO
+========================================================= */
+
+.module-status-section {
+    padding: 45px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f1ff,
+            #ffffff
+        );
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.module-progress-info {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+
+    padding: 0 5px;
+}
+
+.module-progress-info span {
+    color: var(--purple-dark);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+}
+
+.module-progress-info strong {
+    color: var(--purple-dark);
+
+    font-family: var(--font-display);
+
+    font-size: 20px;
+}
+
+.module-requirements {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.requirement-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 78px;
+
+    padding: 17px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 8px 25px rgba(40,30,70,0.05);
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.requirement-item:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--purple-border);
+
+    box-shadow:
+        0 14px 30px rgba(109,40,217,0.08);
+}
+
+.requirement-item > span {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 8px;
+
+    background:
+        var(--purple-soft);
+
+    color:
+        var(--purple-dark);
+
+    font-family:
+        var(--font-display);
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.requirement-item div {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.requirement-item strong {
+    color:
+        var(--text);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.3;
+}
+
+.requirement-item small {
+    margin-top:
+        3px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+}
+
+.requirement-item.completed {
+    border-color:
+        rgba(5,150,105,0.30);
+
+    background:
+        #f0fdf8;
+}
+
+.requirement-item.completed > span {
+    background:
+        #dcfce7;
+
+    color:
+        var(--green);
+}
+
+.requirement-item.completed small {
+    color:
+        var(--green);
+
+    font-weight:
+        700;
+}
+
+.requirement-item.pending {
+    border-color:
+        rgba(183,121,0,0.25);
+
+    background:
+        #fffbeb;
+}
+
+.requirement-item.pending > span {
+    background:
+        #fef3c7;
+
+    color:
+        var(--yellow);
+}
+
+.requirement-item.pending small {
+    color:
+        var(--yellow);
+}
+
+.requirement-item.locked {
+    opacity:
+        0.82;
+}
+
+.requirement-item.locked > span {
+    background:
+        #f2f1f5;
+
+    color:
+        #8c8995;
+}
+
+
+/* =========================================================
    COMPLETAR MÓDULO
 ========================================================= */
 
@@ -3208,7 +3305,9 @@ strong {
     transition:
         background var(--transition),
         transform var(--transition),
-        box-shadow var(--transition);
+        box-shadow var(--transition),
+        opacity var(--transition),
+        filter var(--transition);
 }
 
 .next-module-button:hover {
@@ -3233,6 +3332,120 @@ strong {
 .next-module-button:hover span {
     transform:
         translateX(5px);
+}
+
+
+/* =========================================================
+   ESTADOS DEL BOTÓN SIGUIENTE
+========================================================= */
+
+.next-module-button[aria-disabled="true"] {
+    background:
+        #d9d6e1;
+
+    border-color:
+        #cbc7d5;
+
+    color:
+        #706c79;
+
+    cursor:
+        not-allowed;
+
+    opacity:
+        0.8;
+
+    box-shadow:
+        none;
+
+    filter:
+        grayscale(0.2);
+}
+
+.next-module-button[aria-disabled="true"]:hover {
+    transform:
+        none;
+
+    background:
+        #d9d6e1;
+
+    box-shadow:
+        none;
+}
+
+.next-module-button[aria-disabled="true"] span {
+    transform:
+        none;
+}
+
+.next-module-button.unlocked {
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            #047857
+        );
+
+    border-color:
+        rgba(5,150,105,0.35);
+
+    color:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    opacity:
+        1;
+
+    box-shadow:
+        0 12px 35px rgba(5,150,105,0.20);
+}
+
+.next-module-button.unlocked:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #047857,
+            #065f46
+        );
+
+    box-shadow:
+        0 18px 42px rgba(5,150,105,0.28);
+}
+
+.module-complete.completed {
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf5,
+            #ffffff
+        );
+}
+
+.module-complete.completed .complete-label {
+    color:
+        var(--green);
+}
+
+.module-complete.completed .complete-label::before {
+    content:
+        "✓ ";
+
+    font-size:
+        14px;
+}
+
+.module-complete.blocked .complete-label {
+    color:
+        var(--yellow);
+}
+
+.module-complete.blocked .complete-label::before {
+    content:
+        "🔒 ";
+    font-size:
+        11px;
 }
 
 
@@ -3325,7 +3538,6 @@ strong {
 
 /* =========================================================
    MODALES
-   AHORA BLANCOS Y CON TEXTO OSCURO
 ========================================================= */
 
 .modal {
@@ -3338,7 +3550,6 @@ strong {
     display: none;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 30px;
@@ -4429,6 +4640,11 @@ strong {
         transform:
             rotate(90deg);
     }
+
+    .module-requirements {
+        grid-template-columns:
+            1fr;
+    }
 }
 
 
@@ -4712,6 +4928,26 @@ strong {
             1fr;
     }
 
+    .module-status-section {
+        padding:
+            35px 0;
+    }
+
+    .module-progress-info {
+        margin-bottom:
+            15px;
+    }
+
+    .module-requirements {
+        grid-template-columns:
+            1fr;
+    }
+
+    .requirement-item {
+        min-height:
+            70px;
+    }
+
     .module-complete {
         padding:
             95px 20px;
@@ -4865,6 +5101,11 @@ strong {
     .modal-content {
         padding:
             25px 20px 30px;
+    }
+
+    .module-progress-info strong {
+        font-size:
+            18px;
     }
 }
 
