@@ -2472,12 +2472,13 @@ select {
     max-width: 900px;
     margin: 0 auto;
     padding: 28px 32px;
-    border-left: 3px solid var(--purple);
     background: var(--bg-soft);
+    border-left: 4px solid #7c3aed !important;
     font-size: 1.05rem;
     line-height: 1.8;
     color: #4b5563;
     text-align: justify;
+    box-sizing: border-box;
 }
 
 
