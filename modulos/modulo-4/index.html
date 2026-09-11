@@ -1,0 +1,1932 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Módulo 04 del curso El Empleado Aumentado: Automatización de tareas y procesos."
+    >
+
+    <title>Módulo 04 | Automatizar tareas y procesos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="module-header">
+
+        <div class="header-container">
+
+            <a href="../../index.html" class="brand">
+
+                <span class="brand-mark">
+                    EA
+                </span>
+
+                <span class="brand-text">
+
+                    <strong>
+                        El Empleado
+                    </strong>
+
+                    <span>
+                        Aumentado
+                    </span>
+
+                </span>
+
+            </a>
+
+
+            <div class="module-progress">
+
+                <span>
+                    MÓDULO 04
+                </span>
+
+                <div class="progress-line">
+                    <span id="progressBar"></span>
+                </div>
+
+            </div>
+
+
+            <a href="../../index.html" class="back-link">
+                ← Volver
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-background">
+
+                <div class="hero-grid"></div>
+
+                <div class="hero-glow hero-glow-one"></div>
+
+                <div class="hero-glow hero-glow-two"></div>
+
+            </div>
+
+
+            <div class="container hero-container">
+
+
+                <div class="hero-intro">
+
+                    <span class="eyebrow">
+                        MÓDULO 04 · AUTOMATIZACIÓN
+                    </span>
+
+
+                    <h1>
+
+                        Automatizar
+                        <span>
+                            para trabajar mejor
+                        </span>
+
+                    </h1>
+
+
+                    <p class="hero-text">
+                        Automatizar no significa simplemente utilizar una
+                        herramienta tecnológica. Significa comprender un
+                        proceso, identificar actividades repetitivas y
+                        diseñar una forma más eficiente, controlada y
+                        confiable de ejecutarlas.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#introduccion"
+                            class="button button-primary"
+                        >
+                            Comenzar módulo
+                            <span>→</span>
+                        </a>
+
+                        <a
+                            href="#ejercicio"
+                            class="button button-secondary"
+                        >
+                            Ir al ejercicio
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HERO CARD -->
+
+                <div class="hero-visual">
+
+                    <div class="ai-card">
+
+
+                        <div class="ai-card-top">
+
+                            <div>
+
+                                <span>
+                                    FLUJO DE TRABAJO
+                                </span>
+
+                                <strong>
+                                    Automatización
+                                </strong>
+
+                            </div>
+
+
+                            <span class="ai-status">
+                                PROCESO ACTIVO
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="ai-conversation">
+
+
+                            <div class="message message-user">
+
+                                <span class="message-label">
+                                    TAREA
+                                </span>
+
+                                <p>
+                                    Recibir información, revisar datos,
+                                    generar un reporte y enviarlo.
+                                </p>
+
+                            </div>
+
+
+                            <div class="message message-ai">
+
+                                <span class="message-label">
+                                    ANÁLISIS
+                                </span>
+
+                                <p>
+                                    Identifique las entradas, las reglas,
+                                    los pasos repetitivos y el resultado
+                                    esperado.
+                                </p>
+
+                            </div>
+
+
+                            <div class="message data-message">
+
+                                <span class="message-label">
+                                    AUTOMATIZACIÓN
+                                </span>
+
+                                <p>
+                                    Transforme esas reglas en un flujo
+                                    que pueda ejecutarse de forma
+                                    consistente y verificable.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="ai-footer">
+
+                            <span>
+                                Entrada
+                            </span>
+
+                            <span>
+                                Reglas
+                            </span>
+
+                            <span>
+                                Proceso
+                            </span>
+
+                            <span>
+                                Resultado
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="floating-label floating-label-one">
+                        REPETIR
+                    </span>
+
+                    <span class="floating-label floating-label-two">
+                        REGLA
+                    </span>
+
+                    <span class="floating-label floating-label-three">
+                        RESULTADO
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             INTRODUCCIÓN
+        ================================================== -->
+
+        <section class="section intro" id="introduccion">
+
+            <div class="container intro-grid">
+
+
+                <div class="intro-content">
+
+                    <div class="section-header">
+
+                        <span class="section-number">
+                            01
+                        </span>
+
+                        <div>
+
+                            <span class="section-kicker">
+                                FUNDAMENTOS
+                            </span>
+
+                            <h2>
+                                Antes de automatizar,
+                                hay que entender el proceso.
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="lead">
+                        Una automatización bien diseñada comienza con una
+                        pregunta sencilla: ¿cómo se realiza actualmente
+                        este trabajo?
+                    </p>
+
+
+                    <p>
+                        Cuando una actividad se repite muchas veces,
+                        es habitual concentrarse directamente en buscar
+                        una herramienta que la ejecute de manera
+                        automática. Sin embargo, ese enfoque puede
+                        trasladar los problemas existentes al nuevo
+                        sistema.
+                    </p>
+
+
+                    <p>
+                        El primer paso consiste en observar el proceso,
+                        identificar sus entradas, comprender las reglas
+                        que intervienen y establecer con claridad cuál
+                        debe ser el resultado.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="statement-card">
+
+                    <span class="statement-mark">
+                        “
+                    </span>
+
+                    <p>
+                        No automatice el desorden.
+                        Primero comprenda el proceso,
+                        luego mejórelo y finalmente automatícelo.
+                    </p>
+
+                    <span class="statement-author">
+                        PRINCIPIO DE AUTOMATIZACIÓN
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             IDEA CENTRAL
+        ================================================== -->
+
+        <section class="central-idea">
+
+            <div class="container">
+
+                <div class="central-card">
+
+                    <div class="central-card-label">
+                        IDEA CENTRAL
+                    </div>
+
+                    <h2>
+                        Automatizar no es hacer más rápido cualquier tarea.
+                    </h2>
+
+                    <p>
+                        El verdadero valor aparece cuando una actividad
+                        puede ejecutarse con reglas claras, menor esfuerzo,
+                        menos errores y suficiente control para verificar
+                        que el resultado sea correcto.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CAPACIDADES
+        ================================================== -->
+
+        <section class="section capabilities" id="capacidades">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        02
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            CAPACIDADES
+                        </span>
+
+                        <h2>
+                            Cuatro habilidades para comenzar a automatizar
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="capabilities-grid">
+
+
+                    <!-- CARD 1 -->
+
+                    <article
+                        class="capability-card"
+                        data-modal="detectar"
+                    >
+
+                        <span class="capability-number">
+                            01
+                        </span>
+
+                        <div class="capability-icon">
+                            01
+                        </div>
+
+                        <span class="capability-tag">
+                            OBSERVAR
+                        </span>
+
+                        <h3>
+                            Detectar
+                        </h3>
+
+                        <p>
+                            Identificar tareas repetitivas, cuellos de
+                            botella, actividades manuales y oportunidades
+                            reales de mejora.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="text-button"
+                        >
+                            Ver enfoque →
+                        </button>
+
+                    </article>
+
+
+
+                    <!-- CARD 2 -->
+
+                    <article
+                        class="capability-card"
+                        data-modal="disenar"
+                    >
+
+                        <span class="capability-number">
+                            02
+                        </span>
+
+                        <div class="capability-icon">
+                            02
+                        </div>
+
+                        <span class="capability-tag">
+                            ESTRUCTURAR
+                        </span>
+
+                        <h3>
+                            Diseñar
+                        </h3>
+
+                        <p>
+                            Convertir una tarea manual en una secuencia
+                            de entradas, reglas, acciones y resultados
+                            claramente definidos.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="text-button"
+                        >
+                            Ver enfoque →
+                        </button>
+
+                    </article>
+
+
+
+                    <!-- CARD 3 -->
+
+                    <article
+                        class="capability-card"
+                        data-modal="ejecutar"
+                    >
+
+                        <span class="capability-number">
+                            03
+                        </span>
+
+                        <div class="capability-icon">
+                            03
+                        </div>
+
+                        <span class="capability-tag">
+                            EJECUTAR
+                        </span>
+
+                        <h3>
+                            Automatizar
+                        </h3>
+
+                        <p>
+                            Llevar las reglas del proceso a una herramienta
+                            que permita ejecutar las acciones de forma
+                            consistente.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="text-button"
+                        >
+                            Ver enfoque →
+                        </button>
+
+                    </article>
+
+
+
+                    <!-- CARD 4 -->
+
+                    <article
+                        class="capability-card"
+                        data-modal="validar"
+                    >
+
+                        <span class="capability-number">
+                            04
+                        </span>
+
+                        <div class="capability-icon">
+                            04
+                        </div>
+
+                        <span class="capability-tag">
+                            CONTROLAR
+                        </span>
+
+                        <h3>
+                            Validar
+                        </h3>
+
+                        <p>
+                            Comprobar que la automatización funcione,
+                            controlar excepciones y verificar el resultado
+                            obtenido.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="text-button"
+                        >
+                            Ver enfoque →
+                        </button>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             THINKING
+        ================================================== -->
+
+        <section class="section thinking" id="criterio">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        03
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            CRITERIO
+                        </span>
+
+                        <h2>
+                            No toda tarea repetitiva debe automatizarse.
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="thinking-layout">
+
+
+                    <div class="thinking-main">
+
+                        <p class="lead">
+                            La automatización tiene sentido cuando
+                            existe una oportunidad concreta de mejorar
+                            el trabajo.
+                        </p>
+
+                        <p>
+                            La frecuencia de una tarea es solamente uno
+                            de los criterios. También es necesario revisar
+                            su estabilidad, las reglas que la gobiernan,
+                            el esfuerzo requerido, el impacto de los
+                            errores y la posibilidad de verificar el
+                            resultado.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="thinking-steps">
+
+
+                        <div class="thinking-step">
+
+                            <span>
+                                01
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Se repite
+                                </strong>
+
+                                <p>
+                                    La actividad ocurre con frecuencia
+                                    y sigue una secuencia relativamente
+                                    estable.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="thinking-step">
+
+                            <span>
+                                02
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Tiene reglas
+                                </strong>
+
+                                <p>
+                                    Existen condiciones que permiten
+                                    determinar qué acción corresponde.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="thinking-step">
+
+                            <span>
+                                03
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Consume recursos
+                                </strong>
+
+                                <p>
+                                    El tiempo o esfuerzo empleado es
+                                    significativo frente al valor generado.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="thinking-step">
+
+                            <span>
+                                04
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Puede verificarse
+                                </strong>
+
+                                <p>
+                                    Es posible comprobar si el resultado
+                                    producido por la automatización
+                                    es correcto.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MÉTODO
+        ================================================== -->
+
+        <section class="section method" id="metodo">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        04
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            MÉTODO
+                        </span>
+
+                        <h2>
+                            Cuatro pasos antes de construir
+                            una automatización
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="method-flow">
+
+
+                    <article class="method-step">
+
+                        <span class="method-number">
+                            01
+                        </span>
+
+                        <span class="method-label">
+                            COMPRENDER
+                        </span>
+
+                        <h3>
+                            Describir
+                        </h3>
+
+                        <p>
+                            Explique la tarea paso a paso, incluyendo
+                            quién la realiza, qué información utiliza
+                            y cuál debe ser el resultado.
+                        </p>
+
+                    </article>
+
+
+                    <div class="method-line"></div>
+
+
+                    <article class="method-step">
+
+                        <span class="method-number">
+                            02
+                        </span>
+
+                        <span class="method-label">
+                            SEPARAR
+                        </span>
+
+                        <h3>
+                            Estructurar
+                        </h3>
+
+                        <p>
+                            Diferencie las entradas, las decisiones,
+                            las acciones, las excepciones y los
+                            resultados esperados.
+                        </p>
+
+                    </article>
+
+
+                    <div class="method-line"></div>
+
+
+                    <article class="method-step">
+
+                        <span class="method-number">
+                            03
+                        </span>
+
+                        <span class="method-label">
+                            SIMPLIFICAR
+                        </span>
+
+                        <h3>
+                            Mejorar
+                        </h3>
+
+                        <p>
+                            Elimine pasos innecesarios antes de pensar
+                            en automatizarlos y reduzca la complejidad
+                            del flujo.
+                        </p>
+
+                    </article>
+
+
+                    <div class="method-line"></div>
+
+
+                    <article class="method-step">
+
+                        <span class="method-number">
+                            04
+                        </span>
+
+                        <span class="method-label">
+                            COMPROBAR
+                        </span>
+
+                        <h3>
+                            Probar
+                        </h3>
+
+                        <p>
+                            Evalúe el comportamiento con información
+                            real y revise escenarios normales y
+                            excepcionales.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EJERCICIO
+        ================================================== -->
+
+        <section class="section exercise" id="ejercicio">
+
+            <div class="container">
+
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        05
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            ACTIVIDAD PRÁCTICA
+                        </span>
+
+                        <h2>
+                            Identifique una tarea que podría automatizar
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="exercise-card">
+
+
+                    <div class="exercise-info">
+
+                        <span class="exercise-label">
+                            OBSERVE SU TRABAJO
+                        </span>
+
+                        <h3>
+                            Piense en una tarea repetitiva.
+                        </h3>
+
+                        <p>
+                            El objetivo no es escoger todavía una
+                            herramienta. Primero identifique qué tarea
+                            realiza con frecuencia y qué partes podrían
+                            seguir reglas claras.
+                        </p>
+
+
+
+                        <div class="exercise-examples">
+
+                            <span>
+                                Reportes
+                            </span>
+
+                            <span>
+                                Correos
+                            </span>
+
+                            <span>
+                                Excel
+                            </span>
+
+                            <span>
+                                Registros
+                            </span>
+
+                            <span>
+                                Recordatorios
+                            </span>
+
+                            <span>
+                                Consolidación
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="exercise-form">
+
+                        <label for="automationInput">
+                            Describa la tarea que usted realiza
+                        </label>
+
+                        <textarea
+                            id="automationInput"
+                            maxlength="500"
+                            placeholder="Ejemplo: cada viernes consolido información de diferentes archivos de Excel, reviso los datos y envío un reporte por correo."
+                        ></textarea>
+
+
+                        <div class="form-footer">
+
+                            <span id="indicatorCounter">
+                                0 / 500
+                            </span>
+
+                            <button
+                                type="button"
+                                class="button button-primary"
+                                id="analyzeTask"
+                            >
+                                Analizar tarea
+                                <span>→</span>
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="task-feedback"
+                            id="taskFeedback"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RESPONSIBILITY
+        ================================================== -->
+
+        <section class="section responsibility" id="responsabilidad">
+
+            <div class="container">
+
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        06
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            RESPONSABILIDAD
+                        </span>
+
+                        <h2>
+                            La automatización no elimina
+                            el criterio humano.
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="responsibility-grid">
+
+
+                    <article class="responsibility-card">
+
+                        <div class="responsibility-number">
+                            A
+                        </div>
+
+                        <h3>
+                            La tecnología ejecuta
+                        </h3>
+
+                        <p>
+                            Una herramienta puede procesar información,
+                            aplicar reglas, generar documentos, enviar
+                            notificaciones o activar otras acciones.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="responsibility-card">
+
+                        <div class="responsibility-number">
+                            B
+                        </div>
+
+                        <h3>
+                            La persona supervisa
+                        </h3>
+
+                        <p>
+                            El criterio profesional sigue siendo necesario
+                            para revisar excepciones, riesgos, resultados
+                            y decisiones que no pueden reducirse a reglas.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="responsibility-card">
+
+                        <div class="responsibility-number">
+                            C
+                        </div>
+
+                        <h3>
+                            El proceso mejora
+                        </h3>
+
+                        <p>
+                            El objetivo es lograr un trabajo más eficiente,
+                            trazable y confiable, no simplemente trasladar
+                            una tarea manual a otra herramienta.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TRANSFORMACIÓN
+        ================================================== -->
+
+        <section class="section transformation" id="transformacion">
+
+            <div class="container">
+
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        07
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            TRANSFORMACIÓN
+                        </span>
+
+                        <h2>
+                            De una tarea manual a un flujo controlado
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="transformation-grid">
+
+
+                    <div class="transformation-column before">
+
+                        <span class="transformation-label">
+                            ANTES · MANUAL
+                        </span>
+
+
+                        <div class="transformation-item">
+                            Recibir información
+                        </div>
+
+                        <div class="transformation-item">
+                            Copiar datos
+                        </div>
+
+                        <div class="transformation-item">
+                            Revisar registros
+                        </div>
+
+                        <div class="transformation-item">
+                            Preparar reporte
+                        </div>
+
+                        <div class="transformation-item">
+                            Enviar correo
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="transformation-arrow">
+                        →
+                    </div>
+
+
+
+                    <div class="transformation-column after">
+
+                        <span class="transformation-label">
+                            DESPUÉS · AUTOMATIZADO
+                        </span>
+
+
+                        <div class="transformation-item">
+                            Recibir información
+                        </div>
+
+                        <div class="transformation-item">
+                            Validar automáticamente
+                        </div>
+
+                        <div class="transformation-item">
+                            Procesar datos
+                        </div>
+
+                        <div class="transformation-item">
+                            Generar resultado
+                        </div>
+
+                        <div class="transformation-item">
+                            Notificar y registrar
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CHALLENGE
+        ================================================== -->
+
+        <section class="section challenge" id="reto">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        08
+                    </span>
+
+                    <div>
+
+                        <span class="section-kicker">
+                            RETO
+                        </span>
+
+                        <h2>
+                            ¿Cuál debería ser el primer paso?
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="challenge-card">
+
+
+                    <p class="challenge-question">
+                        Una organización genera manualmente un reporte
+                        todos los viernes. El proceso toma tres horas y
+                        utiliza información que ya se encuentra almacenada
+                        en diferentes archivos y sistemas.
+                        ¿Cuál debería ser la primera acción?
+                    </p>
+
+
+
+                    <div class="challenge-options">
+
+
+                        <button
+                            type="button"
+                            class="challenge-option"
+                            data-answer="A"
+                            data-correct="false"
+                        >
+
+                            <span>
+                                A
+                            </span>
+
+                            <strong>
+                                Comprar inmediatamente una herramienta
+                                de automatización.
+                            </strong>
+
+                        </button>
+
+
+
+                        <button
+                            type="button"
+                            class="challenge-option"
+                            data-answer="B"
+                            data-correct="true"
+                        >
+
+                            <span>
+                                B
+                            </span>
+
+                            <strong>
+                                Documentar el flujo actual e identificar
+                                entradas, reglas, pasos y resultado esperado.
+                            </strong>
+
+                        </button>
+
+
+
+                        <button
+                            type="button"
+                            class="challenge-option"
+                            data-answer="C"
+                            data-correct="false"
+                        >
+
+                            <span>
+                                C
+                            </span>
+
+                            <strong>
+                                Eliminar el reporte porque consume
+                                demasiado tiempo.
+                            </strong>
+
+                        </button>
+
+
+
+                        <button
+                            type="button"
+                            class="challenge-option"
+                            data-answer="D"
+                            data-correct="false"
+                        >
+
+                            <span>
+                                D
+                            </span>
+
+                            <strong>
+                                Pedir a otra persona que realice el
+                                proceso manualmente.
+                            </strong>
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="challenge-feedback"
+                        id="challengeFeedback"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RESULTADO
+        ================================================== -->
+
+        <section class="section result">
+
+            <div class="container">
+
+
+                <div class="result-card">
+
+
+                    <div class="result-icon">
+                        04
+                    </div>
+
+
+                    <div class="result-content">
+
+                        <h2>
+                            Automatizar es convertir un proceso claro
+                            en una ejecución más eficiente y controlada.
+                        </h2>
+
+
+                        <div class="result-list">
+
+
+                            <div>
+
+                                <span>
+                                    01
+                                </span>
+
+                                <p>
+                                    Comprenda antes de automatizar.
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    02
+                                </span>
+
+                                <p>
+                                    Simplifique antes de digitalizar.
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    03
+                                </span>
+
+                                <p>
+                                    Pruebe antes de confiar.
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    04
+                                </span>
+
+                                <p>
+                                    Supervise los resultados.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             NEXT MODULE
+        ================================================== -->
+
+        <section class="next-module">
+
+            <div class="container">
+
+                <div class="next-module-content">
+
+                    <span class="next-label">
+                        MÓDULO 04 COMPLETADO
+                    </span>
+
+                    <h2>
+                        Del proceso a la solución.
+                    </h2>
+
+                    <p>
+                        Ya comprende cómo identificar oportunidades de
+                        automatización y convertir una tarea repetitiva
+                        en un flujo más claro y controlado.
+                        El siguiente paso es integrar las herramientas
+                        y construir soluciones que conecten personas,
+                        datos, tecnología e inteligencia artificial.
+                    </p>
+
+                    <a
+                        href="../modulo-5/index.html"
+                        class="next-button"
+                    >
+                        Ir al Módulo 05
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         MODAL DETECTAR
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="modal-detectar"
+        aria-hidden="true"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-window">
+
+            <button
+                type="button"
+                class="modal-close"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+
+            <span class="modal-number">
+                01
+            </span>
+
+            <span class="modal-kicker">
+                OBSERVAR
+            </span>
+
+            <h2>
+                Detectar oportunidades de automatización
+            </h2>
+
+
+            <div class="modal-section">
+
+                <span class="modal-section-label">
+                    ENFOQUE PROFESIONAL
+                </span>
+
+                <p>
+                    Una oportunidad de automatización aparece cuando una
+                    actividad consume recursos de manera recurrente y puede
+                    describirse mediante reglas relativamente estables.
+                </p>
+
+                <p>
+                    El análisis debe considerar frecuencia, tiempo invertido,
+                    volumen de información, errores habituales, dependencia
+                    de otras personas y valor generado.
+                </p>
+
+            </div>
+
+
+            <div class="modal-highlight">
+
+                <strong>
+                    Pregunta clave
+                </strong>
+
+                <span>
+                    ¿Qué parte del trabajo consume esfuerzo repetitivo
+                    sin aportar proporcionalmente el mismo valor?
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MODAL DISEÑAR
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="modal-disenar"
+        aria-hidden="true"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-window">
+
+            <button
+                type="button"
+                class="modal-close"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+
+            <span class="modal-number">
+                02
+            </span>
+
+            <span class="modal-kicker">
+                ESTRUCTURAR
+            </span>
+
+            <h2>
+                Diseñar el flujo antes de implementarlo
+            </h2>
+
+
+            <div class="modal-section">
+
+                <span class="modal-section-label">
+                    ENFOQUE PROFESIONAL
+                </span>
+
+                <p>
+                    Diseñar significa representar el proceso de forma lógica:
+                    qué información entra, qué condiciones deben evaluarse,
+                    qué acciones deben ejecutarse y cuál debe ser el resultado.
+                </p>
+
+
+                <ul class="modal-list">
+
+                    <li>
+                        Identificar las entradas.
+                    </li>
+
+                    <li>
+                        Definir las reglas de decisión.
+                    </li>
+
+                    <li>
+                        Establecer las acciones.
+                    </li>
+
+                    <li>
+                        Definir el resultado esperado.
+                    </li>
+
+                    <li>
+                        Considerar controles y excepciones.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="modal-highlight">
+
+                <strong>
+                    Principio
+                </strong>
+
+                <span>
+                    Una buena automatización comienza con una descripción
+                    precisa del proceso.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MODAL EJECUTAR
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="modal-ejecutar"
+        aria-hidden="true"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-window">
+
+            <button
+                type="button"
+                class="modal-close"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+
+            <span class="modal-number">
+                03
+            </span>
+
+            <span class="modal-kicker">
+                EJECUTAR
+            </span>
+
+            <h2>
+                Convertir reglas en acciones automáticas
+            </h2>
+
+
+            <div class="modal-section">
+
+                <span class="modal-section-label">
+                    ENFOQUE PROFESIONAL
+                </span>
+
+                <p>
+                    Una automatización puede utilizar hojas de cálculo,
+                    scripts, formularios, integraciones, APIs, sistemas
+                    empresariales o plataformas especializadas.
+                </p>
+
+                <p>
+                    La herramienta debe seleccionarse después de entender
+                    el problema y considerando complejidad, seguridad,
+                    mantenimiento y escalabilidad.
+                </p>
+
+            </div>
+
+
+            <div class="modal-example">
+
+                <span class="modal-example-label">
+                    EJEMPLO
+                </span>
+
+                <p>
+                    Recibir información → validar datos → registrar
+                    información → generar resultado → notificar →
+                    conservar evidencia.
+                </p>
+
+            </div>
+
+
+            <div class="modal-highlight">
+
+                <strong>
+                    Regla de decisión
+                </strong>
+
+                <span>
+                    Primero defina qué debe ocurrir. Después determine
+                    qué herramienta puede hacerlo.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MODAL VALIDAR
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="modal-validar"
+        aria-hidden="true"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-window">
+
+            <button
+                type="button"
+                class="modal-close"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+
+            <span class="modal-number">
+                04
+            </span>
+
+            <span class="modal-kicker">
+                CONTROLAR
+            </span>
+
+            <h2>
+                Validar antes de confiar
+            </h2>
+
+
+            <div class="modal-section">
+
+                <span class="modal-section-label">
+                    ENFOQUE PROFESIONAL
+                </span>
+
+                <p>
+                    Una automatización no debe considerarse correcta
+                    únicamente porque funciona en un escenario ideal.
+                    También debe comprobarse frente a datos incompletos,
+                    errores, excepciones y situaciones inesperadas.
+                </p>
+
+                <p>
+                    Debe existir una forma de detectar fallos y revisar
+                    el resultado obtenido.
+                </p>
+
+            </div>
+
+
+            <ul class="modal-list">
+
+                <li>
+                    Probar escenarios normales.
+                </li>
+
+                <li>
+                    Probar datos incorrectos.
+                </li>
+
+                <li>
+                    Revisar excepciones.
+                </li>
+
+                <li>
+                    Validar resultados.
+                </li>
+
+            </ul>
+
+
+            <div class="modal-highlight">
+
+                <strong>
+                    Principio
+                </strong>
+
+                <span>
+                    Automatizar cambia la forma de ejecutar y controlar
+                    el trabajo; no elimina la responsabilidad sobre el resultado.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+
+            <div class="footer-brand">
+
+                <span class="brand-mark">
+                    EA
+                </span>
+
+                <div>
+
+                    <strong>
+                        El Empleado Aumentado
+                    </strong>
+
+                    <span>
+                        Tecnología aplicada al trabajo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-module">
+                MÓDULO 04 · AUTOMATIZAR TAREAS Y PROCESOS
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            El Empleado Aumentado · Formación para trabajar
+            mejor con datos, tecnología e inteligencia artificial.
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="./js/script.js"></script>
+
+</body>
+
+</html>
+
