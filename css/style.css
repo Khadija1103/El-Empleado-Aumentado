@@ -2456,11 +2456,11 @@ select {
 }
 
 /* =====================================================
-   PÚBLICO OBJETIVO
+   PÚBLICO OBJETIVO — CAJA INTERACTIVA
 ===================================================== */
 
 .audience {
-    padding: 0 0 80px;
+    padding: 25px 0 90px;
     background: var(--bg);
 }
 
@@ -2469,16 +2469,147 @@ select {
 }
 
 .audience-text {
+    position: relative;
     max-width: 900px;
     margin: 0 auto;
-    padding: 28px 32px;
-    background: var(--bg-soft);
-    border-left: 4px solid #7c3aed !important;
+    padding: 34px 40px;
+
+    background: var(--white);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: 20px;
+
     font-size: 1.05rem;
     line-height: 1.8;
     color: #4b5563;
     text-align: justify;
+
     box-sizing: border-box;
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px rgba(76, 29, 149, 0.08);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+/* Línea morada */
+.audience-text::before {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 5px;
+    height: 100%;
+
+    background: linear-gradient(
+        180deg,
+        var(--purple),
+        var(--purple-light)
+    );
+
+    box-shadow:
+        0 0 12px rgba(124, 58, 237, 0.6);
+
+    transition:
+        width 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+/* Iluminación */
+.audience-text::after {
+    content: "";
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    right: -120px;
+    top: -130px;
+
+    background: radial-gradient(
+        circle,
+        rgba(139, 92, 246, 0.18) 0%,
+        rgba(139, 92, 246, 0.08) 35%,
+        transparent 70%
+    );
+
+    border-radius: 50%;
+
+    opacity: 0.7;
+
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
+}
+
+/* =====================================================
+   EVENTO MOUSE — HOVER
+===================================================== */
+
+.audience-text:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(124, 58, 237, 0.35);
+
+    box-shadow:
+        0 15px 35px rgba(76, 29, 149, 0.14),
+        0 0 25px rgba(124, 58, 237, 0.12);
+}
+
+.audience-text:hover::before {
+    width: 8px;
+
+    box-shadow:
+        0 0 18px rgba(124, 58, 237, 0.9),
+        0 0 35px rgba(124, 58, 237, 0.45);
+}
+
+.audience-text:hover::after {
+    transform: scale(1.4);
+    opacity: 1;
+}
+
+/* =====================================================
+   ANIMACIÓN DE ENTRADA
+===================================================== */
+
+@keyframes audienceAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.audience-text {
+    animation: audienceAppear 0.8s ease-out both;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .audience {
+        padding: 15px 20px 60px;
+    }
+
+    .audience-text {
+        padding: 28px 30px;
+        font-size: 1rem;
+        line-height: 1.7;
+    }
 }
 
 
